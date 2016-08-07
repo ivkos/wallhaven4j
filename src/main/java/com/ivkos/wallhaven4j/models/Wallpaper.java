@@ -9,7 +9,6 @@ import com.ivkos.wallhaven4j.models.support.UrlPrefixes;
 import org.joda.time.DateTime;
 
 import java.util.List;
-import java.util.Set;
 
 public class Wallpaper implements Resource
 {
@@ -23,7 +22,7 @@ public class Wallpaper implements Resource
    private Category category;
    private long size;
    private long viewsCount;
-   private Set<WallpaperCollection> collections;
+   private List<WallpaperCollection> collections;
 
    @Override
    public String getUrl()
