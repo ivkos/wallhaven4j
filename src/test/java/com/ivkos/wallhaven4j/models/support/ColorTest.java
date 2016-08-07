@@ -27,4 +27,22 @@ public class ColorTest
    {
       Assert.assertEquals(red.toHex(), red.toString());
    }
+
+   @Test
+   public void thatEquals() throws Exception
+   {
+      Color red1 = new Color(255,0,0);
+      Color red2 = new Color("FF0000");
+
+      Assert.assertTrue(red1.equals(red2));
+   }
+
+   @Test
+   public void thatHashCodeIsEqual() throws Exception
+   {
+      Color red1 = new Color(255,0,0);
+      Color red2 = new Color("FF0000");
+
+      Assert.assertTrue(red1.hashCode() == red2.hashCode());
+   }
 }
