@@ -35,4 +35,10 @@ public class WallpaperCollection extends Resource<Long>
    {
       return user.getUrl() + "/favorites/" + id;
    }
+
+   @Override
+   public String toString()
+   {
+      return name;
+   }
 }
