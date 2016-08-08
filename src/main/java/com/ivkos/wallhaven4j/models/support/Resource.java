@@ -25,4 +25,10 @@ public abstract class Resource<T>
    {
       return Objects.hash(this.getClass(), getId());
    }
+
+   @Override
+   public String toString()
+   {
+      return this.getClass().getSimpleName() + " " + getId();
+   }
 }
