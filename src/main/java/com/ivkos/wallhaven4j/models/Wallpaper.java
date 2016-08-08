@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
-public class Wallpaper implements Resource
+public class Wallpaper extends Resource<Long>
 {
    private long id;
    private Resolution resolution;
@@ -23,6 +23,12 @@ public class Wallpaper implements Resource
    private long size;
    private long viewsCount;
    private List<WallpaperCollection> collections;
+
+   @Override
+   public Long getId()
+   {
+      return id;
+   }
 
    @Override
    public String getUrl()

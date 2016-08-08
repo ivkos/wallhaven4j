@@ -3,9 +3,7 @@ package com.ivkos.wallhaven4j.models;
 import com.ivkos.wallhaven4j.models.support.Resource;
 import com.ivkos.wallhaven4j.models.support.UrlPrefixes;
 
-import java.util.Objects;
-
-public class TagCategory implements Resource
+public class TagCategory extends Resource<Long>
 {
    private final long id;
    private final String name;
@@ -25,7 +23,8 @@ public class TagCategory implements Resource
       this.parentCategory = parentCategory;
    }
 
-   public long getId()
+   @Override
+   public Long getId()
    {
       return id;
    }
@@ -50,20 +49,5 @@ public class TagCategory implements Resource
    public String getUrl()
    {
       return UrlPrefixes.URL_TAGS + "/" + id;
-   }
-
-   @Override
-   public boolean equals(Object o)
-   {
-      if (this == o) return true;
-      if (!(o instanceof TagCategory)) return false;
-      TagCategory that = (TagCategory) o;
-      return getId() == that.getId();
-   }
-
-   @Override
-   public int hashCode()
-   {
-      return Objects.hash(getId());
    }
 }

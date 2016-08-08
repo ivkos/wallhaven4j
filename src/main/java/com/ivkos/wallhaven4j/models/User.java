@@ -4,9 +4,7 @@ import com.ivkos.wallhaven4j.models.support.Resource;
 import com.ivkos.wallhaven4j.models.support.UrlPrefixes;
 import org.joda.time.DateTime;
 
-import java.util.Objects;
-
-public class User implements Resource
+public class User extends Resource<String>
 {
    private final String username;
 
@@ -29,23 +27,14 @@ public class User implements Resource
    }
 
    @Override
+   public String getId()
+   {
+      return username;
+   }
+
+   @Override
    public String getUrl()
    {
       return UrlPrefixes.URL_USER + "/" + username;
-   }
-
-   @Override
-   public boolean equals(Object o)
-   {
-      if (this == o) return true;
-      if (!(o instanceof User)) return false;
-      User user = (User) o;
-      return Objects.equals(username, user.username);
-   }
-
-   @Override
-   public int hashCode()
-   {
-      return Objects.hash(username);
    }
 }
