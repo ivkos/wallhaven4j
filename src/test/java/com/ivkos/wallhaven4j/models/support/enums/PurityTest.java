@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.models.enums;
+package com.ivkos.wallhaven4j.models.support.enums;
 
 import org.junit.Assert;
 import org.junit.Test;

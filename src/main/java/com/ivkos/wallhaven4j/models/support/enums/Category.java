@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.models.enums;
+package com.ivkos.wallhaven4j.models.support.enums;
 
 public enum Category
 {
