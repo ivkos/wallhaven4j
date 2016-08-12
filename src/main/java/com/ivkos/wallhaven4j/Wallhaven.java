@@ -27,9 +27,12 @@ public class Wallhaven
       session = injector.getInstance(WallhavenSession.class);
    }
 
+   /**
+    * @return The current user, or null if this is an anonymous session
+    */
    public User getCurrentUser()
    {
-      return injector.getInstance(UserFactory.class).create(session.getUsername());
+      return session.getUsername() == null ? null : injector.getInstance(UserFactory.class).create(session.getUsername());
    }
 
    public Wallpaper getWallpaper(Long id)
