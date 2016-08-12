@@ -9,8 +9,6 @@ import org.joda.time.DateTime;
 
 public class User extends AbstractResource<String>
 {
-   public static final User ANONYMOUS = new User(null, null);
-
    private final String username;
 
    private DateTime lastActiveTime;
