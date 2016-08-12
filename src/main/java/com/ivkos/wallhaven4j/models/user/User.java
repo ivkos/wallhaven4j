@@ -1,12 +1,15 @@
-package com.ivkos.wallhaven4j.models;
+package com.ivkos.wallhaven4j.models.user;
 
-import com.ivkos.wallhaven4j.models.support.Resource;
+import com.google.inject.assistedinject.Assisted;
+import com.google.inject.assistedinject.AssistedInject;
+import com.ivkos.wallhaven4j.models.support.AbstractResource;
 import com.ivkos.wallhaven4j.models.support.UrlPrefixes;
+import com.ivkos.wallhaven4j.support.WallhavenSession;
 import org.joda.time.DateTime;
 
-public class User extends Resource<String>
+public class User extends AbstractResource<String>
 {
-   public static final User ANONYMOUS = new User(null);
+   public static final User ANONYMOUS = new User(null, null);
 
    private final String username;
 
@@ -23,8 +26,10 @@ public class User extends Resource<String>
    private long profileCommentsCounts;
    private long forumPostsCount;
 
-   public User(String username)
+   @AssistedInject
+   User(WallhavenSession session, @Assisted String username)
    {
+      super(session);
       this.username = username;
    }
 

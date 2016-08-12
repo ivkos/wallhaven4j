@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class ColorTest
 {
-   private Color red= new Color(255, 0, 0);
+   private Color red = new Color(255, 0, 0);
    private Color abbeef = new Color("#abbeef");
 
    @Test
@@ -31,7 +31,7 @@ public class ColorTest
    @Test
    public void thatEquals() throws Exception
    {
-      Color red1 = new Color(255,0,0);
+      Color red1 = new Color(255, 0, 0);
       Color red2 = new Color("FF0000");
 
       Assert.assertTrue(red1.equals(red2));
@@ -40,7 +40,7 @@ public class ColorTest
    @Test
    public void thatHashCodeIsEqual() throws Exception
    {
-      Color red1 = new Color(255,0,0);
+      Color red1 = new Color(255, 0, 0);
       Color red2 = new Color("FF0000");
 
       Assert.assertTrue(red1.hashCode() == red2.hashCode());
