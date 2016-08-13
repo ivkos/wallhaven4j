@@ -31,23 +31,6 @@ public abstract class AbstractResource<T>
       }
    }
 
-   public final T getId()
-   {
-      return id;
-   }
-
-   public abstract String getUrl();
-
-   protected WallhavenSession getSession()
-   {
-      return session;
-   }
-
-   protected Document getDom()
-   {
-      return getDom(true);
-   }
-
    protected Document getDom(boolean enableCache)
    {
       if (this.dom != null && enableCache) {
@@ -93,6 +76,24 @@ public abstract class AbstractResource<T>
       return this.dom;
    }
 
+   protected Document getDom()
+   {
+      return getDom(true);
+   }
+
+   public final T getId()
+   {
+      return id;
+   }
+
+   protected WallhavenSession getSession()
+   {
+      return session;
+   }
+
+   public abstract String getUrl();
+
+   //region equals, hashCode, toString
    @Override
    public boolean equals(Object o)
    {
@@ -116,4 +117,5 @@ public abstract class AbstractResource<T>
    {
       return this.getClass().getSimpleName() + " " + this.getId();
    }
+   //endregion
 }
