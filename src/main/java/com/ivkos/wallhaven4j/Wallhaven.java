@@ -9,6 +9,9 @@ import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
 import com.ivkos.wallhaven4j.support.WallhavenGuiceModule;
 import com.ivkos.wallhaven4j.support.WallhavenSession;
+import com.ivkos.wallhaven4j.support.exceptions.ResourceNotFoundException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class Wallhaven
 {
@@ -30,15 +33,22 @@ public class Wallhaven
    /**
     * @return The current user, or null if this is an anonymous session
     */
+   @Nullable
    public User getCurrentUser()
    {
-      return session.getUsername() == null ? null : injector.getInstance(UserFactory.class).create(session.getUsername());
+      return session.getUsername() == null ? null
+            : injector.getInstance(UserFactory.class).create(false, session.getUsername());
    }
 
-   public Wallpaper getWallpaper(Long id)
+   /**
+    * @param id Wallpaper's id
+    * @return the wallpaper
+    * @throws ResourceNotFoundException if there's wallpaper with the set id
+    */
+   public @NotNull Wallpaper getWallpaper(long id)
    {
-      Preconditions.checkNotNull(id);
+      Preconditions.checkArgument(id > 0);
 
-      return injector.getInstance(WallpaperFactory.class).create(id);
+      return injector.getInstance(WallpaperFactory.class).create(true, id);
    }
 }

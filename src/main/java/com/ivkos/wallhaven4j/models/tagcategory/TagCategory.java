@@ -8,39 +8,28 @@ import com.ivkos.wallhaven4j.support.WallhavenSession;
 
 public class TagCategory extends AbstractResource<Long>
 {
-   private final long id;
    private String name;
-
    private TagCategory parentCategory;
 
    @AssistedInject
-   TagCategory(WallhavenSession session, @Assisted long id)
+   TagCategory(WallhavenSession session, @Assisted boolean preloadDom, @Assisted long id)
    {
-      super(session);
-      this.id = id;
+      super(session, preloadDom, id);
    }
 
    @AssistedInject
-   TagCategory(WallhavenSession session, @Assisted long id, @Assisted String name)
+   TagCategory(WallhavenSession session, @Assisted boolean preloadDom, @Assisted long id, @Assisted String name)
    {
-      super(session);
-      this.id = id;
+      super(session, preloadDom, id);
       this.name = name;
    }
 
    @AssistedInject
-   TagCategory(WallhavenSession session, @Assisted long id, @Assisted String name, @Assisted TagCategory parentCategory)
+   TagCategory(WallhavenSession session, @Assisted boolean preloadDom, @Assisted long id, @Assisted String name, @Assisted TagCategory parentCategory)
    {
-      super(session);
-      this.id = id;
+      super(session, preloadDom, id);
       this.name = name;
       this.parentCategory = parentCategory;
-   }
-
-   @Override
-   public Long getId()
-   {
-      return id;
    }
 
    public String getName()

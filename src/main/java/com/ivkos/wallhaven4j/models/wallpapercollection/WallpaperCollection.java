@@ -9,10 +9,8 @@ import com.ivkos.wallhaven4j.support.WallhavenSession;
 
 import java.util.List;
 
-public class WallpaperCollection extends AbstractResource<Long>
+public class WallpaperCollection extends AbstractResource<WallpaperCollectionIdentifier>
 {
-   private final long id;
-   private User user;
    private String name;
 
    private long wallpapersCount;
@@ -23,30 +21,20 @@ public class WallpaperCollection extends AbstractResource<Long>
    private List<Wallpaper> wallpapers;
 
    @AssistedInject
-   WallpaperCollection(WallhavenSession session, @Assisted long id)
+   protected WallpaperCollection(WallhavenSession session, @Assisted boolean preloadDom, @Assisted WallpaperCollectionIdentifier id)
    {
-      super(session);
-      this.id = id;
+      super(session, preloadDom, id);
    }
 
-   @AssistedInject
-   WallpaperCollection(WallhavenSession session, @Assisted long id, @Assisted User user)
+   public User getUser()
    {
-      super(session);
-      this.id = id;
-      this.user = user;
-   }
-
-   @Override
-   public Long getId()
-   {
-      return id;
+      return getId().getUser();
    }
 
    @Override
    public String getUrl()
    {
-      return user.getUrl() + "/favorites/" + id;
+      return getUser().getUrl() + "/favorites/" + id.getLongId();
    }
 
    @Override

@@ -9,8 +9,6 @@ import org.joda.time.DateTime;
 
 public class User extends AbstractResource<String>
 {
-   private final String username;
-
    private DateTime lastActiveTime;
    private DateTime dateCreated;
 
@@ -25,21 +23,14 @@ public class User extends AbstractResource<String>
    private long forumPostsCount;
 
    @AssistedInject
-   User(WallhavenSession session, @Assisted String username)
+   User(WallhavenSession session, @Assisted boolean preloadDom, @Assisted String id)
    {
-      super(session);
-      this.username = username;
-   }
-
-   @Override
-   public String getId()
-   {
-      return username;
+      super(session, preloadDom, id);
    }
 
    @Override
    public String getUrl()
    {
-      return UrlPrefixes.URL_USER + "/" + username;
+      return UrlPrefixes.URL_USER + "/" + id;
    }
 }

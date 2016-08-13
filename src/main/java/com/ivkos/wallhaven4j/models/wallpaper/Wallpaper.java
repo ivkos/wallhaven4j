@@ -18,7 +18,6 @@ import java.util.List;
 
 public class Wallpaper extends AbstractResource<Long>
 {
-   private long id;
    private Resolution resolution;
    private List<Color> colors;
    private List<Tag> tags;
@@ -31,16 +30,9 @@ public class Wallpaper extends AbstractResource<Long>
    private List<WallpaperCollection> collections;
 
    @AssistedInject
-   Wallpaper(WallhavenSession session, @Assisted long id)
+   Wallpaper(WallhavenSession session, @Assisted boolean preloadDom, @Assisted long id)
    {
-      super(session);
-      this.id = id;
-   }
-
-   @Override
-   public Long getId()
-   {
-      return id;
+      super(session, preloadDom, id);
    }
 
    @Override

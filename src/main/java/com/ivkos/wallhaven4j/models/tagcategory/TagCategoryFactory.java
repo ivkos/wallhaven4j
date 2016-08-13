@@ -4,7 +4,7 @@ import com.ivkos.wallhaven4j.models.support.ResourceFactory;
 
 public interface TagCategoryFactory extends ResourceFactory<TagCategory, Long>
 {
-   TagCategory create(Long id, String name);
+   TagCategory create(boolean preloadDom, Long id, String name);
 
-   TagCategory create(Long id, String name, TagCategory parentCategory);
+   TagCategory create(boolean preloadDom, Long id, String name, TagCategory parentCategory);
 }

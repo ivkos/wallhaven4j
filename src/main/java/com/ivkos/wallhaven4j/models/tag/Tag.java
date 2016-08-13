@@ -12,7 +12,6 @@ import org.joda.time.DateTime;
 
 public class Tag extends AbstractResource<Long>
 {
-   private final long id;
    private String name;
    private TagCategory category;
    private String[] aliases;
@@ -25,17 +24,15 @@ public class Tag extends AbstractResource<Long>
    private DateTime dateCreated;
 
    @AssistedInject
-   Tag(WallhavenSession session, @Assisted long id)
+   Tag(WallhavenSession session, @Assisted boolean preloadDom, @Assisted long id)
    {
-      super(session);
-      this.id = id;
+      super(session, preloadDom, id);
    }
 
    @AssistedInject
-   Tag(WallhavenSession session, @Assisted long id, @Assisted String name)
+   Tag(WallhavenSession session, @Assisted boolean preloadDom, @Assisted long id, @Assisted String name)
    {
-      super(session);
-      this.id = id;
+      super(session, preloadDom, id);
       this.name = name;
    }
 
@@ -43,12 +40,6 @@ public class Tag extends AbstractResource<Long>
    public String toString()
    {
       return name;
-   }
-
-   @Override
-   public Long getId()
-   {
-      return id;
    }
 
    @Override
