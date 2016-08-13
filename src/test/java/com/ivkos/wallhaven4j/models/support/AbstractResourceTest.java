@@ -2,6 +2,7 @@ package com.ivkos.wallhaven4j.models.support;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.ivkos.wallhaven4j.models.support.enums.Purity;
 import com.ivkos.wallhaven4j.models.tag.Tag;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
@@ -19,8 +20,8 @@ public class AbstractResourceTest
    @Test
    public void equalObjectsAreEqual()
    {
-      Tag tag1 = tagFactory.create(false, 1L, "somename");
-      Tag tag2 = tagFactory.create(false, 1L, "somename");
+      Tag tag1 = tagFactory.create(false, 1L, "somename", Purity.SFW);
+      Tag tag2 = tagFactory.create(false, 1L, "somename", Purity.SFW);
 
       Assert.assertTrue(tag1.equals(tag2));
       Assert.assertTrue(tag1.hashCode() == tag2.hashCode());
@@ -29,7 +30,7 @@ public class AbstractResourceTest
    @Test
    public void inequalObjectsAreInequal()
    {
-      Tag tag1 = tagFactory.create(false, 1L, "somename");
+      Tag tag1 = tagFactory.create(false, 1L, "somename", Purity.SFW);
       Wallpaper wallpaper = wallpaperFactory.create(false, 1L);
 
       Assert.assertFalse(tag1.equals(wallpaper));
