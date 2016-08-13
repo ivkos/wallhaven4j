@@ -1,14 +1,19 @@
 package com.ivkos.wallhaven4j.models.support;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Objects;
 
 public class Resolution
 {
-   private long width;
-   private long height;
+   private final long width;
+   private final long height;
 
    public Resolution(long width, long height)
    {
+      Preconditions.checkArgument(width >= 0, "width must be positive");
+      Preconditions.checkArgument(height >= 0, "height must be positive");
+
       this.width = width;
       this.height = height;
    }
