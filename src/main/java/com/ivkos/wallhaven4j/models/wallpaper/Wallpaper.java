@@ -5,7 +5,7 @@ import com.google.inject.assistedinject.AssistedInject;
 import com.ivkos.wallhaven4j.models.support.AbstractResource;
 import com.ivkos.wallhaven4j.models.support.Color;
 import com.ivkos.wallhaven4j.models.support.Resolution;
-import com.ivkos.wallhaven4j.models.support.UrlPrefixes;
+import com.ivkos.wallhaven4j.support.UrlPrefixes;
 import com.ivkos.wallhaven4j.models.support.enums.Category;
 import com.ivkos.wallhaven4j.models.support.enums.Purity;
 import com.ivkos.wallhaven4j.models.tag.Tag;
