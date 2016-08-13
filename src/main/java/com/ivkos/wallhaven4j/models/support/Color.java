@@ -2,6 +2,9 @@ package com.ivkos.wallhaven4j.models.support;
 
 import java.util.Objects;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class Color
 {
    private final int red;
@@ -10,6 +13,10 @@ public class Color
 
    public Color(int red, int green, int blue)
    {
+      checkArgument(red >= 0 && red <= 255, "red must be between 0 and 255");
+      checkArgument(green >= 0 && green <= 255, "green must be between 0 and 255");
+      checkArgument(blue >= 0 && blue <= 255, "blue must be between 0 and 255");
+
       this.red = red;
       this.green = green;
       this.blue = blue;
@@ -17,6 +24,9 @@ public class Color
 
    public Color(String hex)
    {
+      checkNotNull(hex, "hex must not be null");
+      checkArgument(hex.matches("#?[0-9A-Fa-f]{6}"), "invalid hex string (%s)", hex);
+
       int offset = hex.startsWith("#") ? 1 : 0;
 
       red = Integer.parseInt(hex.substring(offset, 2 + offset), 16);
