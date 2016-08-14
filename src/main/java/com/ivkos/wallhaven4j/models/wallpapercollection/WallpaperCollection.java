@@ -26,6 +26,13 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       super(session, preloadDom, id);
    }
 
+   @AssistedInject
+   protected WallpaperCollection(WallhavenSession session, @Assisted boolean preloadDom, @Assisted WallpaperCollectionIdentifier id, @Assisted String name)
+   {
+      super(session, preloadDom, id);
+      this.name = name;
+   }
+
    public User getUser()
    {
       return getId().getUser();
