@@ -1,10 +1,13 @@
 package com.ivkos.wallhaven4j;
 
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
+import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.support.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.support.exceptions.ResourceNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
 
 public class WallhavenTest
 {
@@ -41,5 +44,15 @@ public class WallhavenTest
    public void getNsfwWallpaperWhenNotLoggedIn() throws Exception
    {
       whAnon.getWallpaper(8273);
+   }
+
+   @Test
+   public void getCollections() throws Exception
+   {
+      Wallpaper w1 = whAnon.getWallpaper(103929);
+      List<WallpaperCollection> collections = w1.getCollections();
+
+      Assert.assertNotNull(collections);
+      Assert.assertFalse(collections.isEmpty());
    }
 }
