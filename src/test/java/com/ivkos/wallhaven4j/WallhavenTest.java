@@ -37,7 +37,7 @@ public class WallhavenTest
    @Test(expected = ResourceNotFoundException.class)
    public void getNonExistentWallpaper() throws Exception
    {
-      whAnon.getWallpaper(999999);
+      whAnon.getWallpaper(1);
    }
 
    @Test(expected = ResourceNotAccessibleException.class)
