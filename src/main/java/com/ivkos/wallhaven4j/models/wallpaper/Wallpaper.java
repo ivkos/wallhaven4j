@@ -17,7 +17,6 @@ import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
 import com.ivkos.wallhaven4j.support.UrlPrefixes;
 import com.ivkos.wallhaven4j.support.WallhavenSession;
-import com.ivkos.wallhaven4j.support.XhrViewResponse;
 import com.ivkos.wallhaven4j.support.exceptions.ConnectionException;
 import com.ivkos.wallhaven4j.support.exceptions.ParseException;
 import org.apache.http.client.HttpClient;
@@ -50,6 +49,7 @@ import static java.util.Collections.unmodifiableList;
 
 public class Wallpaper extends AbstractResource<Long>
 {
+   private final Gson gson;
    private final TagFactory tagFactory;
    private final UserFactory userFactory;
    private final WallpaperCollectionFactory wallpaperCollectionFactory;
@@ -69,13 +69,14 @@ public class Wallpaper extends AbstractResource<Long>
 
    @AssistedInject
    Wallpaper(WallhavenSession session,
+             Gson gson,
              TagFactory tagFactory,
              UserFactory userFactory,
              WallpaperCollectionFactory wallpaperCollectionFactory,
-             FavoritesToWallpaperCollectionTransformer favoritesToWallpaperCollectionTransformer,
-             @Assisted boolean preloadDom, @Assisted long id)
+             FavoritesToWallpaperCollectionTransformer favoritesToWallpaperCollectionTransformer, @Assisted boolean preloadDom, @Assisted long id)
    {
       super(session, preloadDom, id);
+      this.gson = gson;
       this.tagFactory = tagFactory;
       this.userFactory = userFactory;
       this.wallpaperCollectionFactory = wallpaperCollectionFactory;
@@ -301,14 +302,17 @@ public class Wallpaper extends AbstractResource<Long>
          throw new ConnectionException("Could not connect", e);
       }
 
-      XhrViewResponse xhrViewResponse = new Gson().fromJson(new InputStreamReader(content), XhrViewResponse.class);
-
+      XhrViewResponse xhrViewResponse = gson.fromJson(new InputStreamReader(content), XhrViewResponse.class);
       Document document = Jsoup.parse(xhrViewResponse.view);
-
       Elements userlist = document.select("ul.userlist > li");
 
       collections = unmodifiableList(newArrayList(transform(userlist, favoritesToWallpaperCollectionTransformer)));
 
       return collections;
+   }
+
+   private static class XhrViewResponse
+   {
+      public String view;
    }
 }

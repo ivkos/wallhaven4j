@@ -1,5 +1,6 @@
 package com.ivkos.wallhaven4j.support;
 
+import com.google.gson.Gson;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
@@ -26,6 +27,7 @@ public class WallhavenGuiceModule extends AbstractModule
    protected void configure()
    {
       bind(WallhavenSession.class).toInstance(session);
+      bind(Gson.class).toInstance(new Gson());
 
       install(new FactoryModuleBuilder().build(TagFactory.class));
       install(new FactoryModuleBuilder().build(TagCategoryFactory.class));
