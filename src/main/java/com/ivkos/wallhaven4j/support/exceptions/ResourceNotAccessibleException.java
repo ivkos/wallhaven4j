@@ -1,14 +1,12 @@
 package com.ivkos.wallhaven4j.support.exceptions;
 
-import org.jetbrains.annotations.NonNls;
-
 public class ResourceNotAccessibleException extends RuntimeException
 {
    public ResourceNotAccessibleException()
    {
    }
 
-   public ResourceNotAccessibleException(@NonNls String message)
+   public ResourceNotAccessibleException(String message)
    {
       super(message);
    }
