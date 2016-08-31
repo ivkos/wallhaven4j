@@ -1,6 +1,5 @@
 package com.ivkos.wallhaven4j.support;
 
-import com.google.gson.Gson;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
@@ -8,6 +7,8 @@ import com.ivkos.wallhaven4j.models.tagcategory.TagCategoryFactory;
 import com.ivkos.wallhaven4j.models.user.UserFactory;
 import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
+import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.GsonJsonSerializer;
+import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.JsonSerializer;
 
 public class WallhavenGuiceModule extends AbstractModule
 {
@@ -27,7 +28,7 @@ public class WallhavenGuiceModule extends AbstractModule
    protected void configure()
    {
       bind(WallhavenSession.class).toInstance(session);
-      bind(Gson.class).toInstance(new Gson());
+      bind(JsonSerializer.class).to(GsonJsonSerializer.class);
 
       install(new FactoryModuleBuilder().build(TagFactory.class));
       install(new FactoryModuleBuilder().build(TagCategoryFactory.class));
