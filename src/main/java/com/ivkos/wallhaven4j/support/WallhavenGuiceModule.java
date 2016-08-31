@@ -15,6 +15,7 @@ import com.ivkos.wallhaven4j.support.httpclient.FileCookieStore;
 import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.GsonJsonSerializer;
 import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.JsonSerializer;
 import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 
 import java.io.File;
@@ -50,12 +51,12 @@ public class WallhavenGuiceModule extends AbstractModule
    @Singleton
    HttpClient provideApacheHttpClient(JsonSerializer jsonSerializer)
    {
-      if (cookiesFile == null) {
-         return HttpClients.createDefault();
+      HttpClientBuilder builder = HttpClients.custom();
+
+      if (cookiesFile != null) {
+         builder.setDefaultCookieStore(new FileCookieStore(jsonSerializer, cookiesFile));
       }
 
-      return HttpClients.custom()
-            .setDefaultCookieStore(new FileCookieStore(jsonSerializer, cookiesFile))
-            .build();
+      return builder.build();
    }
 }
