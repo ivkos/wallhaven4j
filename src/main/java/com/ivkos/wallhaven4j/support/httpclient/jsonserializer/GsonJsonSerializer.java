@@ -1,11 +1,13 @@
 package com.ivkos.wallhaven4j.support.httpclient.jsonserializer;
 
 import com.google.gson.Gson;
+import com.google.inject.Inject;
 
 public class GsonJsonSerializer implements JsonSerializer
 {
    private final Gson gson;
 
+   @Inject
    public GsonJsonSerializer(Gson gson)
    {
       this.gson = gson;
