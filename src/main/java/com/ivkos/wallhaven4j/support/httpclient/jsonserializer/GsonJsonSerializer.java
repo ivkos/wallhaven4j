@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.support.httpclient;
+package com.ivkos.wallhaven4j.support.httpclient.jsonserializer;
 
 import com.google.gson.Gson;
 
