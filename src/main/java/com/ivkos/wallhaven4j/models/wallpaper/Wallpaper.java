@@ -2,7 +2,6 @@ package com.ivkos.wallhaven4j.models.wallpaper;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 import com.ivkos.wallhaven4j.models.support.AbstractResource;
@@ -19,6 +18,7 @@ import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFacto
 import com.ivkos.wallhaven4j.support.UrlPrefixes;
 import com.ivkos.wallhaven4j.support.WallhavenSession;
 import com.ivkos.wallhaven4j.support.exceptions.ParseException;
+import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.JsonSerializer;
 import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,7 +44,7 @@ import static java.util.Collections.unmodifiableList;
 
 public class Wallpaper extends AbstractResource<Long>
 {
-   private final Gson gson;
+   private final JsonSerializer jsonSerializer;
    private final TagFactory tagFactory;
    private final UserFactory userFactory;
    private final WallpaperCollectionFactory wallpaperCollectionFactory;
@@ -64,14 +64,14 @@ public class Wallpaper extends AbstractResource<Long>
 
    @AssistedInject
    Wallpaper(WallhavenSession session,
-             Gson gson,
+             JsonSerializer jsonSerializer,
              TagFactory tagFactory,
              UserFactory userFactory,
              WallpaperCollectionFactory wallpaperCollectionFactory,
              FavoritesToWallpaperCollectionTransformer favoritesToWallpaperCollectionTransformer, @Assisted boolean preloadDom, @Assisted long id)
    {
       super(session, preloadDom, id);
-      this.gson = gson;
+      this.jsonSerializer = jsonSerializer;
       this.tagFactory = tagFactory;
       this.userFactory = userFactory;
       this.wallpaperCollectionFactory = wallpaperCollectionFactory;
@@ -287,7 +287,7 @@ public class Wallpaper extends AbstractResource<Long>
             CONTENT_TYPE, JSON_UTF_8.toString()
       ));
 
-      XhrViewResponse xhrViewResponse = gson.fromJson(response, XhrViewResponse.class);
+      XhrViewResponse xhrViewResponse = jsonSerializer.fromJson(response, XhrViewResponse.class);
       Document document = Jsoup.parse(xhrViewResponse.view);
       Elements userlist = document.select("ul.userlist > li");
 
