@@ -26,6 +26,8 @@ public class Wallhaven
    {
       injector = Guice.createInjector(new WallhavenGuiceModule(cookiesFile));
       session = injector.getInstance(WallhavenSession.class);
+
+      session.login(username, password);
    }
 
    public Wallhaven()
