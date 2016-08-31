@@ -1,21 +1,30 @@
 package com.ivkos.wallhaven4j.support.httpclient;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.io.CharStreams;
 import com.google.inject.Inject;
 import com.ivkos.wallhaven4j.support.exceptions.ConnectionException;
 import com.ivkos.wallhaven4j.support.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.support.exceptions.ResourceNotFoundException;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
@@ -117,8 +126,47 @@ public class ApacheHttpClient implements AbstractHttpClient
       return execute("POST", url, headers, body);
    }
 
+   @Override
+   public String post(String url, Map<String, String> headers, Map<String, String> formParams)
+   {
+      Collection<NameValuePair> pairs = Collections2.transform(formParams.entrySet(),
+            new Function<Map.Entry<String, String>, NameValuePair>()
+            {
+               @Override
+               public NameValuePair apply(Map.Entry<String, String> input)
+               {
+                  return new BasicNameValuePair(input.getKey(), input.getValue());
+               }
+            });
+
+      Header contentType;
+      String urlEncodedBody;
+      try {
+         UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(pairs);
+         contentType = urlEncodedFormEntity.getContentType();
+
+         InputStream content = urlEncodedFormEntity.getContent();
+         urlEncodedBody = CharStreams.toString(new InputStreamReader(content));
+      } catch (IOException e) {
+         throw new RuntimeException(e);
+      }
+
+      ImmutableMap<String, String> headers2 = ImmutableMap.<String, String>builder()
+            .putAll(headers)
+            .put(contentType.getName(), contentType.getValue())
+            .build();
+
+      return post(url, headers2, urlEncodedBody);
+   }
+
    public String post(String url, String body)
    {
       return post(url, Collections.<String, String>emptyMap(), body);
+   }
+
+   @Override
+   public String post(String url, Map<String, String> formParams)
+   {
+      return post(url, Collections.<String, String>emptyMap(), formParams);
    }
 }

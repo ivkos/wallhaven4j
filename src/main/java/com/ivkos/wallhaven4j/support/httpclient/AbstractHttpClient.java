@@ -12,5 +12,9 @@ public interface AbstractHttpClient
 
    String post(String url, Map<String, String> headers, String body);
 
+   String post(String url, Map<String, String> headers, Map<String, String> formParams);
+
    String post(String url, String body);
+
+   String post(String url, Map<String, String> formParams);
 }
