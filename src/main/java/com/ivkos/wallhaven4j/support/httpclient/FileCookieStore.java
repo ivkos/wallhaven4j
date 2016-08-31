@@ -1,14 +1,13 @@
-package com.ivkos.wallhaven4j.support.httpclient.filecookiestore;
+package com.ivkos.wallhaven4j.support.httpclient;
 
 import com.google.common.io.Files;
-import com.google.inject.assistedinject.Assisted;
-import com.google.inject.assistedinject.AssistedInject;
 import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.JsonSerializer;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
@@ -16,19 +15,18 @@ import java.util.List;
 public class FileCookieStore implements CookieStore
 {
    private final JsonSerializer jsonSerializer;
-   private final File file;
+   private final File cookiesFile;
    private final CookieStore store = new BasicCookieStore();
 
-   @AssistedInject
-   FileCookieStore(JsonSerializer jsonSerializer, @Assisted File file)
+   public FileCookieStore(JsonSerializer jsonSerializer, File cookiesFile)
    {
       this.jsonSerializer = jsonSerializer;
-      this.file = file;
+      this.cookiesFile = cookiesFile;
 
-      if (!file.exists()) {
+      if (!cookiesFile.exists()) {
          try {
-            Files.createParentDirs(file);
-            Files.touch(file);
+            Files.createParentDirs(cookiesFile);
+            Files.touch(cookiesFile);
 
          } catch (IOException e) {
             throw new RuntimeException("Could not create file", e);
@@ -38,17 +36,11 @@ public class FileCookieStore implements CookieStore
       readCookiesFromFile();
    }
 
-   @AssistedInject
-   FileCookieStore(JsonSerializer jsonSerializer, @Assisted String filename)
-   {
-      this(jsonSerializer, new File(filename));
-   }
-
    private void readCookiesFromFile()
    {
       String json;
       try {
-         json = Files.toString(file, Charset.defaultCharset());
+         json = Files.toString(cookiesFile, Charset.defaultCharset());
       } catch (IOException e) {
          throw new RuntimeException("Could not load cookies from file", e);
       }
@@ -62,11 +54,12 @@ public class FileCookieStore implements CookieStore
       }
    }
 
-   private void writeCookiesToFile() {
+   private void writeCookiesToFile()
+   {
       String json = jsonSerializer.toJson(store);
 
       try {
-         Files.write(json.getBytes(), file);
+         Files.write(json.getBytes(), cookiesFile);
       } catch (IOException e) {
          throw new RuntimeException("Could not write cookies to file", e);
       }

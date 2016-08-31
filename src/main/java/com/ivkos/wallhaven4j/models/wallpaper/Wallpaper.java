@@ -1,6 +1,7 @@
 package com.ivkos.wallhaven4j.models.wallpaper;
 
 import com.google.common.base.Function;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
@@ -17,19 +18,13 @@ import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
 import com.ivkos.wallhaven4j.support.UrlPrefixes;
 import com.ivkos.wallhaven4j.support.WallhavenSession;
-import com.ivkos.wallhaven4j.support.exceptions.ConnectionException;
 import com.ivkos.wallhaven4j.support.exceptions.ParseException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -287,22 +282,12 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (collections != null) return collections;
 
-      // TODO: Extract HTTP client functionality in utility class
+      String response = getSession().getHttpClient().get(getUrl() + "/favorites", ImmutableMap.<String, String>of(
+            X_REQUESTED_WITH, "XMLHttpRequest",
+            CONTENT_TYPE, JSON_UTF_8.toString()
+      ));
 
-      HttpClient client = getSession().getHttpClient();
-
-      HttpGet get = new HttpGet(getUrl() + "/favorites");
-      get.setHeader(X_REQUESTED_WITH, "XMLHttpRequest");
-      get.setHeader(CONTENT_TYPE, JSON_UTF_8.toString());
-
-      InputStream content;
-      try {
-         content = client.execute(get).getEntity().getContent();
-      } catch (IOException e) {
-         throw new ConnectionException("Could not connect", e);
-      }
-
-      XhrViewResponse xhrViewResponse = gson.fromJson(new InputStreamReader(content), XhrViewResponse.class);
+      XhrViewResponse xhrViewResponse = gson.fromJson(response, XhrViewResponse.class);
       Document document = Jsoup.parse(xhrViewResponse.view);
       Elements userlist = document.select("ul.userlist > li");
 

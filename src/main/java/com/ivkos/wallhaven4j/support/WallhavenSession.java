@@ -1,46 +1,22 @@
 package com.ivkos.wallhaven4j.support;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.HttpClients;
-
-import java.io.Closeable;
+import com.ivkos.wallhaven4j.support.httpclient.AbstractHttpClient;
 
 @Singleton
-public class WallhavenSession implements AutoCloseable
+public class WallhavenSession
 {
-   private final HttpClient httpClient;
-   private final String username;
+   private final AbstractHttpClient httpClient;
 
-   public WallhavenSession()
+   @Inject
+   public WallhavenSession(AbstractHttpClient httpClient)
    {
-      this.httpClient = HttpClients.createDefault();
-      this.username = null;
+      this.httpClient = httpClient;
    }
 
-   public WallhavenSession(String username, String password)
-   {
-      this.httpClient = HttpClients.custom()
-            .setDefaultCookieStore(new BasicCookieStore())
-            .build();
-
-      this.username = username;
-   }
-
-   public HttpClient getHttpClient()
+   public AbstractHttpClient getHttpClient()
    {
       return httpClient;
-   }
-
-   @Override
-   public void close() throws Exception
-   {
-      ((Closeable) this.httpClient).close();
-   }
-
-   public String getUsername()
-   {
-      return username;
    }
 }

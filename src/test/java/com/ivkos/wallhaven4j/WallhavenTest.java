@@ -18,13 +18,6 @@ public class WallhavenTest
    );
 
    @Test
-   public void getCurrentUser() throws Exception
-   {
-      Assert.assertEquals(null, whAnon.getCurrentUser());
-      Assert.assertNotNull(whLoggedIn.getCurrentUser());
-   }
-
-   @Test
    public void getWallpaper() throws Exception
    {
       Wallpaper w1 = whAnon.getWallpaper(254637);
