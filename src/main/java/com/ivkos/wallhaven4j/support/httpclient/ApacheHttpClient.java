@@ -1,6 +1,7 @@
 package com.ivkos.wallhaven4j.support.httpclient;
 
 import com.google.common.base.Function;
+import com.google.inject.Inject;
 import com.ivkos.wallhaven4j.support.exceptions.ConnectionException;
 import com.ivkos.wallhaven4j.support.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.support.exceptions.ResourceNotFoundException;
@@ -24,6 +25,7 @@ public class ApacheHttpClient implements AbstractHttpClient
 {
    private final HttpClient client;
 
+   @Inject
    public ApacheHttpClient(HttpClient client)
    {
       this.client = client;
