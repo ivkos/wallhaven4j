@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.ivkos.wallhaven4j.support.exceptions.LoginException;
 import com.ivkos.wallhaven4j.support.exceptions.ParseException;
 import com.ivkos.wallhaven4j.support.httpclient.AbstractHttpClient;
@@ -16,7 +15,6 @@ import org.jsoup.nodes.Element;
 import static com.ivkos.wallhaven4j.support.UrlPrefixes.URL_BASE;
 import static com.ivkos.wallhaven4j.support.UrlPrefixes.URL_LOGIN;
 
-@Singleton
 public class WallhavenSession
 {
    private final AbstractHttpClient httpClient;

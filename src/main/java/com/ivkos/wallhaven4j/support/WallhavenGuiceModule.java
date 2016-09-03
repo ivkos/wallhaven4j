@@ -20,6 +20,8 @@ import org.apache.http.impl.client.HttpClients;
 
 import java.io.File;
 
+import static com.google.inject.Scopes.SINGLETON;
+
 public class WallhavenGuiceModule extends AbstractModule
 {
    private final File cookiesFile;
@@ -37,8 +39,10 @@ public class WallhavenGuiceModule extends AbstractModule
    @Override
    protected void configure()
    {
-      bind(AbstractHttpClient.class).to(ApacheHttpClient.class);
-      bind(JsonSerializer.class).to(GsonJsonSerializer.class);
+      bind(WallhavenSession.class).in(SINGLETON);
+
+      bind(AbstractHttpClient.class).to(ApacheHttpClient.class).in(SINGLETON);
+      bind(JsonSerializer.class).to(GsonJsonSerializer.class).in(SINGLETON);
 
       install(new FactoryModuleBuilder().build(TagFactory.class));
       install(new FactoryModuleBuilder().build(TagCategoryFactory.class));
