@@ -4,25 +4,20 @@ import com.ivkos.wallhaven4j.support.exceptions.ParseException;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class OptionalSelector<T>
+public class OptionalSelector
 {
-   private final T context;
+   private final Element context;
    private final String cssSelector;
 
-   private OptionalSelector(T context, String cssSelector)
+   protected OptionalSelector(Element context, String cssSelector)
    {
       this.context = context;
       this.cssSelector = cssSelector;
    }
 
-   public static <T extends Element> OptionalSelector<T> of(T context, String cssSelector)
+   public static OptionalSelector of(Element context, String cssSelector)
    {
-      return new OptionalSelector<>(context, cssSelector);
-   }
-
-   public static <T extends Elements> OptionalSelector<T> of(T context, String cssSelector)
-   {
-      return new OptionalSelector<>(context, cssSelector);
+      return new OptionalSelector(context, cssSelector);
    }
 
    public Element get() throws ParseException
@@ -53,12 +48,6 @@ public class OptionalSelector<T>
 
    private Elements select()
    {
-      if (context instanceof Element) {
-         return ((Element) context).select(cssSelector);
-      } else if (context instanceof Elements) {
-         return ((Elements) context).select(cssSelector);
-      } else {
-         throw new ClassCastException("Illegal context");
-      }
+      return context.select(cssSelector);
    }
 }

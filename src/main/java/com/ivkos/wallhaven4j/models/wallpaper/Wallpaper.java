@@ -177,7 +177,7 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (user != null) return user;
 
-      Element uploaderElement = of(getDom().select("#showcase-sidebar"), "dd.showcase-uploader > a.username").get();
+      Element uploaderElement = of(getDom().getElementById("showcase-sidebar"), "dd.showcase-uploader > a.username").get();
 
       String username = uploaderElement.text();
 
@@ -190,7 +190,7 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (dateCreated != null) return dateCreated;
 
-      Element timeElement = of(getDom().select("#showcase-sidebar"), "dd.showcase-uploader > time").get();
+      Element timeElement = of(getDom().getElementById("showcase-sidebar"), "dd.showcase-uploader > time").get();
 
       String datetime = timeElement.attr("datetime");
 
