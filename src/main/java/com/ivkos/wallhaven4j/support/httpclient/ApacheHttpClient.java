@@ -11,10 +11,10 @@ import com.ivkos.wallhaven4j.support.exceptions.ResourceNotFoundException;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -30,12 +30,12 @@ import java.util.Map;
 
 import static com.google.common.collect.Collections2.transform;
 
-public class ApacheHttpClient implements AbstractHttpClient
+public class ApacheHttpClient implements HttpClient
 {
-   private final HttpClient client;
+   private final CloseableHttpClient client;
 
    @Inject
-   public ApacheHttpClient(HttpClient client)
+   public ApacheHttpClient(CloseableHttpClient client)
    {
       this.client = client;
    }

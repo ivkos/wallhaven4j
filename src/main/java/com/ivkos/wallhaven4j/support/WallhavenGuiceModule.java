@@ -2,19 +2,18 @@ package com.ivkos.wallhaven4j.support;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.tagcategory.TagCategoryFactory;
 import com.ivkos.wallhaven4j.models.user.UserFactory;
 import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
-import com.ivkos.wallhaven4j.support.httpclient.AbstractHttpClient;
+import com.ivkos.wallhaven4j.support.httpclient.HttpClient;
 import com.ivkos.wallhaven4j.support.httpclient.ApacheHttpClient;
 import com.ivkos.wallhaven4j.support.httpclient.FileCookieStore;
 import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.GsonJsonSerializer;
 import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.JsonSerializer;
-import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 
@@ -41,7 +40,7 @@ public class WallhavenGuiceModule extends AbstractModule
    {
       bind(WallhavenSession.class).in(SINGLETON);
 
-      bind(AbstractHttpClient.class).to(ApacheHttpClient.class).in(SINGLETON);
+      bind(HttpClient.class).to(ApacheHttpClient.class).in(SINGLETON);
       bind(JsonSerializer.class).to(GsonJsonSerializer.class).in(SINGLETON);
 
       install(new FactoryModuleBuilder().build(TagFactory.class));
@@ -52,8 +51,7 @@ public class WallhavenGuiceModule extends AbstractModule
    }
 
    @Provides
-   @Singleton
-   HttpClient provideApacheHttpClient(JsonSerializer jsonSerializer)
+   private CloseableHttpClient provideApacheHttpClient(JsonSerializer jsonSerializer)
    {
       HttpClientBuilder builder = HttpClients.custom();
 

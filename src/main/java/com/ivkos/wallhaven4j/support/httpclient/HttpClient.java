@@ -2,7 +2,7 @@ package com.ivkos.wallhaven4j.support.httpclient;
 
 import java.util.Map;
 
-public interface AbstractHttpClient
+public interface HttpClient
 {
    String execute(String method, String url, Map<String, String> headers, String body);
 

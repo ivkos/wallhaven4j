@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.ivkos.wallhaven4j.support.exceptions.LoginException;
 import com.ivkos.wallhaven4j.support.exceptions.ParseException;
-import com.ivkos.wallhaven4j.support.httpclient.AbstractHttpClient;
+import com.ivkos.wallhaven4j.support.httpclient.HttpClient;
 import com.ivkos.wallhaven4j.support.optionalselector.OptionalSelector;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,17 +17,17 @@ import static com.ivkos.wallhaven4j.support.UrlPrefixes.URL_LOGIN;
 
 public class WallhavenSession
 {
-   private final AbstractHttpClient httpClient;
+   private final HttpClient httpClient;
 
    private String username;
 
    @Inject
-   public WallhavenSession(AbstractHttpClient httpClient)
+   public WallhavenSession(HttpClient httpClient)
    {
       this.httpClient = httpClient;
    }
 
-   public AbstractHttpClient getHttpClient()
+   public HttpClient getHttpClient()
    {
       return httpClient;
    }
