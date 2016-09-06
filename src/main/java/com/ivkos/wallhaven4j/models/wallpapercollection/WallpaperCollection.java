@@ -5,7 +5,7 @@ import com.google.inject.assistedinject.AssistedInject;
 import com.ivkos.wallhaven4j.models.support.AbstractResource;
 import com.ivkos.wallhaven4j.models.user.User;
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
-import com.ivkos.wallhaven4j.support.WallhavenSession;
+import com.ivkos.wallhaven4j.util.WallhavenSession;
 
 import java.util.List;
 

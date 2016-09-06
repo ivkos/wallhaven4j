@@ -1,7 +1,7 @@
 package com.ivkos.wallhaven4j.models.support;
 
-import com.ivkos.wallhaven4j.support.WallhavenSession;
-import com.ivkos.wallhaven4j.support.htmlparser.HtmlElement;
+import com.ivkos.wallhaven4j.util.WallhavenSession;
+import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 
 import java.util.Objects;
 

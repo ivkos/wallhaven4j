@@ -1,7 +1,7 @@
-package com.ivkos.wallhaven4j.support.httpclient;
+package com.ivkos.wallhaven4j.util;
 
 import com.google.common.io.Files;
-import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.JsonSerializer;
+import com.ivkos.wallhaven4j.util.jsonserializer.JsonSerializer;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;

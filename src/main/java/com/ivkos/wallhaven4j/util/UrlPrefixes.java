@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.support;
+package com.ivkos.wallhaven4j.util;
 
 public final class UrlPrefixes
 {

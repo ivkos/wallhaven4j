@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.support;
+package com.ivkos.wallhaven4j.util;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -8,13 +8,12 @@ import com.ivkos.wallhaven4j.models.tagcategory.TagCategoryFactory;
 import com.ivkos.wallhaven4j.models.user.UserFactory;
 import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
-import com.ivkos.wallhaven4j.support.htmlparser.HtmlParser;
-import com.ivkos.wallhaven4j.support.htmlparser.jsoup.JsoupHtmlParser;
-import com.ivkos.wallhaven4j.support.httpclient.HttpClient;
-import com.ivkos.wallhaven4j.support.httpclient.ApacheHttpClient;
-import com.ivkos.wallhaven4j.support.httpclient.FileCookieStore;
-import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.GsonJsonSerializer;
-import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.JsonSerializer;
+import com.ivkos.wallhaven4j.util.htmlparser.HtmlParser;
+import com.ivkos.wallhaven4j.util.htmlparser.jsoup.JsoupHtmlParser;
+import com.ivkos.wallhaven4j.util.httpclient.HttpClient;
+import com.ivkos.wallhaven4j.util.httpclient.ApacheHttpClient;
+import com.ivkos.wallhaven4j.util.jsonserializer.GsonJsonSerializer;
+import com.ivkos.wallhaven4j.util.jsonserializer.JsonSerializer;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;

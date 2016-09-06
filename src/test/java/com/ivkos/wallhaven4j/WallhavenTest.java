@@ -2,8 +2,8 @@ package com.ivkos.wallhaven4j;
 
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
-import com.ivkos.wallhaven4j.support.exceptions.ResourceNotAccessibleException;
-import com.ivkos.wallhaven4j.support.exceptions.ResourceNotFoundException;
+import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
+import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 

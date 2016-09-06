@@ -1,6 +1,6 @@
-package com.ivkos.wallhaven4j.support.htmlparser;
+package com.ivkos.wallhaven4j.util.htmlparser;
 
-import com.ivkos.wallhaven4j.support.exceptions.ParseException;
+import com.ivkos.wallhaven4j.util.exceptions.ParseException;
 
 import java.util.List;
 

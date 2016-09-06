@@ -5,10 +5,10 @@ import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 import com.ivkos.wallhaven4j.models.support.AbstractResource;
 import com.ivkos.wallhaven4j.models.support.enums.Purity;
-import com.ivkos.wallhaven4j.support.UrlPrefixes;
+import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import com.ivkos.wallhaven4j.models.tagcategory.TagCategory;
 import com.ivkos.wallhaven4j.models.user.User;
-import com.ivkos.wallhaven4j.support.WallhavenSession;
+import com.ivkos.wallhaven4j.util.WallhavenSession;
 import org.joda.time.DateTime;
 
 public class Tag extends AbstractResource<Long>

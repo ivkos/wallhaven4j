@@ -7,7 +7,7 @@ import com.ivkos.wallhaven4j.models.tag.Tag;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
-import com.ivkos.wallhaven4j.support.WallhavenGuiceModule;
+import com.ivkos.wallhaven4j.util.WallhavenGuiceModule;
 import org.junit.Assert;
 import org.junit.Test;
 

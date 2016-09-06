@@ -1,7 +1,7 @@
-package com.ivkos.wallhaven4j.support.htmlparser.jsoup;
+package com.ivkos.wallhaven4j.util.htmlparser.jsoup;
 
 import com.google.common.base.Function;
-import com.ivkos.wallhaven4j.support.htmlparser.HtmlElement;
+import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 import org.jsoup.nodes.Element;
 
 import java.util.Collections;

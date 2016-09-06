@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.support.httpclient;
+package com.ivkos.wallhaven4j.util.httpclient;
 
 import java.util.Map;
 

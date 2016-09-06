@@ -1,7 +1,7 @@
-package com.ivkos.wallhaven4j.support.htmlparser.jsoup;
+package com.ivkos.wallhaven4j.util.htmlparser.jsoup;
 
-import com.ivkos.wallhaven4j.support.htmlparser.HtmlElement;
-import com.ivkos.wallhaven4j.support.htmlparser.HtmlParser;
+import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
+import com.ivkos.wallhaven4j.util.htmlparser.HtmlParser;
 import org.jsoup.Jsoup;
 
 public class JsoupHtmlParser implements HtmlParser

@@ -3,8 +3,8 @@ package com.ivkos.wallhaven4j.models.tagcategory;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 import com.ivkos.wallhaven4j.models.support.AbstractResource;
-import com.ivkos.wallhaven4j.support.UrlPrefixes;
-import com.ivkos.wallhaven4j.support.WallhavenSession;
+import com.ivkos.wallhaven4j.util.UrlPrefixes;
+import com.ivkos.wallhaven4j.util.WallhavenSession;
 
 public class TagCategory extends AbstractResource<Long>
 {

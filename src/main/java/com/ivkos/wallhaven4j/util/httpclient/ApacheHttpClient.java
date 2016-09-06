@@ -1,13 +1,13 @@
-package com.ivkos.wallhaven4j.support.httpclient;
+package com.ivkos.wallhaven4j.util.httpclient;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.CharStreams;
 import com.google.inject.Inject;
-import com.ivkos.wallhaven4j.support.exceptions.ConnectionException;
-import com.ivkos.wallhaven4j.support.exceptions.ResourceNotAccessibleException;
-import com.ivkos.wallhaven4j.support.exceptions.ResourceNotFoundException;
+import com.ivkos.wallhaven4j.util.exceptions.ConnectionException;
+import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
+import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;

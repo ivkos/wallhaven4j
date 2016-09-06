@@ -1,18 +1,18 @@
-package com.ivkos.wallhaven4j.support;
+package com.ivkos.wallhaven4j.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
-import com.ivkos.wallhaven4j.support.exceptions.LoginException;
-import com.ivkos.wallhaven4j.support.exceptions.ParseException;
-import com.ivkos.wallhaven4j.support.htmlparser.HtmlElement;
-import com.ivkos.wallhaven4j.support.htmlparser.HtmlParser;
-import com.ivkos.wallhaven4j.support.httpclient.HttpClient;
-import com.ivkos.wallhaven4j.support.htmlparser.OptionalSelector;
+import com.ivkos.wallhaven4j.util.exceptions.LoginException;
+import com.ivkos.wallhaven4j.util.exceptions.ParseException;
+import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
+import com.ivkos.wallhaven4j.util.htmlparser.HtmlParser;
+import com.ivkos.wallhaven4j.util.httpclient.HttpClient;
+import com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector;
 
-import static com.ivkos.wallhaven4j.support.UrlPrefixes.URL_BASE;
-import static com.ivkos.wallhaven4j.support.UrlPrefixes.URL_LOGIN;
+import static com.ivkos.wallhaven4j.util.UrlPrefixes.URL_BASE;
+import static com.ivkos.wallhaven4j.util.UrlPrefixes.URL_LOGIN;
 
 public class WallhavenSession
 {

@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.support.exceptions;
+package com.ivkos.wallhaven4j.util.exceptions;
 
 public class LoginException extends RuntimeException
 {

@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.support.htmlparser;
+package com.ivkos.wallhaven4j.util.htmlparser;
 
 public interface HtmlParser
 {

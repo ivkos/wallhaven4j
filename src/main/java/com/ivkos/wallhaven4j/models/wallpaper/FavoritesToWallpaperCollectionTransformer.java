@@ -7,13 +7,13 @@ import com.ivkos.wallhaven4j.models.user.UserFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionIdentifier;
-import com.ivkos.wallhaven4j.support.exceptions.ParseException;
-import com.ivkos.wallhaven4j.support.htmlparser.HtmlElement;
+import com.ivkos.wallhaven4j.util.exceptions.ParseException;
+import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.ivkos.wallhaven4j.support.htmlparser.OptionalSelector.of;
+import static com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector.of;
 import static java.lang.Long.parseLong;
 import static java.lang.String.format;
 
