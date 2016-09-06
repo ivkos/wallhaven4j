@@ -1,6 +1,6 @@
 package com.ivkos.wallhaven4j.models.tagcategory;
 
-import com.ivkos.wallhaven4j.models.support.ResourceFactory;
+import com.ivkos.wallhaven4j.models.ResourceFactory;
 
 public interface TagCategoryFactory extends ResourceFactory<TagCategory, Long>
 {

@@ -3,7 +3,7 @@ package com.ivkos.wallhaven4j.models.user;
 import com.google.common.net.UrlEscapers;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
-import com.ivkos.wallhaven4j.models.support.AbstractResource;
+import com.ivkos.wallhaven4j.models.AbstractResource;
 import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
 import org.joda.time.DateTime;

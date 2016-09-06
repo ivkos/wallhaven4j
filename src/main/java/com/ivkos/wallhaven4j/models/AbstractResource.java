@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.models.support;
+package com.ivkos.wallhaven4j.models;
 
 import com.ivkos.wallhaven4j.util.WallhavenSession;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;

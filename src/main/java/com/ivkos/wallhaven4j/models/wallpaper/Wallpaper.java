@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
-import com.ivkos.wallhaven4j.models.support.AbstractResource;
+import com.ivkos.wallhaven4j.models.AbstractResource;
 import com.ivkos.wallhaven4j.models.support.Color;
 import com.ivkos.wallhaven4j.models.support.Resolution;
 import com.ivkos.wallhaven4j.models.support.enums.Category;
