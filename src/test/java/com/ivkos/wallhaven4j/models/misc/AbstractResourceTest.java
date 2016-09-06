@@ -1,8 +1,8 @@
-package com.ivkos.wallhaven4j.models.support;
+package com.ivkos.wallhaven4j.models.misc;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.ivkos.wallhaven4j.models.support.enums.Purity;
+import com.ivkos.wallhaven4j.models.misc.enums.Purity;
 import com.ivkos.wallhaven4j.models.tag.Tag;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
