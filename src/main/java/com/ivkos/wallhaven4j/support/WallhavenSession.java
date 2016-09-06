@@ -6,11 +6,10 @@ import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.ivkos.wallhaven4j.support.exceptions.LoginException;
 import com.ivkos.wallhaven4j.support.exceptions.ParseException;
+import com.ivkos.wallhaven4j.support.htmlparser.HtmlElement;
+import com.ivkos.wallhaven4j.support.htmlparser.HtmlParser;
 import com.ivkos.wallhaven4j.support.httpclient.HttpClient;
-import com.ivkos.wallhaven4j.support.optionalselector.OptionalSelector;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import com.ivkos.wallhaven4j.support.htmlparser.OptionalSelector;
 
 import static com.ivkos.wallhaven4j.support.UrlPrefixes.URL_BASE;
 import static com.ivkos.wallhaven4j.support.UrlPrefixes.URL_LOGIN;
@@ -18,18 +17,25 @@ import static com.ivkos.wallhaven4j.support.UrlPrefixes.URL_LOGIN;
 public class WallhavenSession
 {
    private final HttpClient httpClient;
+   private final HtmlParser htmlParser;
 
    private String username;
 
    @Inject
-   public WallhavenSession(HttpClient httpClient)
+   public WallhavenSession(HttpClient httpClient, HtmlParser htmlParser)
    {
       this.httpClient = httpClient;
+      this.htmlParser = htmlParser;
    }
 
    public HttpClient getHttpClient()
    {
       return httpClient;
+   }
+
+   public HtmlParser getHtmlParser()
+   {
+      return htmlParser;
    }
 
    public void login(String username, String password)
@@ -47,13 +53,13 @@ public class WallhavenSession
 
       ParseException parseException = new ParseException("Unexpected login redirect behavior");
 
-      Document dom = Jsoup.parse(html);
-      Element metaRefresh = OptionalSelector.of(dom.head(), "meta[http-equiv=refresh]")
+      HtmlElement dom = htmlParser.parse(html, URL_LOGIN);
+      HtmlElement metaRefresh = OptionalSelector.of(dom.findFirst("head"), "meta[http-equiv=refresh]")
             .orElseThrow(parseException);
 
       String redirectUrl;
       try {
-         redirectUrl = metaRefresh.attr("content").split("url=")[1];
+         redirectUrl = metaRefresh.getAttribute("content").split("url=")[1];
       } catch (IndexOutOfBoundsException e) {
          parseException.initCause(e);
          throw parseException;
@@ -74,15 +80,15 @@ public class WallhavenSession
 
    private String getLoginToken()
    {
-      String html = getHttpClient().get(UrlPrefixes.URL_BASE);
-      Document dom = Jsoup.parse(html);
+      String html = getHttpClient().get(URL_BASE);
+      HtmlElement dom = htmlParser.parse(html, URL_BASE);
 
       ParseException parseException = new ParseException("Could not parse login token");
 
       String token = OptionalSelector
             .of(dom, "input[name=\"_token\"]")
             .orElseThrow(parseException)
-            .val();
+            .getValue();
 
       if (token.isEmpty()) {
          throw parseException;

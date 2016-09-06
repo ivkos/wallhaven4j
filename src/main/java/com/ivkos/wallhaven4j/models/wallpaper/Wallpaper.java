@@ -18,12 +18,9 @@ import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFacto
 import com.ivkos.wallhaven4j.support.UrlPrefixes;
 import com.ivkos.wallhaven4j.support.WallhavenSession;
 import com.ivkos.wallhaven4j.support.exceptions.ParseException;
+import com.ivkos.wallhaven4j.support.htmlparser.HtmlElement;
 import com.ivkos.wallhaven4j.support.httpclient.jsonserializer.JsonSerializer;
 import org.joda.time.DateTime;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +35,7 @@ import static com.google.common.net.HttpHeaders.X_REQUESTED_WITH;
 import static com.google.common.net.MediaType.JSON_UTF_8;
 import static com.ivkos.wallhaven4j.models.support.enums.Category.*;
 import static com.ivkos.wallhaven4j.models.support.enums.Purity.*;
-import static com.ivkos.wallhaven4j.support.optionalselector.OptionalSelector.of;
+import static com.ivkos.wallhaven4j.support.htmlparser.OptionalSelector.of;
 import static java.lang.Long.parseLong;
 import static java.util.Collections.unmodifiableList;
 
@@ -90,8 +87,8 @@ public class Wallpaper extends AbstractResource<Long>
          return resolution;
       }
 
-      Element wallpaperElement = of(getDom(), "#wallpaper").get();
-      Map<String, String> dataset = wallpaperElement.dataset();
+      HtmlElement wallpaperElement = of(getDom(), "#wallpaper").get();
+      Map<String, String> dataset = wallpaperElement.getDataAttributes();
 
       String width = checkNotNull(dataset.get("wallpaper-width"), "could not parse resolution");
       String height = checkNotNull(dataset.get("wallpaper-height"), "could not parse resolution");
@@ -107,16 +104,16 @@ public class Wallpaper extends AbstractResource<Long>
          return colors;
       }
 
-      Elements colorElements = getDom().select("ul.color-palette > li.color");
+      List<HtmlElement> colorElements = getDom().find("ul.color-palette > li.color");
 
-      colors = unmodifiableList(newArrayList(transform(colorElements, new Function<Element, Color>()
+      colors = unmodifiableList(newArrayList(transform(colorElements, new Function<HtmlElement, Color>()
       {
          private final Pattern PATTERN_COLOR = Pattern.compile("background-color:(#[0-9A-Fa-f]{6})");
 
          @Override
-         public Color apply(Element input)
+         public Color apply(HtmlElement input)
          {
-            Matcher matcher = PATTERN_COLOR.matcher(input.attr("style"));
+            Matcher matcher = PATTERN_COLOR.matcher(input.getAttribute("style"));
 
             if (!matcher.matches()) throw new ParseException("Could not parse color");
 
@@ -133,15 +130,15 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (tags != null) return tags;
 
-      Elements tagElements = getDom().select("ul#tags > li.tag");
+      List<HtmlElement> tagElements = getDom().find("ul#tags > li.tag");
 
-      tags = unmodifiableList(newArrayList(transform(tagElements, new Function<Element, Tag>()
+      tags = unmodifiableList(newArrayList(transform(tagElements, new Function<HtmlElement, Tag>()
       {
          @Override
-         public Tag apply(Element input)
+         public Tag apply(HtmlElement input)
          {
-            long tagId = parseLong(input.dataset().get("tag-id"));
-            String tagName = input.select("a.tagname").first().text();
+            long tagId = parseLong(input.getDataAttributes().get("tag-id"));
+            String tagName = input.findFirst("a.tagname").getText();
 
             Purity tagPurity = input.hasClass("tag-sfw") ? SFW
                   : input.hasClass("tag-sketchy") ? SKETCHY
@@ -161,7 +158,7 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (purity != null) return purity;
 
-      Element purityLabel = of(getDom(), "#wallpaper-purity-form > fieldset > label.purity").get();
+      HtmlElement purityLabel = of(getDom(), "#wallpaper-purity-form > fieldset > label.purity").get();
 
       purity = purityLabel.hasClass("sfw") ? SFW
             : purityLabel.hasClass("sketchy") ? SKETCHY
@@ -177,9 +174,9 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (user != null) return user;
 
-      Element uploaderElement = of(getDom().getElementById("showcase-sidebar"), "dd.showcase-uploader > a.username").get();
+      HtmlElement uploaderElement = of(getDom().findElementById("showcase-sidebar"), "dd.showcase-uploader > a.username").get();
 
-      String username = uploaderElement.text();
+      String username = uploaderElement.getText();
 
       user = userFactory.create(false, username);
 
@@ -190,9 +187,9 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (dateCreated != null) return dateCreated;
 
-      Element timeElement = of(getDom().getElementById("showcase-sidebar"), "dd.showcase-uploader > time").get();
+      HtmlElement timeElement = of(getDom().findElementById("showcase-sidebar"), "dd.showcase-uploader > time").get();
 
-      String datetime = timeElement.attr("datetime");
+      String datetime = timeElement.getAttribute("datetime");
 
       if (datetime.isEmpty()) throw new ParseException("datetime is empty");
 
@@ -211,7 +208,7 @@ public class Wallpaper extends AbstractResource<Long>
 
       String categoryText = of(getDom(),
             "div.sidebar-content > div.sidebar-section[data-storage-id=showcase-info] > dl > dd:nth-child(4)"
-      ).get().text();
+      ).get().getText();
 
       switch (categoryText) {
          case "General":
@@ -239,7 +236,7 @@ public class Wallpaper extends AbstractResource<Long>
 
       String sizeText = of(getDom(),
             "div.sidebar-content > div.sidebar-section[data-storage-id=showcase-info] > dl > dd:nth-child(6)"
-      ).get().text();
+      ).get().getText();
 
       Pattern pattern = Pattern.compile("([\\d.,]+)\\s(KiB|MiB)");
       Matcher matcher = pattern.matcher(sizeText);
@@ -266,7 +263,7 @@ public class Wallpaper extends AbstractResource<Long>
 
       String viewsString = of(getDom(),
             "div.sidebar-content > div.sidebar-section[data-storage-id=showcase-info] > dl > dd:nth-child(8)"
-      ).get().text().trim().replace(",", "");
+      ).get().getText().trim().replace(",", "");
 
 
       try {
@@ -288,8 +285,8 @@ public class Wallpaper extends AbstractResource<Long>
       ));
 
       XhrViewResponse xhrViewResponse = jsonSerializer.fromJson(response, XhrViewResponse.class);
-      Document document = Jsoup.parse(xhrViewResponse.view);
-      Elements userlist = document.select("ul.userlist > li");
+      HtmlElement document = getSession().getHtmlParser().parse(xhrViewResponse.view, getUrl());
+      List<HtmlElement> userlist = document.find("ul.userlist > li");
 
       collections = unmodifiableList(newArrayList(transform(userlist, favoritesToWallpaperCollectionTransformer)));
 

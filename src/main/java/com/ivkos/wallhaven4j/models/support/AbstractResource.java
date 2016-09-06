@@ -1,8 +1,7 @@
 package com.ivkos.wallhaven4j.models.support;
 
 import com.ivkos.wallhaven4j.support.WallhavenSession;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import com.ivkos.wallhaven4j.support.htmlparser.HtmlElement;
 
 import java.util.Objects;
 
@@ -11,7 +10,7 @@ public abstract class AbstractResource<T>
    protected final T id;
 
    private final WallhavenSession session;
-   private Document dom;
+   private HtmlElement dom;
 
    protected AbstractResource(WallhavenSession session, boolean preloadDom, T id)
    {
@@ -23,19 +22,19 @@ public abstract class AbstractResource<T>
       }
    }
 
-   protected Document getDom(boolean enableCache)
+   protected HtmlElement getDom(boolean enableCache)
    {
       if (this.dom != null && enableCache) {
          return this.dom;
       }
 
       String html = getSession().getHttpClient().get(getUrl());
-      this.dom = Jsoup.parse(html, getUrl());
+      this.dom = getSession().getHtmlParser().parse(html, getUrl());
 
       return this.dom;
    }
 
-   protected Document getDom()
+   protected HtmlElement getDom()
    {
       return getDom(true);
    }

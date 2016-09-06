@@ -8,17 +8,17 @@ import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionIdentifier;
 import com.ivkos.wallhaven4j.support.exceptions.ParseException;
-import org.jsoup.nodes.Element;
+import com.ivkos.wallhaven4j.support.htmlparser.HtmlElement;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.ivkos.wallhaven4j.support.optionalselector.OptionalSelector.of;
+import static com.ivkos.wallhaven4j.support.htmlparser.OptionalSelector.of;
 import static java.lang.Long.parseLong;
 import static java.lang.String.format;
 
 
-class FavoritesToWallpaperCollectionTransformer implements Function<Element, WallpaperCollection>
+class FavoritesToWallpaperCollectionTransformer implements Function<HtmlElement, WallpaperCollection>
 {
    private final UserFactory userFactory;
    private final WallpaperCollectionFactory wallpaperCollectionFactory;
@@ -31,20 +31,20 @@ class FavoritesToWallpaperCollectionTransformer implements Function<Element, Wal
    }
 
    @Override
-   public WallpaperCollection apply(Element input)
+   public WallpaperCollection apply(HtmlElement input)
    {
       String username = of(input, "a.username")
             .orElseThrow(new ParseException("Could not get username for wallpaper collection"))
-            .text();
+            .getText();
 
       User user = userFactory.create(false, username);
 
-      Element lastLink = input.select("a").last();
+      HtmlElement lastLink = input.findLast("a");
       if (lastLink == null)
          throw new ParseException("Could not parse wallpaper collection, no URL of collection");
 
-      String name = lastLink.text();
-      String href = lastLink.attr("href");
+      String name = lastLink.getText();
+      String href = lastLink.getAttribute("href");
       Pattern pattern = Pattern.compile(Pattern.quote(user.getUrl()) + "/favorites/(\\d+)");
       Matcher matcher = pattern.matcher(href);
 

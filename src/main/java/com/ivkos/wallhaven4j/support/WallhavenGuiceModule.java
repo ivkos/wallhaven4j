@@ -8,6 +8,8 @@ import com.ivkos.wallhaven4j.models.tagcategory.TagCategoryFactory;
 import com.ivkos.wallhaven4j.models.user.UserFactory;
 import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
+import com.ivkos.wallhaven4j.support.htmlparser.HtmlParser;
+import com.ivkos.wallhaven4j.support.htmlparser.jsoup.JsoupHtmlParser;
 import com.ivkos.wallhaven4j.support.httpclient.HttpClient;
 import com.ivkos.wallhaven4j.support.httpclient.ApacheHttpClient;
 import com.ivkos.wallhaven4j.support.httpclient.FileCookieStore;
@@ -41,6 +43,7 @@ public class WallhavenGuiceModule extends AbstractModule
       bind(WallhavenSession.class).in(SINGLETON);
 
       bind(HttpClient.class).to(ApacheHttpClient.class).in(SINGLETON);
+      bind(HtmlParser.class).to(JsoupHtmlParser.class).in(SINGLETON);
       bind(JsonSerializer.class).to(GsonJsonSerializer.class).in(SINGLETON);
 
       install(new FactoryModuleBuilder().build(TagFactory.class));
