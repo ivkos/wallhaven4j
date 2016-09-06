@@ -28,7 +28,7 @@ public abstract class AbstractResource<T>
          return this.dom;
       }
 
-      String html = getSession().getHttpClient().get(getUrl());
+      String html = getSession().getHttpClient().get(getUrl()).getBody();
       this.dom = getSession().getHtmlParser().parse(html, getUrl());
 
       return this.dom;

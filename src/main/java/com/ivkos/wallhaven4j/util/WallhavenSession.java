@@ -49,7 +49,7 @@ public class WallhavenSession
             "_token", token,
             "username", username,
             "password", password
-      ));
+      )).getBody();
 
       ParseException parseException = new ParseException("Unexpected login redirect behavior");
 
@@ -80,7 +80,7 @@ public class WallhavenSession
 
    private String getLoginToken()
    {
-      String html = getHttpClient().get(URL_BASE);
+      String html = getHttpClient().get(URL_BASE).getBody();
       HtmlElement dom = htmlParser.parse(html, URL_BASE);
 
       ParseException parseException = new ParseException("Could not parse login token");

@@ -1,4 +1,4 @@
-package com.ivkos.wallhaven4j.util.httpclient;
+package com.ivkos.wallhaven4j.util.httpclient.apache;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -8,16 +8,15 @@ import com.google.inject.Inject;
 import com.ivkos.wallhaven4j.util.exceptions.ConnectionException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
+import com.ivkos.wallhaven4j.util.httpclient.HttpClient;
+import com.ivkos.wallhaven4j.util.httpclient.HttpResponse;
 import org.apache.http.Header;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,16 +31,16 @@ import static com.google.common.collect.Collections2.transform;
 
 public class ApacheHttpClient implements HttpClient
 {
-   private final CloseableHttpClient client;
+   private final org.apache.http.client.HttpClient apacheClient;
 
    @Inject
-   public ApacheHttpClient(CloseableHttpClient client)
+   public ApacheHttpClient(org.apache.http.client.HttpClient apacheClient)
    {
-      this.client = client;
+      this.apacheClient = apacheClient;
    }
 
    @Override
-   public String execute(final String method, String url, Map<String, String> headers, String body)
+   public HttpResponse execute(final String method, String url, Map<String, String> headers, String body)
    {
       //region Build request
       HttpEntityEnclosingRequestBase base = new HttpEntityEnclosingRequestBase()
@@ -75,9 +74,9 @@ public class ApacheHttpClient implements HttpClient
       }
       //endregion
 
-      HttpResponse response;
+      org.apache.http.HttpResponse response;
       try {
-         response = client.execute(base);
+         response = apacheClient.execute(base);
       } catch (IOException e) {
          throw new ConnectionException(e);
       }
@@ -98,36 +97,29 @@ public class ApacheHttpClient implements HttpClient
       }
       //endregion
 
-      String responseBody;
-      try {
-         responseBody = EntityUtils.toString(response.getEntity());
-      } catch (IOException e) {
-         throw new ConnectionException("Could not get response entity", e);
-      }
-
-      return responseBody;
+      return new ApacheHttpResponse(response);
    }
 
 
    @Override
-   public String get(String url, Map<String, String> headers)
+   public HttpResponse get(String url, Map<String, String> headers)
    {
       return execute("GET", url, headers, null);
    }
 
-   public String get(String url)
+   public HttpResponse get(String url)
    {
       return get(url, Collections.<String, String>emptyMap());
    }
 
    @Override
-   public String post(String url, Map<String, String> headers, String body)
+   public HttpResponse post(String url, Map<String, String> headers, String body)
    {
       return execute("POST", url, headers, body);
    }
 
    @Override
-   public String post(String url, Map<String, String> headers, Map<String, String> formParams)
+   public HttpResponse post(String url, Map<String, String> headers, Map<String, String> formParams)
    {
       Collection<NameValuePair> pairs = Collections2.transform(formParams.entrySet(),
             new Function<Map.Entry<String, String>, NameValuePair>()
@@ -159,13 +151,13 @@ public class ApacheHttpClient implements HttpClient
       return post(url, headers2, urlEncodedBody);
    }
 
-   public String post(String url, String body)
+   public HttpResponse post(String url, String body)
    {
       return post(url, Collections.<String, String>emptyMap(), body);
    }
 
    @Override
-   public String post(String url, Map<String, String> formParams)
+   public HttpResponse post(String url, Map<String, String> formParams)
    {
       return post(url, Collections.<String, String>emptyMap(), formParams);
    }

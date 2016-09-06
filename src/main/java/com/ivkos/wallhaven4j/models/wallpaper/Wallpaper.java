@@ -279,10 +279,10 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (collections != null) return collections;
 
-      String response = getSession().getHttpClient().get(getUrl() + "/favorites", ImmutableMap.<String, String>of(
+      String response = getSession().getHttpClient().get(getUrl() + "/favorites", ImmutableMap.of(
             X_REQUESTED_WITH, "XMLHttpRequest",
             CONTENT_TYPE, JSON_UTF_8.toString()
-      ));
+      )).getBody();
 
       XhrViewResponse xhrViewResponse = jsonSerializer.fromJson(response, XhrViewResponse.class);
       HtmlElement document = getSession().getHtmlParser().parse(xhrViewResponse.view, getUrl());

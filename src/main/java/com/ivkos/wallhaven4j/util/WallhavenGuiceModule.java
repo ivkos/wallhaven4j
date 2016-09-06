@@ -11,10 +11,9 @@ import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFacto
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlParser;
 import com.ivkos.wallhaven4j.util.htmlparser.jsoup.JsoupHtmlParser;
 import com.ivkos.wallhaven4j.util.httpclient.HttpClient;
-import com.ivkos.wallhaven4j.util.httpclient.ApacheHttpClient;
+import com.ivkos.wallhaven4j.util.httpclient.apache.ApacheHttpClient;
 import com.ivkos.wallhaven4j.util.jsonserializer.GsonJsonSerializer;
 import com.ivkos.wallhaven4j.util.jsonserializer.JsonSerializer;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 
@@ -53,7 +52,7 @@ public class WallhavenGuiceModule extends AbstractModule
    }
 
    @Provides
-   private CloseableHttpClient provideApacheHttpClient(JsonSerializer jsonSerializer)
+   private org.apache.http.client.HttpClient provideApacheHttpClient(JsonSerializer jsonSerializer)
    {
       HttpClientBuilder builder = HttpClients.custom();
 
