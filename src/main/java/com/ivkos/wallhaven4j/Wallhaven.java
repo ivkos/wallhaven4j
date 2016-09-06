@@ -5,9 +5,9 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
-import com.ivkos.wallhaven4j.support.WallhavenGuiceModule;
-import com.ivkos.wallhaven4j.support.WallhavenSession;
-import com.ivkos.wallhaven4j.support.exceptions.ResourceNotFoundException;
+import com.ivkos.wallhaven4j.util.WallhavenGuiceModule;
+import com.ivkos.wallhaven4j.util.WallhavenSession;
+import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
 
 import java.io.File;
 
