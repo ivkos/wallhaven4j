@@ -48,6 +48,6 @@ public class Ratio
    @Override
    public int hashCode()
    {
-      return Objects.hash(getWidth(), getHeight());
+      return Objects.hash((double) width / height);
    }
 }
