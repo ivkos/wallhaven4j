@@ -39,4 +39,17 @@ public class ResolutionTest
       Assert.assertFalse(new Resolution(1080, 1080).hashCode() == new Resolution(1920, 1080).hashCode());
    }
 
+   @Test
+   public void getRatio() throws Exception
+   {
+      Assert.assertEquals(new Ratio(16, 9), new Resolution(1920, 1080).getRatio());
+      Assert.assertEquals(new Ratio(9, 16), new Resolution(1080, 1920).getRatio());
+
+      Assert.assertEquals(new Ratio(4, 3), new Resolution(1024, 768).getRatio());
+
+      Assert.assertEquals(new Ratio(16, 10), new Resolution(1920, 1200).getRatio());
+      Assert.assertEquals(new Ratio(10, 16), new Resolution(1200, 1920).getRatio());
+
+      Assert.assertEquals(new Ratio(8, 5), new Resolution(1920, 1200).getRatio());
+   }
 }

@@ -1,37 +1,42 @@
 package com.ivkos.wallhaven4j.models.misc;
 
-import com.google.common.base.Preconditions;
-
-import java.util.Objects;
-
-public class Resolution
+public class Resolution extends Ratio
 {
-   private final long width;
-   private final long height;
-
    public Resolution(long width, long height)
    {
-      Preconditions.checkArgument(width >= 0, "width must be positive");
-      Preconditions.checkArgument(height >= 0, "height must be positive");
-
-      this.width = width;
-      this.height = height;
+      super(width, height);
    }
 
-   public long getWidth()
+   public Ratio getRatio()
    {
-      return width;
+      if (getWidth() == getHeight()) {
+         return new Ratio(1, 1);
+      }
+
+      long divisor = gcd(getWidth(), getHeight());
+
+      long w = getWidth() / divisor;
+      long h = getHeight() / divisor;
+
+      //region handle some ratios having better known terms than their "real" ones
+      if ((w == 8 && h == 5) || (w == 5 && h == 8)) {
+         w *= 2;
+         h *= 2;
+      }
+
+      if ((w == 7 && h == 3) || (w == 3 && h == 7)) {
+         w *= 3;
+         h *= 3;
+      }
+      //endregion
+
+      return new Ratio(w, h);
    }
 
-   public long getHeight()
+   private long gcd(long a, long b)
    {
-      return height;
-   }
-
-   @Override
-   public String toString()
-   {
-      return width + "x" + height;
+      if (b == 0) return a;
+      else return gcd(b, a % b);
    }
 
    @Override
@@ -39,14 +44,10 @@ public class Resolution
    {
       if (this == o) return true;
       if (!(o instanceof Resolution)) return false;
+
       Resolution that = (Resolution) o;
+
       return getWidth() == that.getWidth() &&
             getHeight() == that.getHeight();
-   }
-
-   @Override
-   public int hashCode()
-   {
-      return Objects.hash(getWidth(), getHeight());
    }
 }
