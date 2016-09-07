@@ -11,11 +11,11 @@ import java.util.Map;
 
 import static java.util.Collections.unmodifiableMap;
 
-public class ApacheHttpResponse implements HttpResponse
+class ApacheHttpResponse implements HttpResponse
 {
    private final org.apache.http.HttpResponse apacheResponse;
 
-   public ApacheHttpResponse(org.apache.http.HttpResponse apacheResponse)
+   ApacheHttpResponse(org.apache.http.HttpResponse apacheResponse)
    {
       this.apacheResponse = apacheResponse;
    }

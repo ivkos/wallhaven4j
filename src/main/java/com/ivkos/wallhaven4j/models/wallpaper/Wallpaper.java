@@ -65,7 +65,9 @@ public class Wallpaper extends AbstractResource<Long>
              TagFactory tagFactory,
              UserFactory userFactory,
              WallpaperCollectionFactory wallpaperCollectionFactory,
-             FavoritesToWallpaperCollectionTransformer favoritesToWallpaperCollectionTransformer, @Assisted boolean preloadDom, @Assisted long id)
+             FavoritesToWallpaperCollectionTransformer favoritesToWallpaperCollectionTransformer,
+             @Assisted boolean preloadDom,
+             @Assisted long id)
    {
       super(session, preloadDom, id);
       this.jsonSerializer = jsonSerializer;

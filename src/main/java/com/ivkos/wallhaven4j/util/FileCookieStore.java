@@ -12,13 +12,13 @@ import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 
-public class FileCookieStore implements CookieStore
+class FileCookieStore implements CookieStore
 {
    private final JsonSerializer jsonSerializer;
    private final File cookiesFile;
    private final CookieStore store = new BasicCookieStore();
 
-   public FileCookieStore(JsonSerializer jsonSerializer, File cookiesFile)
+   FileCookieStore(JsonSerializer jsonSerializer, File cookiesFile)
    {
       this.jsonSerializer = jsonSerializer;
       this.cookiesFile = cookiesFile;

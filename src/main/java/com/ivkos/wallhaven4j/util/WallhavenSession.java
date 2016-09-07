@@ -22,7 +22,7 @@ public class WallhavenSession
    private String username;
 
    @Inject
-   public WallhavenSession(HttpClient httpClient, HtmlParser htmlParser)
+   WallhavenSession(HttpClient httpClient, HtmlParser htmlParser)
    {
       this.httpClient = httpClient;
       this.htmlParser = htmlParser;

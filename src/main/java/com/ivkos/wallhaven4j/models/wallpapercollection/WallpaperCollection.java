@@ -21,13 +21,13 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
    private List<Wallpaper> wallpapers;
 
    @AssistedInject
-   protected WallpaperCollection(WallhavenSession session, @Assisted boolean preloadDom, @Assisted WallpaperCollectionIdentifier id)
+   WallpaperCollection(WallhavenSession session, @Assisted boolean preloadDom, @Assisted WallpaperCollectionIdentifier id)
    {
       super(session, preloadDom, id);
    }
 
    @AssistedInject
-   protected WallpaperCollection(WallhavenSession session, @Assisted boolean preloadDom, @Assisted WallpaperCollectionIdentifier id, @Assisted String name)
+   WallpaperCollection(WallhavenSession session, @Assisted boolean preloadDom, @Assisted WallpaperCollectionIdentifier id, @Assisted String name)
    {
       super(session, preloadDom, id);
       this.name = name;

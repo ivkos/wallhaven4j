@@ -24,7 +24,7 @@ class FavoritesToWallpaperCollectionTransformer implements Function<HtmlElement,
    private final WallpaperCollectionFactory wallpaperCollectionFactory;
 
    @Inject
-   public FavoritesToWallpaperCollectionTransformer(UserFactory userFactory, WallpaperCollectionFactory wallpaperCollectionFactory)
+   FavoritesToWallpaperCollectionTransformer(UserFactory userFactory, WallpaperCollectionFactory wallpaperCollectionFactory)
    {
       this.userFactory = userFactory;
       this.wallpaperCollectionFactory = wallpaperCollectionFactory;

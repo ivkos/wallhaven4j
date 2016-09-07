@@ -8,7 +8,7 @@ public class GsonJsonSerializer implements JsonSerializer
    private final Gson gson;
 
    @Inject
-   public GsonJsonSerializer(Gson gson)
+   GsonJsonSerializer(Gson gson)
    {
       this.gson = gson;
    }

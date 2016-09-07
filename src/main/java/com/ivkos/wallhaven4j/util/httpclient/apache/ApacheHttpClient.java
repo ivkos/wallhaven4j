@@ -34,7 +34,7 @@ public class ApacheHttpClient implements HttpClient
    private final org.apache.http.client.HttpClient apacheClient;
 
    @Inject
-   public ApacheHttpClient(org.apache.http.client.HttpClient apacheClient)
+   ApacheHttpClient(org.apache.http.client.HttpClient apacheClient)
    {
       this.apacheClient = apacheClient;
    }

@@ -10,11 +10,11 @@ import java.util.Map;
 
 import static com.google.common.collect.Lists.transform;
 
-public class JsoupHtmlElement implements HtmlElement
+class JsoupHtmlElement implements HtmlElement
 {
    private final Element jsoupElement;
 
-   public JsoupHtmlElement(Element jsoupElement)
+   JsoupHtmlElement(Element jsoupElement)
    {
       this.jsoupElement = jsoupElement;
    }
