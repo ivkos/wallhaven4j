@@ -1,18 +1,12 @@
 package com.ivkos.wallhaven4j.models.misc.enums;
 
-public enum Category
+public enum Category implements BitfieldCompatible
 {
-   GENERAL(4), ANIME(2), PEOPLE(1);
+   PEOPLE, ANIME, GENERAL;
 
-   private final long value;
-
-   Category(long value)
+   @Override
+   public long getBitfieldValue()
    {
-      this.value = value;
-   }
-
-   public long getValue()
-   {
-      return value;
+      return 1 << ordinal();
    }
 }

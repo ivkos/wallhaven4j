@@ -3,13 +3,15 @@ package com.ivkos.wallhaven4j.models.misc.enums;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static com.ivkos.wallhaven4j.models.misc.enums.Purity.*;
+
 public class PurityTest
 {
    @Test
-   public void ordinalsAreCorrect() throws Exception
+   public void valuesAreCorrect() throws Exception
    {
-      Assert.assertEquals(0, Purity.SFW.ordinal());
-      Assert.assertEquals(1, Purity.SKETCHY.ordinal());
-      Assert.assertEquals(2, Purity.NSFW.ordinal());
+      Assert.assertEquals(4, SFW.getBitfieldValue());
+      Assert.assertEquals(2, SKETCHY.getBitfieldValue());
+      Assert.assertEquals(1, NSFW.getBitfieldValue());
    }
 }

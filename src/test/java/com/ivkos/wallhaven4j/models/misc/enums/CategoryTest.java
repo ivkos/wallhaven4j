@@ -3,13 +3,15 @@ package com.ivkos.wallhaven4j.models.misc.enums;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static com.ivkos.wallhaven4j.models.misc.enums.Category.*;
+
 public class CategoryTest
 {
    @Test
-   public void ordinalsAreCorrect() throws Exception
+   public void valuesAreCorrect() throws Exception
    {
-      Assert.assertEquals(0, Category.GENERAL.ordinal());
-      Assert.assertEquals(1, Category.ANIME.ordinal());
-      Assert.assertEquals(2, Category.PEOPLE.ordinal());
+      Assert.assertEquals(4, GENERAL.getBitfieldValue());
+      Assert.assertEquals(2, ANIME.getBitfieldValue());
+      Assert.assertEquals(1, PEOPLE.getBitfieldValue());
    }
 }
