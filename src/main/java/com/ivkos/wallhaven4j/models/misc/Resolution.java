@@ -1,5 +1,7 @@
 package com.ivkos.wallhaven4j.models.misc;
 
+import java.util.Objects;
+
 public class Resolution extends Ratio
 {
    public Resolution(long width, long height)
@@ -49,5 +51,11 @@ public class Resolution extends Ratio
 
       return getWidth() == that.getWidth() &&
             getHeight() == that.getHeight();
+   }
+
+   @Override
+   public int hashCode()
+   {
+      return Objects.hash(getWidth(), getHeight());
    }
 }
