@@ -15,6 +15,7 @@ import com.ivkos.wallhaven4j.models.user.User;
 import com.ivkos.wallhaven4j.models.user.UserFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
+import com.ivkos.wallhaven4j.util.ResourceFieldGetter;
 import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
 import com.ivkos.wallhaven4j.util.exceptions.ParseException;
@@ -75,6 +76,8 @@ public class Wallpaper extends AbstractResource<Long>
       this.userFactory = userFactory;
       this.wallpaperCollectionFactory = wallpaperCollectionFactory;
       this.favoritesToWallpaperCollectionTransformer = favoritesToWallpaperCollectionTransformer;
+
+      if (preloadDom) populateFields();
    }
 
    @Override
@@ -83,6 +86,7 @@ public class Wallpaper extends AbstractResource<Long>
       return UrlPrefixes.URL_WALLPAPER + "/" + id;
    }
 
+   @ResourceFieldGetter
    public Resolution getResolution()
    {
       if (resolution != null) {
@@ -100,6 +104,7 @@ public class Wallpaper extends AbstractResource<Long>
       return resolution;
    }
 
+   @ResourceFieldGetter
    public List<Color> getColors()
    {
       if (colors != null) {
@@ -128,6 +133,7 @@ public class Wallpaper extends AbstractResource<Long>
       return colors;
    }
 
+   @ResourceFieldGetter
    public List<Tag> getTags()
    {
       if (tags != null) return tags;
@@ -156,6 +162,7 @@ public class Wallpaper extends AbstractResource<Long>
       return tags;
    }
 
+   @ResourceFieldGetter
    public Purity getPurity()
    {
       if (purity != null) return purity;
@@ -172,6 +179,7 @@ public class Wallpaper extends AbstractResource<Long>
       return purity;
    }
 
+   @ResourceFieldGetter
    public User getUser()
    {
       if (user != null) return user;
@@ -185,6 +193,7 @@ public class Wallpaper extends AbstractResource<Long>
       return user;
    }
 
+   @ResourceFieldGetter
    public DateTime getDateCreated()
    {
       if (dateCreated != null) return dateCreated;
@@ -204,6 +213,7 @@ public class Wallpaper extends AbstractResource<Long>
       return dateCreated;
    }
 
+   @ResourceFieldGetter
    public Category getCategory()
    {
       if (category != null) return category;
@@ -232,6 +242,7 @@ public class Wallpaper extends AbstractResource<Long>
    /**
     * @return the size of the wallpaper in KiB
     */
+   @ResourceFieldGetter
    public double getSize()
    {
       if (size != null) return size;
@@ -259,6 +270,7 @@ public class Wallpaper extends AbstractResource<Long>
       return size;
    }
 
+   @ResourceFieldGetter
    public long getViewsCount()
    {
       if (viewsCount != null) return viewsCount;
