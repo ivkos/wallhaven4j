@@ -83,4 +83,10 @@ class JsoupHtmlElement implements HtmlElement
    {
       return jsoupElement.val();
    }
+
+   @Override
+   public String getTagName()
+   {
+      return jsoupElement.tagName();
+   }
 }

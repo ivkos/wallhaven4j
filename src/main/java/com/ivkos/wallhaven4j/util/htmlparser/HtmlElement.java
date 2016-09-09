@@ -22,4 +22,6 @@ public interface HtmlElement
    Map<String, String> getDataAttributes();
 
    String getValue();
+
+   String getTagName();
 }
