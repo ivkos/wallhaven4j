@@ -1,8 +1,11 @@
 package com.ivkos.wallhaven4j.models;
 
+import com.ivkos.wallhaven4j.util.ResourceFieldGetter;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Objects;
 
 public abstract class AbstractResource<T>
@@ -37,6 +40,21 @@ public abstract class AbstractResource<T>
    protected HtmlElement getDom()
    {
       return getDom(true);
+   }
+
+   protected void populateFields()
+   {
+      for (Method method : getClass().getMethods()) {
+         boolean isFieldGetter = method.isAnnotationPresent(ResourceFieldGetter.class);
+
+         if (!isFieldGetter) continue;
+
+         try {
+            method.invoke(this);
+         } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException("A failure of epic proportions has occurred", e);
+         }
+      }
    }
 
    public final T getId()
