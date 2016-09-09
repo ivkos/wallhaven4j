@@ -9,19 +9,13 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class WallhavenTest
+public class WallhavenTest extends WallhavenTestBase
 {
-   private final Wallhaven whAnon = new Wallhaven();
-   private final Wallhaven whLoggedIn = new Wallhaven(
-         System.getenv("WALLHAVEN_USERNAME"),
-         System.getenv("WALLHAVEN_PASSWORD")
-   );
-
    @Test
    public void getWallpaper() throws Exception
    {
-      Wallpaper w1 = whAnon.getWallpaper(254637);
-      Wallpaper w2 = whLoggedIn.getWallpaper(254637);
+      Wallpaper w1 = getWallhaven().getWallpaper(254637);
+      Wallpaper w2 = getWallhaven(true).getWallpaper(254637);
 
       Assert.assertNotNull(w1);
       Assert.assertNotNull(w2);
@@ -30,19 +24,19 @@ public class WallhavenTest
    @Test(expected = ResourceNotFoundException.class)
    public void getNonExistentWallpaper() throws Exception
    {
-      whAnon.getWallpaper(1);
+      getWallhaven().getWallpaper(1);
    }
 
    @Test(expected = ResourceNotAccessibleException.class)
    public void getNsfwWallpaperWhenNotLoggedIn() throws Exception
    {
-      whAnon.getWallpaper(8273);
+      getWallhaven().getWallpaper(8273);
    }
 
    @Test
    public void getCollections() throws Exception
    {
-      Wallpaper w1 = whAnon.getWallpaper(103929);
+      Wallpaper w1 = getWallhaven().getWallpaper(313179);
       List<WallpaperCollection> collections = w1.getCollections();
 
       Assert.assertNotNull(collections);
