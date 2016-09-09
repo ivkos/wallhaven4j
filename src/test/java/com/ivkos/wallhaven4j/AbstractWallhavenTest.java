@@ -2,17 +2,13 @@ package com.ivkos.wallhaven4j;
 
 import org.junit.BeforeClass;
 
-public abstract class WallhavenTestBase
+public abstract class AbstractWallhavenTest
 {
    private static Wallhaven wallhavenAnonymous;
    private static Wallhaven wallhavenLoggedIn;
 
-   protected WallhavenTestBase()
-   {
-   }
-
    @BeforeClass
-   public static void setUp()
+   public static void setUpBase()
    {
       wallhavenAnonymous = new Wallhaven();
       wallhavenLoggedIn = new Wallhaven(

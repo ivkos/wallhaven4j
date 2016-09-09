@@ -1,15 +1,26 @@
 package com.ivkos.wallhaven4j.models.tag;
 
-import com.ivkos.wallhaven4j.WallhavenTestBase;
+import com.ivkos.wallhaven4j.AbstractWallhavenTest;
 import com.ivkos.wallhaven4j.models.misc.enums.Purity;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class TagTest extends WallhavenTestBase
+public class TagTest extends AbstractWallhavenTest
 {
-   private Tag nature = getWallhaven().getTag(37);
-   private Tag trees = getWallhaven().getTag(115);
+   private static Tag nature;
+   private static Tag trees;
+
+   @BeforeClass
+   public static void setUp() throws Exception
+   {
+      nature = getWallhaven().getTag(37);
+      trees = getWallhaven().getTag(115);
+
+      assertNotNull(nature);
+      assertNotNull(trees);
+   }
 
    @Test
    public void getName() throws Exception
