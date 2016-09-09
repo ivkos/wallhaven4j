@@ -4,8 +4,9 @@ public enum Sorting
 {
    RELEVANCE, RANDOM, DATE_ADDED, VIEWS, FAVORITES;
 
-   public String getValue()
+   @Override
+   public String toString()
    {
-      return this.name().toLowerCase();
+      return name().toLowerCase();
    }
 }
