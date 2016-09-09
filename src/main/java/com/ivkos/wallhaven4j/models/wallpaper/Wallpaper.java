@@ -20,6 +20,7 @@ import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
 import com.ivkos.wallhaven4j.util.exceptions.ParseException;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
+import com.ivkos.wallhaven4j.util.htmlparser.TimeElementParser;
 import com.ivkos.wallhaven4j.util.jsonserializer.JsonSerializer;
 import org.joda.time.DateTime;
 
@@ -200,15 +201,7 @@ public class Wallpaper extends AbstractResource<Long>
 
       HtmlElement timeElement = of(getDom().findElementById("showcase-sidebar"), "dd.showcase-uploader > time").get();
 
-      String datetime = timeElement.getAttribute("datetime");
-
-      if (datetime.isEmpty()) throw new ParseException("datetime is empty");
-
-      try {
-         dateCreated = DateTime.parse(datetime);
-      } catch (IllegalArgumentException e) {
-         throw new ParseException("Could not parse date created", e);
-      }
+      dateCreated = TimeElementParser.parse(timeElement);
 
       return dateCreated;
    }
