@@ -8,6 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public abstract class AbstractResource<T>
 {
    protected final T id;
@@ -18,7 +20,7 @@ public abstract class AbstractResource<T>
    protected AbstractResource(WallhavenSession session, boolean preloadDom, T id)
    {
       this.session = session;
-      this.id = id;
+      this.id = checkNotNull(id, "id must not be null");
 
       if (preloadDom) {
          getDom();
