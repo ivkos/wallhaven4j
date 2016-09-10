@@ -46,6 +46,11 @@ public class OptionalSelector
       return elements.get(0);
    }
 
+   public boolean isPresent()
+   {
+      return !select().isEmpty();
+   }
+
    private List<HtmlElement> select()
    {
       return context.find(cssSelector);

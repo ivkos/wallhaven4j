@@ -5,8 +5,7 @@ import com.ivkos.wallhaven4j.util.htmlparser.jsoup.JsoupHtmlParser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class OptionalSelectorTest
 {
@@ -55,4 +54,10 @@ public class OptionalSelectorTest
       OptionalSelector.of(dom, ".nope").get();
    }
 
+   @Test
+   public void isPresent() throws Exception
+   {
+      assertTrue(legitSelector.isPresent());
+      assertFalse(OptionalSelector.of(dom, "#nope").isPresent());
+   }
 }
