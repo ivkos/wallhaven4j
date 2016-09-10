@@ -4,6 +4,11 @@ import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
 import org.junit.Test;
 
+import java.io.File;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class WallhavenTest extends AbstractWallhavenTest
 {
    @Test(expected = ResourceNotFoundException.class)
@@ -16,5 +21,26 @@ public class WallhavenTest extends AbstractWallhavenTest
    public void getNsfwWallpaperWhenNotLoggedIn() throws Exception
    {
       getWallhaven().getWallpaper(8273);
+   }
+
+   @Test
+   public void testCookies() {
+      File cookiesFile = new File("testcookies.json");
+
+      Wallhaven wh1 = new Wallhaven(
+            System.getenv("WALLHAVEN_USERNAME"),
+            System.getenv("WALLHAVEN_PASSWORD"),
+            cookiesFile
+      );
+
+      // will reuse the session cookies from the file
+      Wallhaven wh2 = new Wallhaven(
+            System.getenv("WALLHAVEN_USERNAME"),
+            "doesntmatter",
+            cookiesFile
+      );
+
+      assertEquals(System.getenv("WALLHAVEN_USERNAME"), wh2.getCurrentUser().getId());
+      assertTrue(cookiesFile.delete());
    }
 }

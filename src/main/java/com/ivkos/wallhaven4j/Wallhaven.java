@@ -5,6 +5,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.ivkos.wallhaven4j.models.tag.Tag;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
+import com.ivkos.wallhaven4j.models.user.User;
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
 import com.ivkos.wallhaven4j.util.WallhavenGuiceModule;
@@ -40,6 +41,11 @@ public class Wallhaven
    public Wallhaven(String username, String password)
    {
       this(username, password, null);
+   }
+
+   public User getCurrentUser()
+   {
+      return session.getCurrentUser();
    }
 
    /**
