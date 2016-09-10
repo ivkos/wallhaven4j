@@ -1,16 +1,19 @@
 package com.ivkos.wallhaven4j.util;
 
 import com.google.common.io.Files;
+import com.google.common.reflect.TypeToken;
 import com.ivkos.wallhaven4j.util.jsonserializer.JsonSerializer;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.cookie.BasicClientCookie;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 class FileCookieStore implements CookieStore
 {
@@ -47,16 +50,20 @@ class FileCookieStore implements CookieStore
 
       if (json.isEmpty()) return;
 
-      BasicCookieStore cookiesInFile = jsonSerializer.fromJson(json, BasicCookieStore.class);
+      TypeToken<Set<BasicClientCookie>> typeToken = new TypeToken<Set<BasicClientCookie>>()
+      {
+      };
 
-      for (Cookie cookie : cookiesInFile.getCookies()) {
+      Set<Cookie> cookiesInFile = jsonSerializer.fromJson(json, typeToken.getType());
+
+      for (Cookie cookie : cookiesInFile) {
          store.addCookie(cookie);
       }
    }
 
    private void writeCookiesToFile()
    {
-      String json = jsonSerializer.toJson(store);
+      String json = jsonSerializer.toJson(store.getCookies());
 
       try {
          Files.write(json.getBytes(), cookiesFile);
