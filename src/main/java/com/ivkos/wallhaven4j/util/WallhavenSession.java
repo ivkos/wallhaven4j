@@ -52,7 +52,10 @@ public class WallhavenSession
          String indexHtml = getHttpClient().get(URL_BASE).getBody();
          HtmlElement indexDom = getHtmlParser().parse(indexHtml, URL_BASE);
 
-         if (username.equals(getLoggedInUsername(indexDom))) return;
+         if (username.equals(getLoggedInUsername(indexDom))) {
+            this.currentUser = rff.getFactoryFor(User.class).create(false, username);
+            return;
+         }
 
          token = getLoginToken(indexDom);
       }

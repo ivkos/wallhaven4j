@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class WallhavenTest extends AbstractWallhavenTest
@@ -33,12 +34,16 @@ public class WallhavenTest extends AbstractWallhavenTest
             cookiesFile
       );
 
+      assertNotNull(wh1.getCurrentUser());
+
       // will reuse the session cookies from the file
       Wallhaven wh2 = new Wallhaven(
             System.getenv("WALLHAVEN_USERNAME"),
             "doesntmatter",
             cookiesFile
       );
+
+      assertNotNull(wh2.getCurrentUser());
 
       assertEquals(System.getenv("WALLHAVEN_USERNAME"), wh2.getCurrentUser().getId());
       assertTrue(cookiesFile.delete());
