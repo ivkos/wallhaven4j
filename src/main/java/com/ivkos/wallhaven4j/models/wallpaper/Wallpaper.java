@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 import com.ivkos.wallhaven4j.models.AbstractResource;
+import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
 import com.ivkos.wallhaven4j.models.misc.Color;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
 import com.ivkos.wallhaven4j.models.misc.enums.Category;
@@ -12,9 +13,7 @@ import com.ivkos.wallhaven4j.models.misc.enums.Purity;
 import com.ivkos.wallhaven4j.models.tag.Tag;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.user.User;
-import com.ivkos.wallhaven4j.models.user.UserFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
-import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
 import com.ivkos.wallhaven4j.util.ResourceFieldGetter;
 import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
@@ -44,9 +43,7 @@ import static java.util.Collections.unmodifiableList;
 public class Wallpaper extends AbstractResource<Long>
 {
    private final JsonSerializer jsonSerializer;
-   private final TagFactory tagFactory;
-   private final UserFactory userFactory;
-   private final WallpaperCollectionFactory wallpaperCollectionFactory;
+   private final ResourceFactoryFactory rff;
    private final FavoritesToWallpaperCollectionTransformer favoritesToWallpaperCollectionTransformer;
 
    private Resolution resolution;
@@ -64,18 +61,14 @@ public class Wallpaper extends AbstractResource<Long>
    @AssistedInject
    Wallpaper(WallhavenSession session,
              JsonSerializer jsonSerializer,
-             TagFactory tagFactory,
-             UserFactory userFactory,
-             WallpaperCollectionFactory wallpaperCollectionFactory,
+             ResourceFactoryFactory resourceFactoryFactory,
              FavoritesToWallpaperCollectionTransformer favoritesToWallpaperCollectionTransformer,
              @Assisted boolean preloadDom,
              @Assisted long id)
    {
       super(session, preloadDom, id);
       this.jsonSerializer = jsonSerializer;
-      this.tagFactory = tagFactory;
-      this.userFactory = userFactory;
-      this.wallpaperCollectionFactory = wallpaperCollectionFactory;
+      this.rff = resourceFactoryFactory;
       this.favoritesToWallpaperCollectionTransformer = favoritesToWallpaperCollectionTransformer;
 
       if (preloadDom) populateFields();
@@ -156,7 +149,7 @@ public class Wallpaper extends AbstractResource<Long>
 
             if (tagPurity == null) throw new ParseException("Could not parse purity of tag");
 
-            return tagFactory.create(false, tagId, tagName, tagPurity);
+            return ((TagFactory) rff.getFactoryFor(Tag.class)).create(false, tagId, tagName, tagPurity);
          }
       })));
 
@@ -189,7 +182,7 @@ public class Wallpaper extends AbstractResource<Long>
 
       String username = uploaderElement.getText();
 
-      user = userFactory.create(false, username);
+      user = rff.getFactoryFor(User.class).create(false, username);
 
       return user;
    }

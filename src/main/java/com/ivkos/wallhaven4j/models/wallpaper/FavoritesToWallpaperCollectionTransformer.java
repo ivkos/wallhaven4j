@@ -2,8 +2,8 @@ package com.ivkos.wallhaven4j.models.wallpaper;
 
 import com.google.common.base.Function;
 import com.google.inject.Inject;
+import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
 import com.ivkos.wallhaven4j.models.user.User;
-import com.ivkos.wallhaven4j.models.user.UserFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionIdentifier;
@@ -20,14 +20,12 @@ import static java.lang.String.format;
 
 class FavoritesToWallpaperCollectionTransformer implements Function<HtmlElement, WallpaperCollection>
 {
-   private final UserFactory userFactory;
-   private final WallpaperCollectionFactory wallpaperCollectionFactory;
+   private final ResourceFactoryFactory rff;
 
    @Inject
-   FavoritesToWallpaperCollectionTransformer(UserFactory userFactory, WallpaperCollectionFactory wallpaperCollectionFactory)
+   FavoritesToWallpaperCollectionTransformer(ResourceFactoryFactory rff)
    {
-      this.userFactory = userFactory;
-      this.wallpaperCollectionFactory = wallpaperCollectionFactory;
+      this.rff = rff;
    }
 
    @Override
@@ -37,7 +35,7 @@ class FavoritesToWallpaperCollectionTransformer implements Function<HtmlElement,
             .orElseThrow(new ParseException("Could not get username for wallpaper collection"))
             .getText();
 
-      User user = userFactory.create(false, username);
+      User user = rff.getFactoryFor(User.class).create(false, username);
 
       HtmlElement lastLink = input.findLast("a");
       if (lastLink == null)
@@ -55,7 +53,7 @@ class FavoritesToWallpaperCollectionTransformer implements Function<HtmlElement,
 
       long id = parseLong(matcher.group(1));
 
-      return wallpaperCollectionFactory.create(
+      return ((WallpaperCollectionFactory) rff.getFactoryFor(WallpaperCollection.class)).create(
             false,
             new WallpaperCollectionIdentifier(id, user),
             name
