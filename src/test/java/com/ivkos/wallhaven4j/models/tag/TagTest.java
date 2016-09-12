@@ -23,6 +23,13 @@ public class TagTest extends AbstractWallhavenTest
    }
 
    @Test
+   public void toAString() throws Exception
+   {
+      assertEquals("#nature", nature.toString());
+      assertEquals("#trees", trees.toString());
+   }
+
+   @Test
    public void getName() throws Exception
    {
       assertEquals("nature", nature.getName());
