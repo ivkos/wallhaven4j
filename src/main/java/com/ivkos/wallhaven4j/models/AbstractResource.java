@@ -27,7 +27,7 @@ public abstract class AbstractResource<T>
       }
    }
 
-   protected HtmlElement getDom(boolean enableCache)
+   protected final HtmlElement getDom(boolean enableCache)
    {
       if (this.dom != null && enableCache) {
          return this.dom;
@@ -39,12 +39,12 @@ public abstract class AbstractResource<T>
       return this.dom;
    }
 
-   protected HtmlElement getDom()
+   protected final HtmlElement getDom()
    {
       return getDom(true);
    }
 
-   protected void populateFields()
+   protected final void populateFields()
    {
       for (Method method : getClass().getMethods()) {
          boolean isFieldGetter = method.isAnnotationPresent(ResourceFieldGetter.class);
@@ -64,7 +64,7 @@ public abstract class AbstractResource<T>
       return id;
    }
 
-   protected WallhavenSession getSession()
+   protected final WallhavenSession getSession()
    {
       return session;
    }
