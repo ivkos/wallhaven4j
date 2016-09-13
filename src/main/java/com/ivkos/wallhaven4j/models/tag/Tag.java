@@ -1,7 +1,6 @@
 package com.ivkos.wallhaven4j.models.tag;
 
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
@@ -123,31 +122,26 @@ public class Tag extends AbstractResource<Long>
       if (elements.isEmpty()) throw new ParseException("Could not parse tag category");
 
       final TagCategoryFactory tcf = rff.getFactoryFor(TagCategory.class);
-      List<TagCategory> categories = transform(elements, new Function<HtmlElement, TagCategory>()
-      {
-         private final Pattern pattern = Pattern.compile(Pattern.quote(UrlPrefixes.URL_TAGS + "/") + "(\\d+)");
+      List<TagCategory> categories = transform(elements, input -> {
+         String href = input.getAttribute("href");
 
-         @Override
-         public TagCategory apply(HtmlElement input)
-         {
-            String href = input.getAttribute("href");
-            Matcher matcher = pattern.matcher(href);
+         Pattern pattern = Pattern.compile(Pattern.quote(UrlPrefixes.URL_TAGS + "/") + "(\\d+)");
+         Matcher matcher = pattern.matcher(href);
 
-            if (!matcher.matches()) {
-               throw new ParseException(
-                     format(
-                           "Could not parse tag category URL\nFound URL %s does not match pattern %s",
-                           href,
-                           pattern.toString()
-                     )
-               );
-            }
-
-            long id = parseLong(matcher.group(1));
-            String name = input.getText();
-
-            return tcf.create(false, id, name);
+         if (!matcher.matches()) {
+            throw new ParseException(
+                  format(
+                        "Could not parse tag category URL\nFound URL %s does not match pattern %s",
+                        href,
+                        pattern.toString()
+                  )
+            );
          }
+
+         long id1 = parseLong(matcher.group(1));
+         String name1 = input.getText();
+
+         return tcf.create(false, id1, name1);
       });
 
       TagCategory top = null;

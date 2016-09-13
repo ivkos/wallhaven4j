@@ -1,7 +1,5 @@
 package com.ivkos.wallhaven4j.util.httpclient.apache;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.CharStreams;
 import com.google.inject.Inject;
@@ -55,14 +53,10 @@ public class ApacheHttpClient implements HttpClient
       base.setURI(URI.create(url));
 
       if (headers != null && !headers.isEmpty()) {
-         base.setHeaders(transform(headers.entrySet(), new Function<Map.Entry<String, String>, Header>()
-         {
-            @Override
-            public Header apply(Map.Entry<String, String> input)
-            {
-               return new BasicHeader(input.getKey(), input.getValue());
-            }
-         }).toArray(new Header[0]));
+         base.setHeaders(
+               transform(headers.entrySet(), input -> new BasicHeader(input.getKey(), input.getValue()))
+                     .toArray(new Header[0])
+         );
       }
 
       if (body != null) {
@@ -109,7 +103,7 @@ public class ApacheHttpClient implements HttpClient
 
    public HttpResponse get(String url)
    {
-      return get(url, Collections.<String, String>emptyMap());
+      return get(url, Collections.emptyMap());
    }
 
    @Override
@@ -121,15 +115,8 @@ public class ApacheHttpClient implements HttpClient
    @Override
    public HttpResponse post(String url, Map<String, String> headers, Map<String, String> formParams)
    {
-      Collection<NameValuePair> pairs = Collections2.transform(formParams.entrySet(),
-            new Function<Map.Entry<String, String>, NameValuePair>()
-            {
-               @Override
-               public NameValuePair apply(Map.Entry<String, String> input)
-               {
-                  return new BasicNameValuePair(input.getKey(), input.getValue());
-               }
-            });
+      Collection<NameValuePair> pairs = transform(formParams.entrySet(),
+            input -> new BasicNameValuePair(input.getKey(), input.getValue()));
 
       Header contentType;
       String urlEncodedBody;
@@ -153,12 +140,12 @@ public class ApacheHttpClient implements HttpClient
 
    public HttpResponse post(String url, String body)
    {
-      return post(url, Collections.<String, String>emptyMap(), body);
+      return post(url, Collections.emptyMap(), body);
    }
 
    @Override
    public HttpResponse post(String url, Map<String, String> formParams)
    {
-      return post(url, Collections.<String, String>emptyMap(), formParams);
+      return post(url, Collections.emptyMap(), formParams);
    }
 }

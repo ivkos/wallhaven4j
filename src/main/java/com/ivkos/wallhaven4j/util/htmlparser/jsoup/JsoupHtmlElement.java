@@ -1,6 +1,5 @@
 package com.ivkos.wallhaven4j.util.htmlparser.jsoup;
 
-import com.google.common.base.Function;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 import org.jsoup.nodes.Element;
 
@@ -22,14 +21,7 @@ class JsoupHtmlElement implements HtmlElement
    @Override
    public List<HtmlElement> find(String cssQuery)
    {
-      return Collections.unmodifiableList(transform(jsoupElement.select(cssQuery), new Function<Element, HtmlElement>()
-      {
-         @Override
-         public HtmlElement apply(Element input)
-         {
-            return new JsoupHtmlElement(input);
-         }
-      }));
+      return Collections.unmodifiableList(transform(jsoupElement.select(cssQuery), JsoupHtmlElement::new));
    }
 
    @Override
