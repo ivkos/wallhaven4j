@@ -27,7 +27,7 @@
     </scm>
 
     <properties>
-        <required.jdk.version>1.7</required.jdk.version>
+        <required.jdk.version>1.8</required.jdk.version>
     </properties>
 
     <developers>
@@ -99,6 +99,20 @@
                     <source>${required.jdk.version}</source>
                     <target>${required.jdk.version}</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>net.orfjackal.retrolambda</groupId>
+                <artifactId>retrolambda-maven-plugin</artifactId>
+                <version>2.3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process-main</goal>
+                            <goal>process-test</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
