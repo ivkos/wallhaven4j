@@ -1,8 +1,11 @@
 package com.ivkos.wallhaven4j.models.wallpaper;
 
-import com.google.common.base.Function;
 import com.google.inject.Inject;
 import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
+import com.ivkos.wallhaven4j.models.misc.Color;
+import com.ivkos.wallhaven4j.models.misc.enums.Purity;
+import com.ivkos.wallhaven4j.models.tag.Tag;
+import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.user.User;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
@@ -13,23 +16,23 @@ import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.ivkos.wallhaven4j.models.misc.enums.Purity.*;
 import static com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector.of;
 import static java.lang.Long.parseLong;
 import static java.lang.String.format;
 
 
-class FavoritesToWallpaperCollectionTransformer implements Function<HtmlElement, WallpaperCollection>
+class WallpaperTransformers
 {
    private final ResourceFactoryFactory rff;
 
    @Inject
-   FavoritesToWallpaperCollectionTransformer(ResourceFactoryFactory rff)
+   WallpaperTransformers(ResourceFactoryFactory rff)
    {
       this.rff = rff;
    }
 
-   @Override
-   public WallpaperCollection apply(HtmlElement input)
+   WallpaperCollection transformToWallpaperCollection(HtmlElement input)
    {
       String username = of(input, "a.username")
             .orElseThrow(new ParseException("Could not get username for wallpaper collection"))
@@ -58,5 +61,32 @@ class FavoritesToWallpaperCollectionTransformer implements Function<HtmlElement,
             new WallpaperCollectionIdentifier(id, user),
             name
       );
+   }
+
+   Tag transformToTag(HtmlElement input)
+   {
+      long tagId = parseLong(input.getDataAttributes().get("tag-id"));
+      String tagName = input.findFirst("a.tagname").getText();
+
+      Purity tagPurity = input.hasClass("tag-sfw") ? SFW
+            : input.hasClass("tag-sketchy") ? SKETCHY
+            : input.hasClass("tag-nsfw") ? NSFW
+            : null;
+
+      if (tagPurity == null) throw new ParseException("Could not parse purity of tag");
+
+      return ((TagFactory) rff.getFactoryFor(Tag.class)).create(false, tagId, tagName, tagPurity);
+   }
+
+   Color transformToColor(HtmlElement input)
+   {
+      Pattern PATTERN_COLOR = Pattern.compile("background-color:(#[0-9A-Fa-f]{6})");
+      Matcher matcher = PATTERN_COLOR.matcher(input.getAttribute("style"));
+
+      if (!matcher.matches()) throw new ParseException("Could not parse color");
+
+      String hex = matcher.group(1);
+
+      return new Color(hex);
    }
 }

@@ -1,6 +1,5 @@
 package com.ivkos.wallhaven4j.models.wallpaper;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
@@ -11,7 +10,6 @@ import com.ivkos.wallhaven4j.models.misc.Resolution;
 import com.ivkos.wallhaven4j.models.misc.enums.Category;
 import com.ivkos.wallhaven4j.models.misc.enums.Purity;
 import com.ivkos.wallhaven4j.models.tag.Tag;
-import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.user.User;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.util.ResourceFieldGetter;
@@ -44,7 +42,7 @@ public class Wallpaper extends AbstractResource<Long>
 {
    private final JsonSerializer jsonSerializer;
    private final ResourceFactoryFactory rff;
-   private final FavoritesToWallpaperCollectionTransformer favoritesToWallpaperCollectionTransformer;
+   private final WallpaperTransformers transformers;
 
    private Resolution resolution;
    private List<Color> colors;
@@ -62,14 +60,14 @@ public class Wallpaper extends AbstractResource<Long>
    Wallpaper(WallhavenSession session,
              JsonSerializer jsonSerializer,
              ResourceFactoryFactory resourceFactoryFactory,
-             FavoritesToWallpaperCollectionTransformer favoritesToWallpaperCollectionTransformer,
+             WallpaperTransformers wallpaperTransformers,
              @Assisted boolean preloadDom,
              @Assisted long id)
    {
       super(session, preloadDom, id);
       this.jsonSerializer = jsonSerializer;
       this.rff = resourceFactoryFactory;
-      this.favoritesToWallpaperCollectionTransformer = favoritesToWallpaperCollectionTransformer;
+      this.transformers = wallpaperTransformers;
 
       if (preloadDom) populateFields();
    }
@@ -107,22 +105,7 @@ public class Wallpaper extends AbstractResource<Long>
 
       List<HtmlElement> colorElements = getDom().find("ul.color-palette > li.color");
 
-      colors = unmodifiableList(newArrayList(transform(colorElements, new Function<HtmlElement, Color>()
-      {
-         private final Pattern PATTERN_COLOR = Pattern.compile("background-color:(#[0-9A-Fa-f]{6})");
-
-         @Override
-         public Color apply(HtmlElement input)
-         {
-            Matcher matcher = PATTERN_COLOR.matcher(input.getAttribute("style"));
-
-            if (!matcher.matches()) throw new ParseException("Could not parse color");
-
-            String hex = matcher.group(1);
-
-            return new Color(hex);
-         }
-      })));
+      colors = unmodifiableList(newArrayList(transform(colorElements, transformers::transformToColor)));
 
       return colors;
    }
@@ -134,24 +117,7 @@ public class Wallpaper extends AbstractResource<Long>
 
       List<HtmlElement> tagElements = getDom().find("ul#tags > li.tag");
 
-      tags = unmodifiableList(newArrayList(transform(tagElements, new Function<HtmlElement, Tag>()
-      {
-         @Override
-         public Tag apply(HtmlElement input)
-         {
-            long tagId = parseLong(input.getDataAttributes().get("tag-id"));
-            String tagName = input.findFirst("a.tagname").getText();
-
-            Purity tagPurity = input.hasClass("tag-sfw") ? SFW
-                  : input.hasClass("tag-sketchy") ? SKETCHY
-                  : input.hasClass("tag-nsfw") ? NSFW
-                  : null;
-
-            if (tagPurity == null) throw new ParseException("Could not parse purity of tag");
-
-            return ((TagFactory) rff.getFactoryFor(Tag.class)).create(false, tagId, tagName, tagPurity);
-         }
-      })));
+      tags = unmodifiableList(newArrayList(transform(tagElements, transformers::transformToTag)));
 
       return tags;
    }
@@ -288,7 +254,8 @@ public class Wallpaper extends AbstractResource<Long>
       HtmlElement document = getSession().getHtmlParser().parse(xhrViewResponse.view, getUrl());
       List<HtmlElement> userlist = document.find("ul.userlist > li");
 
-      collections = unmodifiableList(newArrayList(transform(userlist, favoritesToWallpaperCollectionTransformer)));
+      collections = unmodifiableList(newArrayList(transform(userlist,
+            transformers::transformToWallpaperCollection)));
 
       return collections;
    }
