@@ -113,6 +113,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <defaultMethods>true</defaultMethods>
+                </configuration>
             </plugin>
 
             <plugin>
