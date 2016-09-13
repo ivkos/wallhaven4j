@@ -8,6 +8,7 @@ cache:
   - $HOME/.m2
 
 script:
+  - mvn test -B
   - jdk_switcher use oraclejdk7
   - mvn test -B
 
