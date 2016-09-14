@@ -26,9 +26,14 @@ public class Resolution extends Ratio
          h *= 2;
       }
 
-      if ((w == 64 && h == 27) || (w == 27 && h == 64)) {
+      if (w == 64 && h == 27) {
          w = 21;
          h = 9;
+      }
+
+      if (w == 27 && h == 64) {
+         w = 9;
+         h = 21;
       }
       //endregion
 

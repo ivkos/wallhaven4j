@@ -53,6 +53,7 @@ public class ResolutionTest
       Assert.assertEquals(new Ratio(8, 5), new Resolution(1920, 1200).getRatio());
 
       Assert.assertEquals(new Ratio(21, 9), new Resolution(2560, 1080).getRatio());
+      Assert.assertEquals(new Ratio(9, 21), new Resolution(1080, 2560).getRatio());
 
       Assert.assertEquals(new Ratio(1, 1), new Resolution(800, 800).getRatio());
    }
