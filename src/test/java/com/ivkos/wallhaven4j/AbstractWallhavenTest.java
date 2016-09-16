@@ -8,7 +8,7 @@ public abstract class AbstractWallhavenTest
    private static Wallhaven wallhavenLoggedIn;
 
    @BeforeClass
-   public static void setUpBase()
+   public static final void setUpBase()
    {
       wallhavenAnonymous = new Wallhaven();
       wallhavenLoggedIn = new Wallhaven(
