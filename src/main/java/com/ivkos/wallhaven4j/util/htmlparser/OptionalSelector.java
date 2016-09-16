@@ -4,6 +4,8 @@ import com.ivkos.wallhaven4j.util.exceptions.ParseException;
 
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class OptionalSelector
 {
    private final HtmlElement context;
@@ -11,6 +13,9 @@ public class OptionalSelector
 
    protected OptionalSelector(HtmlElement context, String cssSelector)
    {
+      checkNotNull(context, "context must not be null");
+      checkNotNull(context, "cssSelector must not be null");
+
       this.context = context;
       this.cssSelector = cssSelector;
    }
