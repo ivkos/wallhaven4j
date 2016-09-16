@@ -1,17 +1,22 @@
 package com.ivkos.wallhaven4j;
 
+import com.ivkos.wallhaven4j.util.exceptions.LoginException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
 import org.junit.Test;
 
 import java.io.File;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class WallhavenTest extends AbstractWallhavenTest
 {
+   @Test(expected = LoginException.class)
+   public void loginWithIncorrectCredentials()
+   {
+      new Wallhaven(System.getenv("WALLHAVEN_USERNAME"), "thewrongpassword");
+   }
+
    @Test(expected = ResourceNotFoundException.class)
    public void getNonExistentWallpaper() throws Exception
    {
@@ -25,7 +30,8 @@ public class WallhavenTest extends AbstractWallhavenTest
    }
 
    @Test
-   public void testCookies() {
+   public void testCookies()
+   {
       File cookiesFile = new File("testcookies.json");
 
       Wallhaven wh1 = new Wallhaven(
