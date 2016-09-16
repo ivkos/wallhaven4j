@@ -47,6 +47,12 @@ class JsoupHtmlElement implements HtmlElement
    }
 
    @Override
+   public HtmlElement getNextElementSibling()
+   {
+      return new JsoupHtmlElement(jsoupElement.nextElementSibling());
+   }
+
+   @Override
    public String getText()
    {
       return jsoupElement.text();

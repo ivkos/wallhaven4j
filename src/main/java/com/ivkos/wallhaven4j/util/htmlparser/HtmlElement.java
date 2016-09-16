@@ -13,6 +13,8 @@ public interface HtmlElement
 
    HtmlElement findElementById(String id);
 
+   HtmlElement getNextElementSibling();
+
    String getText();
 
    String getAttribute(String attributeName);

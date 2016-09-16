@@ -38,6 +38,12 @@ public class TimeElementParserTest
          }
 
          @Override
+         public HtmlElement getNextElementSibling()
+         {
+            return null;
+         }
+
+         @Override
          public String getText()
          {
             return null;
@@ -107,6 +113,12 @@ public class TimeElementParserTest
          }
 
          @Override
+         public HtmlElement getNextElementSibling()
+         {
+            return null;
+         }
+
+         @Override
          public String getText()
          {
             return null;
@@ -171,6 +183,12 @@ public class TimeElementParserTest
 
          @Override
          public HtmlElement findElementById(String id)
+         {
+            return null;
+         }
+
+         @Override
+         public HtmlElement getNextElementSibling()
          {
             return null;
          }
