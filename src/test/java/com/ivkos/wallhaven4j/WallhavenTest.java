@@ -14,7 +14,7 @@ public class WallhavenTest extends AbstractWallhavenTest
    @Test(expected = LoginException.class)
    public void loginWithIncorrectCredentials()
    {
-      new Wallhaven(System.getenv("WALLHAVEN_USERNAME"), "thewrongpassword");
+      new Wallhaven(getWallhavenUsername(), "thewrongpassword");
    }
 
    @Test(expected = ResourceNotFoundException.class)
@@ -35,8 +35,8 @@ public class WallhavenTest extends AbstractWallhavenTest
       File cookiesFile = new File("testcookies.json");
 
       Wallhaven wh1 = new Wallhaven(
-            System.getenv("WALLHAVEN_USERNAME"),
-            System.getenv("WALLHAVEN_PASSWORD"),
+            getWallhavenUsername(),
+            getWallhavenPassword(),
             cookiesFile
       );
 
@@ -44,14 +44,14 @@ public class WallhavenTest extends AbstractWallhavenTest
 
       // will reuse the session cookies from the file
       Wallhaven wh2 = new Wallhaven(
-            System.getenv("WALLHAVEN_USERNAME"),
+            getWallhavenUsername(),
             "doesntmatter",
             cookiesFile
       );
 
       assertNotNull(wh2.getCurrentUser());
 
-      assertEquals(System.getenv("WALLHAVEN_USERNAME"), wh2.getCurrentUser().getId());
+      assertEquals(getWallhavenUsername(), wh2.getCurrentUser().getId());
       assertTrue(cookiesFile.delete());
    }
 }
