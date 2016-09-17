@@ -1,8 +1,7 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
+import com.google.common.base.Supplier;
 import com.ivkos.wallhaven4j.models.AbstractResource;
-
-import java.util.function.Supplier;
 
 import static java.lang.String.format;
 
