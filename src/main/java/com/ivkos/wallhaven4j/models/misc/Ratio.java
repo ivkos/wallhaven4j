@@ -11,8 +11,8 @@ public class Ratio
 
    public Ratio(long width, long height)
    {
-      checkArgument(width >= 0, "width must be positive");
-      checkArgument(height >= 0, "height must be positive");
+      checkArgument(width > 0, "width must be greater than zero");
+      checkArgument(height > 0, "height must be greater than zero");
 
       this.width = width;
       this.height = height;

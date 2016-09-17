@@ -7,6 +7,30 @@ public class RatioTest
 {
    private Ratio ratio = new Ratio(16, 9);
 
+   @Test(expected = IllegalArgumentException.class)
+   public void ratioWontAcceptZeroWidth() throws Exception
+   {
+      new Ratio(0, 1);
+   }
+
+   @Test(expected = IllegalArgumentException.class)
+   public void ratioWontAcceptZeroHeight() throws Exception
+   {
+      new Ratio(1, 0);
+   }
+
+   @Test(expected = IllegalArgumentException.class)
+   public void ratioWontAcceptNegativeWidth() throws Exception
+   {
+      new Ratio(-2, 1);
+   }
+
+   @Test(expected = IllegalArgumentException.class)
+   public void ratioWontAcceptNegativeHeight() throws Exception
+   {
+      new Ratio(1, -2);
+   }
+
    @Test
    public void getWidth() throws Exception
    {
