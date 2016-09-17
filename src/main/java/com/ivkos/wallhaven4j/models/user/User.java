@@ -51,6 +51,11 @@ public class User extends AbstractResource<String>
       return UrlPrefixes.URL_USER + "/" + UrlEscapers.urlPathSegmentEscaper().escape(id);
    }
 
+   public String getUsername()
+   {
+      return getId();
+   }
+
    @ResourceFieldGetter
    public String getGroupName()
    {
