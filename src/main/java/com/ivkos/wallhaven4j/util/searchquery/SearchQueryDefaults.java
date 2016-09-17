@@ -16,7 +16,7 @@ import static com.ivkos.wallhaven4j.models.misc.enums.Purity.SFW;
 import static com.ivkos.wallhaven4j.models.misc.enums.Sorting.RELEVANCE;
 import static java.util.Collections.emptySet;
 
-abstract class SearchQueryDefaults
+final class SearchQueryDefaults
 {
    static final String DEFAULT_KEYWORDS = "";
    static final EnumSet<Category> DEFAULT_CATEGORIES = EnumSet.of(GENERAL, ANIME, PEOPLE);
@@ -26,4 +26,8 @@ abstract class SearchQueryDefaults
    static final Set<Resolution> DEFAULT_RESOLUTIONS = emptySet();
    static final Set<Ratio> DEFAULT_RATIOS = emptySet();
    static final long DEFAULT_PAGES = 1;
+
+   private SearchQueryDefaults()
+   {
+   }
 }
