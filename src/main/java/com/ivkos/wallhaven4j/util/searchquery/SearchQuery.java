@@ -8,23 +8,18 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import static com.google.common.collect.ImmutableSet.copyOf;
-import static com.ivkos.wallhaven4j.models.misc.enums.Category.*;
-import static com.ivkos.wallhaven4j.models.misc.enums.Order.DESC;
-import static com.ivkos.wallhaven4j.models.misc.enums.Purity.SFW;
-import static com.ivkos.wallhaven4j.models.misc.enums.Sorting.RELEVANCE;
-import static java.util.Collections.emptySet;
-import static java.util.EnumSet.of;
+import static com.ivkos.wallhaven4j.util.searchquery.SearchQueryDefaults.*;
 
 public class SearchQuery
 {
-   protected String keywords = "";
-   protected EnumSet<Category> categories = of(GENERAL, ANIME, PEOPLE);
-   protected EnumSet<Purity> purity = of(SFW);
-   protected Sorting sorting = RELEVANCE;
-   protected Order order = DESC;
-   protected Set<Resolution> resolutions = emptySet();
-   protected Set<Ratio> ratios = emptySet();
-   protected long pages = 1;
+   protected String keywords = DEFAULT_KEYWORDS;
+   protected EnumSet<Category> categories = DEFAULT_CATEGORIES;
+   protected EnumSet<Purity> purity = DEFAULT_PURITY;
+   protected Sorting sorting = DEFAULT_SORTING;
+   protected Order order = DEFAULT_ORDER;
+   protected Set<Resolution> resolutions = DEFAULT_RESOLUTIONS;
+   protected Set<Ratio> ratios = DEFAULT_RATIOS;
+   protected long pages = DEFAULT_PAGES;
 
    protected SearchQuery()
    {
