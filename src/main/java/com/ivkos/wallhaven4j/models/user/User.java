@@ -5,9 +5,14 @@ import com.google.common.net.UrlEscapers;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 import com.ivkos.wallhaven4j.models.AbstractResource;
+import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
+import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
+import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
+import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionIdentifier;
 import com.ivkos.wallhaven4j.util.ResourceFieldGetter;
 import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
+import com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 import com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector;
 import com.ivkos.wallhaven4j.util.htmlparser.TimeElementParser;
@@ -15,12 +20,19 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.transform;
+import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.of;
 import static java.lang.Long.parseLong;
+import static java.util.Collections.unmodifiableList;
 
 public class User extends AbstractResource<String>
 {
+   private final ResourceFactoryFactory rff;
+
    private String groupName;
    private String description;
 
@@ -38,9 +50,10 @@ public class User extends AbstractResource<String>
    private Long forumPostsCount;
 
    @AssistedInject
-   User(WallhavenSession session, @Assisted boolean preloadDom, @Assisted String id)
+   User(WallhavenSession session, ResourceFactoryFactory rff, @Assisted boolean preloadDom, @Assisted String id)
    {
       super(session, preloadDom, id);
+      this.rff = rff;
 
       if (preloadDom) populateFields();
    }
@@ -225,6 +238,44 @@ public class User extends AbstractResource<String>
       forumPostsCount = parseLong(flaggedText);
 
       return forumPostsCount;
+   }
+
+   public List<WallpaperCollection> getCollections()
+   {
+      String url = getUrl() + "/favorites";
+
+      String html = getSession().getHttpClient().get(url).getBody();
+      HtmlElement dom = getSession().getHtmlParser().parse(html, url);
+
+      List<HtmlElement> lis = dom.find("ul#collections > li.collection");
+
+      return unmodifiableList(newArrayList(transform(lis, input -> {
+         DescriptiveParseExceptionSupplier supplier = of(WallpaperCollection.class, "collection link in user's page");
+
+         HtmlElement a = OptionalSelector.of(input, "a")
+               .orElseThrowSupplied(supplier);
+
+         String href = a.getAttribute("href").trim();
+         Pattern pattern = Pattern.compile("^" + Pattern.quote(getUrl() + "/favorites/") + "(\\d+)$");
+         Matcher matcher = pattern.matcher(href);
+
+         if (!matcher.matches()) {
+            throw supplier.get();
+         }
+
+         long id = 0;
+         try {
+            id = parseLong(matcher.group(1));
+         } catch (NumberFormatException e) {
+            throw supplier.get(e);
+         }
+
+         String name = OptionalSelector.of(a, "span.collection-label")
+               .orElseThrowSupplied(of(WallpaperCollection.class, "collection name")).getText();
+
+         return ((WallpaperCollectionFactory) rff.getFactoryFor(WallpaperCollection.class))
+               .create(false, new WallpaperCollectionIdentifier(id, this), name);
+      })));
    }
 
    private HtmlElement getElementNextToLabel(String labelContent)

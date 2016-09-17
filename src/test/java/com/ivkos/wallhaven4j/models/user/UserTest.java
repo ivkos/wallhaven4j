@@ -99,4 +99,10 @@ public class UserTest extends AbstractWallhavenTest
    {
       assertTrue(gandalf.getForumPostsCount() > 0);
    }
+
+   @Test
+   public void getCollections() throws Exception
+   {
+      assertFalse(gandalf.getCollections().isEmpty());
+   }
 }
