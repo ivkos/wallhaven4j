@@ -12,6 +12,7 @@ import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionIdent
 import com.ivkos.wallhaven4j.util.WallhavenGuiceModule;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
 import com.ivkos.wallhaven4j.util.exceptions.LoginException;
+import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
 
 import java.io.File;
@@ -118,8 +119,9 @@ public class Wallhaven
     *
     * @param id the wallpaper's id
     * @return the wallpaper
-    * @throws ResourceNotFoundException if there is no wallpaper with the specified id
-    * @throws IllegalArgumentException  if the specified id is not greater than zero
+    * @throws ResourceNotFoundException      if there is no wallpaper with the specified id
+    * @throws ResourceNotAccessibleException if the wallpaper is NSFW but the current Wallhaven session is anonymous
+    * @throws IllegalArgumentException       if the specified id is not greater than zero
     */
    public Wallpaper getWallpaper(long id)
    {
