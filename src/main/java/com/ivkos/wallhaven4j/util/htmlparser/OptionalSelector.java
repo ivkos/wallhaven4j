@@ -3,6 +3,7 @@ package com.ivkos.wallhaven4j.util.htmlparser;
 import com.ivkos.wallhaven4j.util.exceptions.ParseException;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -46,6 +47,17 @@ public class OptionalSelector
          }
 
          throw throwable;
+      }
+
+      return elements.get(0);
+   }
+
+   public <X extends Throwable> HtmlElement orElseThrowSupplied(Supplier<? extends X> throwable) throws X
+   {
+      List<HtmlElement> elements = select();
+
+      if (elements.isEmpty()) {
+         throw throwable.get();
       }
 
       return elements.get(0);

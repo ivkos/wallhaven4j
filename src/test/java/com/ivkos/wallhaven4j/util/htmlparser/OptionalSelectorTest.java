@@ -48,6 +48,12 @@ public class OptionalSelectorTest
       OptionalSelector.of(dom, ".nope").orElseThrow(new IllegalArgumentException());
    }
 
+   @Test(expected = IllegalArgumentException.class)
+   public void itThrowsTheSuppliedException() throws Exception
+   {
+      OptionalSelector.of(dom, ".nope").orElseThrowSupplied(IllegalArgumentException::new);
+   }
+
    @Test(expected = ParseException.class)
    public void itThrowsParseException() throws Exception
    {
