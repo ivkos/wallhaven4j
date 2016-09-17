@@ -1,9 +1,9 @@
 package com.ivkos.wallhaven4j.util.htmlparser;
 
+import com.google.common.base.Supplier;
 import com.ivkos.wallhaven4j.util.exceptions.ParseException;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
