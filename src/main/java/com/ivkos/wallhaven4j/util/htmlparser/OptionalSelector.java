@@ -57,7 +57,13 @@ public class OptionalSelector
       List<HtmlElement> elements = select();
 
       if (elements.isEmpty()) {
-         throw throwable.get();
+         X x = throwable.get();
+
+         if (x.getCause() == null) {
+            x.initCause(new ParseException("No such element: " + cssSelector));
+         }
+
+         throw x;
       }
 
       return elements.get(0);
