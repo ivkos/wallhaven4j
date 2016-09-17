@@ -33,4 +33,12 @@ public class DescriptiveParseExceptionSupplier implements Supplier<ParseExceptio
    {
       return parseExceptionSupplier.get();
    }
+
+   public ParseException get(Throwable cause)
+   {
+      ParseException parseException = parseExceptionSupplier.get();
+      parseException.initCause(cause);
+
+      return parseException;
+   }
 }
