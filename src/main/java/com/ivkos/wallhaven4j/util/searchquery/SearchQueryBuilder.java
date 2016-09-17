@@ -1,6 +1,7 @@
 package com.ivkos.wallhaven4j.util.searchquery;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.ivkos.wallhaven4j.models.misc.Ratio;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
@@ -9,8 +10,10 @@ import com.ivkos.wallhaven4j.models.misc.enums.Order;
 import com.ivkos.wallhaven4j.models.misc.enums.Purity;
 import com.ivkos.wallhaven4j.models.misc.enums.Sorting;
 
+import java.util.Collection;
 import java.util.EnumSet;
 
+import static com.ivkos.wallhaven4j.util.searchquery.SearchQueryDefaults.*;
 import static java.util.Arrays.asList;
 
 public class SearchQueryBuilder
@@ -23,8 +26,20 @@ public class SearchQueryBuilder
 
    // TODO: Add documentation
 
-   public SearchQueryBuilder keywords(Iterable<String> keywords)
+   private static <T> T checkNotNull(T ref, String refName)
    {
+      return Preconditions.checkNotNull(ref, "%s must not be null", refName);
+   }
+
+   public SearchQueryBuilder keywords(Collection<String> keywords)
+   {
+      checkNotNull(keywords, "keywords");
+
+      if (keywords.isEmpty()) {
+         this.query.keywords = DEFAULT_KEYWORDS;
+         return this;
+      }
+
       Joiner joiner = Joiner.on(" ");
       this.query.keywords = joiner.join(keywords);
       return this;
@@ -35,9 +50,16 @@ public class SearchQueryBuilder
       return keywords(asList(keywords));
    }
 
-   public SearchQueryBuilder categories(Iterable<Category> categories)
+   public SearchQueryBuilder categories(Collection<Category> categories)
    {
-      this.query.categories = EnumSet.copyOf(ImmutableSet.copyOf(categories));
+      checkNotNull(categories, "categories");
+
+      if (categories.isEmpty()) {
+         this.query.categories = DEFAULT_CATEGORIES;
+         return this;
+      }
+
+      this.query.categories = EnumSet.copyOf(categories);
       return this;
    }
 
@@ -46,9 +68,16 @@ public class SearchQueryBuilder
       return categories(ImmutableSet.copyOf(categories));
    }
 
-   public SearchQueryBuilder purity(Iterable<Purity> purity)
+   public SearchQueryBuilder purity(Collection<Purity> purity)
    {
-      this.query.purity = EnumSet.copyOf(ImmutableSet.copyOf(purity));
+      checkNotNull(purity, "purity");
+
+      if (purity.isEmpty()) {
+         this.query.purity = DEFAULT_PURITY;
+         return this;
+      }
+
+      this.query.purity = EnumSet.copyOf(purity);
       return this;
    }
 
@@ -59,18 +88,29 @@ public class SearchQueryBuilder
 
    public SearchQueryBuilder sorting(Sorting sorting)
    {
+      checkNotNull(sorting, "sorting");
+
       this.query.sorting = sorting;
       return this;
    }
 
    public SearchQueryBuilder order(Order order)
    {
+      checkNotNull(order, "order");
+
       this.query.order = order;
       return this;
    }
 
-   public SearchQueryBuilder resolutions(Iterable<Resolution> resolutions)
+   public SearchQueryBuilder resolutions(Collection<Resolution> resolutions)
    {
+      checkNotNull(resolutions, "resolutions");
+
+      if (resolutions.isEmpty()) {
+         this.query.resolutions = DEFAULT_RESOLUTIONS;
+         return this;
+      }
+
       this.query.resolutions = ImmutableSet.copyOf(resolutions);
       return this;
    }
@@ -80,8 +120,15 @@ public class SearchQueryBuilder
       return resolutions(ImmutableSet.copyOf(resolutions));
    }
 
-   public SearchQueryBuilder ratios(Iterable<Ratio> ratios)
+   public SearchQueryBuilder ratios(Collection<Ratio> ratios)
    {
+      checkNotNull(ratios, "ratios");
+
+      if (ratios.isEmpty()) {
+         this.query.ratios = DEFAULT_RATIOS;
+         return this;
+      }
+
       this.query.ratios = ImmutableSet.copyOf(ratios);
       return this;
    }
@@ -93,6 +140,8 @@ public class SearchQueryBuilder
 
    public SearchQueryBuilder pages(long pages)
    {
+      Preconditions.checkArgument(pages > 0, "pages must be greater than zero");
+
       this.query.pages = pages;
       return this;
    }
