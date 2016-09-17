@@ -4,11 +4,24 @@ import java.util.Objects;
 
 public class Resolution extends Ratio
 {
+   /**
+    * Creates a new <code>Resolution</code>.
+    *
+    * @param width  the width
+    * @param height the height
+    * @throws IllegalArgumentException if the width or height are not greater than zero
+    */
    public Resolution(long width, long height)
    {
       super(width, height);
    }
 
+   /**
+    * Calculates and returns the <code>Ratio</code> of this resolution.
+    *
+    * @return the <code>Ratio</code> of this resolution.
+    * @see Ratio
+    */
    public Ratio getRatio()
    {
       if (getWidth() == getHeight()) {

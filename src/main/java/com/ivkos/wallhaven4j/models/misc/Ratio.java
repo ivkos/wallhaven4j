@@ -9,6 +9,13 @@ public class Ratio
    private final long width;
    private final long height;
 
+   /**
+    * Creates a new <code>Ratio</code>.
+    *
+    * @param width  the width
+    * @param height the height
+    * @throws IllegalArgumentException if the width or height are not greater than zero
+    */
    public Ratio(long width, long height)
    {
       checkArgument(width > 0, "width must be greater than zero");
@@ -18,16 +25,31 @@ public class Ratio
       this.height = height;
    }
 
+   /**
+    * Returns the width.
+    *
+    * @return the width
+    */
    public long getWidth()
    {
       return width;
    }
 
+   /**
+    * Returns the height.
+    *
+    * @return the height
+    */
    public long getHeight()
    {
       return height;
    }
 
+   /**
+    * Returns a string representation in the format of <code>WxH</code>.
+    *
+    * @return a string representation in the format of <code>WxH</code>
+    */
    @Override
    public String toString()
    {
