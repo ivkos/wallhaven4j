@@ -19,6 +19,13 @@ public class UserTest extends AbstractWallhavenTest
    }
 
    @Test
+   public void getUsername() throws Exception
+   {
+      assertEquals("ivkos", ivkos.getId());
+      assertEquals("ivkos", ivkos.getUsername());
+   }
+
+   @Test
    public void getGroupName() throws Exception
    {
       assertEquals("Developer", gandalf.getGroupName());
