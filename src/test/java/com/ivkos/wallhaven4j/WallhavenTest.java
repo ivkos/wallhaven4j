@@ -19,6 +19,24 @@ public class WallhavenTest extends AbstractWallhavenTest
    }
 
    @Test(expected = ResourceNotFoundException.class)
+   public void getNonExistentTag() throws Exception
+   {
+      getWallhaven().getTag(999999999);
+   }
+
+   @Test(expected = ResourceNotFoundException.class)
+   public void getNonExistentUser() throws Exception
+   {
+      getWallhaven().getUser("nonexistentuser");
+   }
+
+   @Test(expected = ResourceNotFoundException.class)
+   public void getNonExistentWallpaperCollection() throws Exception
+   {
+      getWallhaven().getWallpaperCollection("ivkos", 999999999);
+   }
+
+   @Test(expected = ResourceNotFoundException.class)
    public void getNonExistentWallpaper() throws Exception
    {
       getWallhaven().getWallpaper(1);
