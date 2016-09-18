@@ -10,6 +10,7 @@ import com.ivkos.wallhaven4j.util.httpclient.HttpClient;
 import com.ivkos.wallhaven4j.util.httpclient.HttpResponse;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.StringEntity;
@@ -29,6 +30,8 @@ import static com.google.common.collect.Collections2.transform;
 
 public class ApacheHttpClient implements HttpClient
 {
+   public static final int CONNECTION_TIMEOUT_MS = 10 * 1000;
+
    private final org.apache.http.client.HttpClient apacheClient;
 
    @Inject
@@ -51,6 +54,11 @@ public class ApacheHttpClient implements HttpClient
       };
 
       base.setURI(URI.create(url));
+      base.setConfig(RequestConfig.custom()
+            .setConnectionRequestTimeout(CONNECTION_TIMEOUT_MS)
+            .setConnectTimeout(CONNECTION_TIMEOUT_MS)
+            .setSocketTimeout(CONNECTION_TIMEOUT_MS)
+            .build());
 
       if (headers != null && !headers.isEmpty()) {
          base.setHeaders(
