@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -85,6 +86,10 @@ public class ApacheHttpClient implements HttpClient
 
       //region Handle error codes
       int statusCode = response.getStatusLine().getStatusCode();
+
+      if (statusCode >= 400) {
+         EntityUtils.consumeQuietly(response.getEntity());
+      }
 
       if (statusCode == 404) {
          throw new ResourceNotFoundException("Resource not found");
