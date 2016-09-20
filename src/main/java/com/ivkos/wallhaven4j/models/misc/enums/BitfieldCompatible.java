@@ -1,14 +1,20 @@
 package com.ivkos.wallhaven4j.models.misc.enums;
 
+import java.util.Collection;
+import java.util.EnumSet;
+
 import static java.util.Arrays.asList;
 
 public interface BitfieldCompatible
 {
-   static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(Iterable<Enum<E>> enums)
+   static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(Collection<E> enumsCollection)
    {
       long result = 0;
 
-      for (Enum<E> theEnum : enums) {
+      if (enumsCollection.isEmpty()) return result;
+
+      EnumSet<E> enumSet = EnumSet.copyOf(enumsCollection);
+      for (Enum<E> theEnum : enumSet) {
          BitfieldCompatible bfc = (BitfieldCompatible) theEnum;
 
          result += bfc.getBitfieldValue();
@@ -18,7 +24,7 @@ public interface BitfieldCompatible
    }
 
    @SafeVarargs
-   static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(Enum<E>... enums)
+   static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(E... enums)
    {
       return bitfieldSumOf(asList(enums));
    }
