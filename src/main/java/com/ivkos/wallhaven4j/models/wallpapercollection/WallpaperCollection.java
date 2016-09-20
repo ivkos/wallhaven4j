@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 import com.ivkos.wallhaven4j.models.AbstractResource;
+import com.ivkos.wallhaven4j.models.misc.enums.Purity;
 import com.ivkos.wallhaven4j.models.user.User;
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.util.ResourceFieldGetter;
@@ -16,6 +17,7 @@ import com.ivkos.wallhaven4j.util.jsonserializer.JsonSerializer;
 
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.transform;
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
@@ -182,9 +184,18 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       return subscribers;
    }
 
-   // TODO: Implement
-   public List<Wallpaper> getWallpapers()
+   /**
+    * Fetch wallpapers that are in the collection
+    *
+    * @param pages    Number of pages to fetch. One page could contain 24 (default), 32 or 64 wallpapers,
+    *                 depending on the preference of the logged in user, set in Wallhaven's settings page.
+    * @param purities The purity of wallpapers to include in result.
+    * @return a list of wallpapers in the collection
+    */
+   public List<Wallpaper> getWallpapers(long pages, Purity... purities)
    {
+      checkArgument(pages > 0, "pages count must be greater than zero");
+
       return null;
    }
 

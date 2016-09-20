@@ -1,13 +1,17 @@
-package com.ivkos.wallhaven4j.models.misc.enums;
+package com.ivkos.wallhaven4j.models.misc.enums.util;
 
 import java.util.Collection;
 import java.util.EnumSet;
 
 import static java.util.Arrays.asList;
 
-public interface BitfieldCompatible
+public final class BitfieldSum
 {
-   static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(Collection<E> enumsCollection)
+   private BitfieldSum()
+   {
+   }
+
+   public static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(Collection<E> enumsCollection)
    {
       long result = 0;
 
@@ -24,16 +28,8 @@ public interface BitfieldCompatible
    }
 
    @SafeVarargs
-   static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(E... enums)
+   public static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(E... enums)
    {
       return bitfieldSumOf(asList(enums));
-   }
-
-   // Enums implicitly extend java.lang.Enum which implements ordinal()
-   int ordinal();
-
-   default long getBitfieldValue()
-   {
-      return 1 << ordinal();
    }
 }

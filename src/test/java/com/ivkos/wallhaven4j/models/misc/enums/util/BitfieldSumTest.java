@@ -1,12 +1,12 @@
-package com.ivkos.wallhaven4j.models.misc.enums;
+package com.ivkos.wallhaven4j.models.misc.enums.util;
 
 import org.junit.Test;
 
-import static com.ivkos.wallhaven4j.models.misc.enums.BitfieldCompatible.bitfieldSumOf;
 import static com.ivkos.wallhaven4j.models.misc.enums.Purity.*;
+import static com.ivkos.wallhaven4j.models.misc.enums.util.BitfieldSum.bitfieldSumOf;
 import static org.junit.Assert.assertEquals;
 
-public class BitfieldCompatibleTest
+public class BitfieldSumTest
 {
    @Test
    public void bitfieldSum() throws Exception
