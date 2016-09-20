@@ -2,12 +2,14 @@ package com.ivkos.wallhaven4j.util.searchquery;
 
 import com.ivkos.wallhaven4j.models.misc.Ratio;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
-import com.ivkos.wallhaven4j.models.misc.enums.*;
+import com.ivkos.wallhaven4j.models.misc.enums.Category;
+import com.ivkos.wallhaven4j.models.misc.enums.Order;
+import com.ivkos.wallhaven4j.models.misc.enums.Purity;
+import com.ivkos.wallhaven4j.models.misc.enums.Sorting;
 
 import java.util.EnumSet;
 import java.util.Set;
 
-import static com.google.common.collect.ImmutableSet.copyOf;
 import static com.ivkos.wallhaven4j.util.searchquery.SearchQueryDefaults.*;
 
 public class SearchQuery
@@ -23,25 +25,6 @@ public class SearchQuery
 
    protected SearchQuery()
    {
-   }
-
-   @SafeVarargs
-   protected static long bitfieldSumOf(Enum<? extends BitfieldCompatible>... enums)
-   {
-      return bitfieldSumOf(copyOf(enums));
-   }
-
-   protected static long bitfieldSumOf(Iterable<Enum<? extends BitfieldCompatible>> enums)
-   {
-      long result = 0;
-
-      for (Enum<? extends BitfieldCompatible> theEnum : enums) {
-         BitfieldCompatible bfc = (BitfieldCompatible) theEnum;
-
-         result += bfc.getBitfieldValue();
-      }
-
-      return result;
    }
 
    //region getters
