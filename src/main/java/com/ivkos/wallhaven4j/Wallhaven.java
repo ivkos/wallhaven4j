@@ -21,7 +21,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public class Wallhaven
 {
-   private final Injector injector;
    private final WallhavenSession session;
    private final ResourceFactoryFactory rff;
 
@@ -32,7 +31,8 @@ public class Wallhaven
     */
    public Wallhaven(File cookiesFile)
    {
-      injector = Guice.createInjector(new WallhavenGuiceModule(cookiesFile));
+      Injector injector = Guice.createInjector(new WallhavenGuiceModule(cookiesFile));
+
       session = injector.getInstance(WallhavenSession.class);
       rff = injector.getInstance(ResourceFactoryFactory.class);
    }
