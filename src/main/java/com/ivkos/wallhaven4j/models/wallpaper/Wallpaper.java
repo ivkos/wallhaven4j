@@ -282,7 +282,7 @@ public class Wallpaper extends AbstractResource<Long>
       try {
          favoritesCount = parseLong(favoritesCountString);
       } catch (NumberFormatException e) {
-         throw new ParseException("Could not parse views count", e);
+         throw new ParseException("Could not parse favorites count", e);
       }
 
       return favoritesCount;
