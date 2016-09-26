@@ -11,7 +11,7 @@ public final class BitfieldSum
    {
    }
 
-   public static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(Collection<E> enumsCollection)
+   public static <E extends Enum<E> & BitfieldCompatible> long of(Collection<E> enumsCollection)
    {
       long result = 0;
 
@@ -28,8 +28,8 @@ public final class BitfieldSum
    }
 
    @SafeVarargs
-   public static <E extends Enum<E> & BitfieldCompatible> long bitfieldSumOf(E... enums)
+   public static <E extends Enum<E> & BitfieldCompatible> long of(E... enums)
    {
-      return bitfieldSumOf(asList(enums));
+      return of(asList(enums));
    }
 }
