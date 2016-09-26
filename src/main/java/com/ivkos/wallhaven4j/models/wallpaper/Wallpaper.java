@@ -269,6 +269,25 @@ public class Wallpaper extends AbstractResource<Long>
       return viewsCount;
    }
 
+   @ResourceFieldGetter
+   public Long getFavoritesCount()
+   {
+      if (favoritesCount != null) return favoritesCount;
+
+      String favoritesCountString = of(getDom(),
+            "div.sidebar-content > div:nth-child(5) > dl > dd:nth-child(10) > a"
+      ).get().getText().trim().replace(",", "");
+
+
+      try {
+         favoritesCount = parseLong(favoritesCountString);
+      } catch (NumberFormatException e) {
+         throw new ParseException("Could not parse views count", e);
+      }
+
+      return favoritesCount;
+   }
+
    public List<WallpaperCollection> getCollections()
    {
       if (collections != null) return collections;

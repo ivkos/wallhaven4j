@@ -80,6 +80,12 @@ public class WallpaperTest extends AbstractWallhavenTest
    }
 
    @Test
+   public void getFavoritesCount() throws Exception
+   {
+      assertTrue(w.getFavoritesCount() > 0);
+   }
+
+   @Test
    public void getCollections() throws Exception
    {
       List<WallpaperCollection> collections = w.getCollections();
