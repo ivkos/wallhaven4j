@@ -3,6 +3,7 @@ package com.ivkos.wallhaven4j.util;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
+import com.ivkos.wallhaven4j.models.ResourceFactory;
 import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.tagcategory.TagCategoryFactory;
@@ -24,6 +25,14 @@ import static com.google.inject.Scopes.SINGLETON;
 
 public class WallhavenGuiceModule extends AbstractModule
 {
+   private static final Class[] factories = {
+         TagFactory.class,
+         TagCategoryFactory.class,
+         UserFactory.class,
+         WallpaperFactory.class,
+         WallpaperCollectionFactory.class
+   };
+
    private final File cookiesFile;
 
    public WallhavenGuiceModule()
@@ -46,11 +55,14 @@ public class WallhavenGuiceModule extends AbstractModule
       bind(HtmlParser.class).to(JsoupHtmlParser.class).in(SINGLETON);
       bind(JsonSerializer.class).to(GsonJsonSerializer.class).in(SINGLETON);
 
-      install(new FactoryModuleBuilder().build(TagFactory.class));
-      install(new FactoryModuleBuilder().build(TagCategoryFactory.class));
-      install(new FactoryModuleBuilder().build(UserFactory.class));
-      install(new FactoryModuleBuilder().build(WallpaperFactory.class));
-      install(new FactoryModuleBuilder().build(WallpaperCollectionFactory.class));
+      for (Class factory : factories) {
+         installFactory(factory);
+      }
+   }
+
+   private <F extends ResourceFactory> void installFactory(Class<F> factoryClass)
+   {
+      install(new FactoryModuleBuilder().build(factoryClass));
    }
 
    @Provides
