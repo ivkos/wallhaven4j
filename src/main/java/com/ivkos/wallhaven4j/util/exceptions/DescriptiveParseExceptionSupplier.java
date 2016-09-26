@@ -14,14 +14,14 @@ public class DescriptiveParseExceptionSupplier implements Supplier<ParseExceptio
       this.parseExceptionSupplier = parseExceptionSupplier;
    }
 
-   public static <R extends AbstractResource> DescriptiveParseExceptionSupplier of(R thrower, String parsingWhat)
+   public static <R extends AbstractResource> DescriptiveParseExceptionSupplier forResource(R thrower, String parsingWhat)
    {
       return new DescriptiveParseExceptionSupplier(() -> new ParseException(format("Could not parse %s of %s with id %s",
             parsingWhat, thrower.getClass().getSimpleName(), thrower.getId().toString()
       )));
    }
 
-   public static <R extends AbstractResource> DescriptiveParseExceptionSupplier of(Class<R> throwingClass, String parsingWhat)
+   public static <R extends AbstractResource> DescriptiveParseExceptionSupplier forResource(Class<R> throwingClass, String parsingWhat)
    {
       return new DescriptiveParseExceptionSupplier(() -> new ParseException(format("Could not parse %s of %s",
             parsingWhat, throwingClass.getSimpleName()

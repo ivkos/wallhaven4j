@@ -6,7 +6,7 @@ import com.ivkos.wallhaven4j.models.user.User;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 import com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector;
 
-import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.of;
+import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.forResource;
 
 class WallpaperCollectionTransformers
 {
@@ -21,7 +21,7 @@ class WallpaperCollectionTransformers
    public User transformSubscribers(HtmlElement input)
    {
       String username = OptionalSelector.of(input, "a.username")
-            .orElseThrowSupplied(of(WallpaperCollection.class, "subscribed user"))
+            .orElseThrowSupplied(forResource(WallpaperCollection.class, "subscribed user"))
             .getText()
             .trim();
 

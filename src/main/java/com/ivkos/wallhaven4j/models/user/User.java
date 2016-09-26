@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.transform;
-import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.of;
+import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.forResource;
 import static java.lang.Long.parseLong;
 import static java.util.Collections.unmodifiableList;
 
@@ -250,7 +250,7 @@ public class User extends AbstractResource<String>
       List<HtmlElement> lis = dom.find("ul#collections > li.collection");
 
       return unmodifiableList(newArrayList(transform(lis, input -> {
-         DescriptiveParseExceptionSupplier supplier = of(WallpaperCollection.class, "collection link in user's page");
+         DescriptiveParseExceptionSupplier supplier = forResource(WallpaperCollection.class, "collection link in user's page");
 
          HtmlElement a = OptionalSelector.of(input, "a")
                .orElseThrowSupplied(supplier);
@@ -271,7 +271,7 @@ public class User extends AbstractResource<String>
          }
 
          String name = OptionalSelector.of(a, "span.collection-label")
-               .orElseThrowSupplied(of(WallpaperCollection.class, "collection name")).getText();
+               .orElseThrowSupplied(forResource(WallpaperCollection.class, "collection name")).getText();
 
          return ((WallpaperCollectionFactory) rff.getFactoryFor(WallpaperCollection.class))
                .create(false, new WallpaperCollectionIdentifier(id, this), name);

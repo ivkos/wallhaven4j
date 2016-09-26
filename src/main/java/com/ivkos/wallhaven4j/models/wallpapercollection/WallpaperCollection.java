@@ -23,7 +23,7 @@ import static com.google.common.collect.Lists.transform;
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 import static com.google.common.net.HttpHeaders.X_REQUESTED_WITH;
 import static com.google.common.net.MediaType.JSON_UTF_8;
-import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.of;
+import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.forResource;
 import static java.lang.Long.parseLong;
 import static java.util.Collections.unmodifiableList;
 
@@ -91,7 +91,8 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
    {
       if (name != null) return name;
 
-      HtmlElement nameElement = OptionalSelector.of(getDom(), "#profile-content > header > h1").orElseThrowSupplied(of(this, "name"));
+      HtmlElement nameElement = OptionalSelector.of(getDom(), "#profile-content > header > h1")
+            .orElseThrowSupplied(forResource(this, "name"));
 
       this.name = nameElement.getText();
 
@@ -104,14 +105,14 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       if (wallpapersCount != null) return wallpapersCount;
 
       HtmlElement countElement = OptionalSelector.of(getDom(), "#profile-content > header > div > span:nth-child(1)")
-            .orElseThrowSupplied(of(this, "wallpapers count"));
+            .orElseThrowSupplied(forResource(this, "wallpapers count"));
 
       String countText = countElement.getText().trim().replace(",", "");
 
       try {
          wallpapersCount = parseLong(countText);
       } catch (NumberFormatException e) {
-         throw of(this, "wallpapers count").get(e);
+         throw forResource(this, "wallpapers count").get(e);
       }
 
       return wallpapersCount;
@@ -123,14 +124,14 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       if (viewsCount != null) return viewsCount;
 
       HtmlElement countElement = OptionalSelector.of(getDom(), "#profile-content > header > div > span:nth-child(2)")
-            .orElseThrowSupplied(of(this, "views count"));
+            .orElseThrowSupplied(forResource(this, "views count"));
 
       String countText = countElement.getText().trim().replace(",", "");
 
       try {
          viewsCount = parseLong(countText);
       } catch (NumberFormatException e) {
-         throw of(this, "views count").get(e);
+         throw forResource(this, "views count").get(e);
       }
 
       return viewsCount;
@@ -142,14 +143,14 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       if (subscribersCount != null) return subscribersCount;
 
       HtmlElement countElement = OptionalSelector.of(getDom(), "#profile-content > header > div > span:nth-child(3) > a")
-            .orElseThrowSupplied(of(this, "subscribers count"));
+            .orElseThrowSupplied(forResource(this, "subscribers count"));
 
       String countText = countElement.getText().trim().replace(",", "");
 
       try {
          subscribersCount = parseLong(countText);
       } catch (NumberFormatException e) {
-         throw of(this, "subscribers count").get(e);
+         throw forResource(this, "subscribers count").get(e);
       }
 
       return subscribersCount;
