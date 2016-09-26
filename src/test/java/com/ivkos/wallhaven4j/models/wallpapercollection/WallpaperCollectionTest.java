@@ -1,7 +1,9 @@
 package com.ivkos.wallhaven4j.models.wallpapercollection;
 
 import com.ivkos.wallhaven4j.AbstractWallhavenTest;
+import com.ivkos.wallhaven4j.models.misc.enums.Purity;
 import com.ivkos.wallhaven4j.models.user.User;
+import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -82,5 +84,13 @@ public class WallpaperCollectionTest extends AbstractWallhavenTest
    public void getSubscribersFailsForForeignCollectionsWhileLoggedIn() throws Exception
    {
       wcLoggedIn.getSubscribers();
+   }
+
+   @Test
+   public void getWallpapers() throws Exception
+   {
+      List<Wallpaper> wallpapers = wc.getWallpapers(3, Purity.SFW, Purity.SKETCHY, Purity.NSFW);
+
+      assertEquals(3 * 24, wallpapers.size());
    }
 }
