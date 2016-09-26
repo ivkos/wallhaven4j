@@ -47,9 +47,7 @@ public class Wallhaven
     */
    public Wallhaven(String username, String password, File cookiesFile)
    {
-      injector = Guice.createInjector(new WallhavenGuiceModule(cookiesFile));
-      session = injector.getInstance(WallhavenSession.class);
-      rff = injector.getInstance(ResourceFactoryFactory.class);
+      this(cookiesFile);
 
       session.login(username, password);
    }
