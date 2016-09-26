@@ -8,8 +8,9 @@ import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
 import com.ivkos.wallhaven4j.util.WallhavenGuiceModule;
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class AbstractResourceTest
 {
@@ -23,8 +24,8 @@ public class AbstractResourceTest
       Tag tag1 = tagFactory.create(false, 1L, "somename", Purity.SFW);
       Tag tag2 = tagFactory.create(false, 1L, "somename", Purity.SFW);
 
-      Assert.assertTrue(tag1.equals(tag2));
-      Assert.assertTrue(tag1.hashCode() == tag2.hashCode());
+      assertTrue(tag1.equals(tag2));
+      assertTrue(tag1.hashCode() == tag2.hashCode());
    }
 
    @Test
@@ -33,7 +34,15 @@ public class AbstractResourceTest
       Tag tag1 = tagFactory.create(false, 1L, "somename", Purity.SFW);
       Wallpaper wallpaper = wallpaperFactory.create(false, 1L);
 
-      Assert.assertFalse(tag1.equals(wallpaper));
-      Assert.assertFalse(tag1.hashCode() == wallpaper.hashCode());
+      assertFalse(tag1.equals(wallpaper));
+      assertFalse(tag1.hashCode() == wallpaper.hashCode());
+   }
+
+   @Test
+   public void toAString() throws Exception
+   {
+      Wallpaper wallpaper = wallpaperFactory.create(false, 42L);
+
+      assertEquals("42", wallpaper.toString());
    }
 }

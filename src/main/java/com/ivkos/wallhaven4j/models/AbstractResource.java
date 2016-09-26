@@ -93,7 +93,7 @@ public abstract class AbstractResource<T>
    @Override
    public String toString()
    {
-      return this.getClass().getSimpleName() + " " + this.getId();
+      return this.getId().toString();
    }
    //endregion
 }
