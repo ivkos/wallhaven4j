@@ -24,8 +24,6 @@ public class SearchQueryBuilder
    {
    }
 
-   // TODO: Add documentation
-
    private static <T> T checkNotNull(T ref, String refName)
    {
       return Preconditions.checkNotNull(ref, "%s must not be null", refName);
