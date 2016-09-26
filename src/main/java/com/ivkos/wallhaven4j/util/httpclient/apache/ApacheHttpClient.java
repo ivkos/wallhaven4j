@@ -106,7 +106,11 @@ public class ApacheHttpClient implements HttpClient
       }
       //endregion
 
-      return new ApacheHttpResponse(response);
+      ApacheHttpResponse theResponse = new ApacheHttpResponse(response);
+
+      base.releaseConnection();
+
+      return theResponse;
    }
 
 
