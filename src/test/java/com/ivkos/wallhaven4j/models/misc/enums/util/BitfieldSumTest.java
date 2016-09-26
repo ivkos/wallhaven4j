@@ -27,4 +27,12 @@ public class BitfieldSumTest
    {
       assertEquals(SFW.getBitfieldValue(), BitfieldSum.of(SFW, SFW));
    }
+
+   @Test
+   public void asBinaryString() throws Exception
+   {
+      assertEquals("000", BitfieldSum.asThreeBitBinaryString());
+      assertEquals("001", BitfieldSum.asThreeBitBinaryString(NSFW));
+      assertEquals("101", BitfieldSum.asThreeBitBinaryString(SFW, NSFW));
+   }
 }

@@ -32,4 +32,15 @@ public final class BitfieldSum
    {
       return of(asList(enums));
    }
+
+   public static <E extends Enum<E> & BitfieldCompatible> String asThreeBitBinaryString(Collection<E> enumsCollection)
+   {
+      return String.format("%03d", Long.parseLong(Long.toBinaryString(of(enumsCollection))));
+   }
+
+   @SafeVarargs
+   public static <E extends Enum<E> & BitfieldCompatible> String asThreeBitBinaryString(E... enums)
+   {
+      return asThreeBitBinaryString(asList(enums));
+   }
 }
