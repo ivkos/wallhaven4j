@@ -54,6 +54,7 @@ public class Wallpaper extends AbstractResource<Long>
    private Double size;
    private Long viewsCount;
 
+   private Long favoritesCount;
    private List<WallpaperCollection> collections;
 
    @AssistedInject
@@ -65,9 +66,36 @@ public class Wallpaper extends AbstractResource<Long>
              @Assisted long id)
    {
       super(session, preloadDom, id);
+
       this.jsonSerializer = jsonSerializer;
       this.rff = resourceFactoryFactory;
       this.transformers = wallpaperTransformers;
+
+      if (preloadDom) populateFields();
+   }
+
+   @AssistedInject
+   Wallpaper(WallhavenSession session,
+             JsonSerializer jsonSerializer,
+             ResourceFactoryFactory resourceFactoryFactory,
+             WallpaperTransformers wallpaperTransformers,
+             @Assisted boolean preloadDom,
+             @Assisted("id") long id,
+             @Assisted Category category,
+             @Assisted Purity purity,
+             @Assisted Resolution resolution,
+             @Assisted("favoritesCount") long favoritesCount)
+   {
+      super(session, preloadDom, id);
+
+      this.jsonSerializer = jsonSerializer;
+      this.rff = resourceFactoryFactory;
+      this.transformers = wallpaperTransformers;
+
+      this.category = category;
+      this.purity = purity;
+      this.resolution = resolution;
+      this.favoritesCount = favoritesCount;
 
       if (preloadDom) populateFields();
    }
