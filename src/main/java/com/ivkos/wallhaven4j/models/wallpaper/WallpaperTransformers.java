@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.ivkos.wallhaven4j.models.misc.enums.Purity.*;
+import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.forResource;
 import static com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector.of;
 import static java.lang.Long.parseLong;
 import static java.lang.String.format;
@@ -35,14 +36,14 @@ class WallpaperTransformers
    WallpaperCollection transformToWallpaperCollection(HtmlElement input)
    {
       String username = of(input, "a.username")
-            .orElseThrow(new ParseException("Could not get username for wallpaper collection"))
+            .orElseThrow(forResource(WallpaperCollection.class, "username"))
             .getText();
 
       User user = rff.getFactoryFor(User.class).create(false, username);
 
       HtmlElement lastLink = input.findLast("a");
       if (lastLink == null)
-         throw new ParseException("Could not parse wallpaper collection, no URL of collection");
+         throw forResource(WallpaperCollection.class, "URL of collection").get();
 
       String name = lastLink.getText();
       String href = lastLink.getAttribute("href");

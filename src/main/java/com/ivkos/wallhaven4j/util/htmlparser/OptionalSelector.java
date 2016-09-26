@@ -37,22 +37,7 @@ public class OptionalSelector
       return elements.get(0);
    }
 
-   public <X extends Throwable> HtmlElement orElseThrow(X throwable) throws X
-   {
-      List<HtmlElement> elements = select();
-
-      if (elements.isEmpty()) {
-         if (throwable.getCause() == null) {
-            throwable.initCause(new ParseException("No such element: " + cssSelector));
-         }
-
-         throw throwable;
-      }
-
-      return elements.get(0);
-   }
-
-   public <X extends Throwable> HtmlElement orElseThrowSupplied(Supplier<? extends X> throwable) throws X
+   public <X extends Throwable> HtmlElement orElseThrow(Supplier<? extends X> throwable) throws X
    {
       List<HtmlElement> elements = select();
 

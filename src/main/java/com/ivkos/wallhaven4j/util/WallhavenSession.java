@@ -70,7 +70,7 @@ public class WallhavenSession
 
       HtmlElement dom = htmlParser.parse(html, URL_LOGIN);
       HtmlElement metaRefresh = OptionalSelector.of(dom.findFirst("head"), "meta[http-equiv=refresh]")
-            .orElseThrow(parseException);
+            .orElseThrow(() -> parseException);
 
       String redirectUrl;
       try {
@@ -106,7 +106,7 @@ public class WallhavenSession
 
       String token = OptionalSelector
             .of(dom, "input[name=\"_token\"]")
-            .orElseThrow(parseException)
+            .orElseThrow(() -> parseException)
             .getValue();
 
       if (token.isEmpty()) {

@@ -104,7 +104,7 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       if (name != null) return name;
 
       HtmlElement nameElement = OptionalSelector.of(getDom(), "#profile-content > header > h1")
-            .orElseThrowSupplied(forResource(this, "name"));
+            .orElseThrow(forResource(this, "name"));
 
       this.name = nameElement.getText();
 
@@ -117,7 +117,7 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       if (wallpapersCount != null) return wallpapersCount;
 
       HtmlElement countElement = OptionalSelector.of(getDom(), "#profile-content > header > div > span:nth-child(1)")
-            .orElseThrowSupplied(forResource(this, "wallpapers count"));
+            .orElseThrow(forResource(this, "wallpapers count"));
 
       String countText = countElement.getText().trim().replace(",", "");
 
@@ -136,7 +136,7 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       if (viewsCount != null) return viewsCount;
 
       HtmlElement countElement = OptionalSelector.of(getDom(), "#profile-content > header > div > span:nth-child(2)")
-            .orElseThrowSupplied(forResource(this, "views count"));
+            .orElseThrow(forResource(this, "views count"));
 
       String countText = countElement.getText().trim().replace(",", "");
 
@@ -155,7 +155,7 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       if (subscribersCount != null) return subscribersCount;
 
       HtmlElement countElement = OptionalSelector.of(getDom(), "#profile-content > header > div > span:nth-child(3) > a")
-            .orElseThrowSupplied(forResource(this, "subscribers count"));
+            .orElseThrow(forResource(this, "subscribers count"));
 
       String countText = countElement.getText().trim().replace(",", "");
 

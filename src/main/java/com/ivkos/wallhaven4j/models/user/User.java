@@ -253,7 +253,7 @@ public class User extends AbstractResource<String>
          DescriptiveParseExceptionSupplier supplier = forResource(WallpaperCollection.class, "collection link in user's page");
 
          HtmlElement a = OptionalSelector.of(input, "a")
-               .orElseThrowSupplied(supplier);
+               .orElseThrow(supplier);
 
          String href = a.getAttribute("href").trim();
          Pattern pattern = Pattern.compile("^" + Pattern.quote(getUrl() + "/favorites/") + "(\\d+)$");
@@ -271,7 +271,7 @@ public class User extends AbstractResource<String>
          }
 
          String name = OptionalSelector.of(a, "span.collection-label")
-               .orElseThrowSupplied(forResource(WallpaperCollection.class, "collection name")).getText();
+               .orElseThrow(forResource(WallpaperCollection.class, "collection name")).getText();
 
          return ((WallpaperCollectionFactory) rff.getFactoryFor(WallpaperCollection.class))
                .create(false, new WallpaperCollectionIdentifier(id, this), name);

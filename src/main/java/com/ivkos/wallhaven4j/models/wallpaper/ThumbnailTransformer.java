@@ -9,12 +9,8 @@ import com.ivkos.wallhaven4j.util.exceptions.ParseException;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 import com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector;
 
-import static com.ivkos.wallhaven4j.models.misc.enums.Category.ANIME;
-import static com.ivkos.wallhaven4j.models.misc.enums.Category.GENERAL;
-import static com.ivkos.wallhaven4j.models.misc.enums.Category.PEOPLE;
-import static com.ivkos.wallhaven4j.models.misc.enums.Purity.NSFW;
-import static com.ivkos.wallhaven4j.models.misc.enums.Purity.SFW;
-import static com.ivkos.wallhaven4j.models.misc.enums.Purity.SKETCHY;
+import static com.ivkos.wallhaven4j.models.misc.enums.Category.*;
+import static com.ivkos.wallhaven4j.models.misc.enums.Purity.*;
 import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.forResource;
 import static java.lang.Long.parseLong;
 
@@ -61,7 +57,7 @@ public class ThumbnailTransformer
 
       //region resolution
       HtmlElement resolutionElement = OptionalSelector.of(figureElement, "span.wall-res")
-            .orElseThrowSupplied(forResource(Wallpaper.class, "resolution in thumbnail"));
+            .orElseThrow(forResource(Wallpaper.class, "resolution in thumbnail"));
 
       String resolutionText = resolutionElement.getText().replace(" ", "");
       Resolution resolution = Resolution.parse(resolutionText);
@@ -69,7 +65,7 @@ public class ThumbnailTransformer
 
       //region favorites count
       String favoritesCountText = OptionalSelector.of(figureElement, "a.wall-favs")
-            .orElseThrowSupplied(forResource(Wallpaper.class, "favorites count in thumbnail"))
+            .orElseThrow(forResource(Wallpaper.class, "favorites count in thumbnail"))
             .getText()
             .trim()
             .replace(",", "");

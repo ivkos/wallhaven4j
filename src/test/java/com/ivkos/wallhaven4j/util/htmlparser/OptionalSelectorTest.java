@@ -36,7 +36,7 @@ public class OptionalSelectorTest
    @Test
    public void itDoesNotThrow() throws Exception
    {
-      HtmlElement htmlElement = legitSelector.orElseThrow(new Exception());
+      HtmlElement htmlElement = legitSelector.orElseThrow(Exception::new);
 
       assertNotNull(htmlElement);
       assertEquals("div", htmlElement.getTagName());
@@ -45,13 +45,7 @@ public class OptionalSelectorTest
    @Test(expected = IllegalArgumentException.class)
    public void itThrowsTheSpecifiedException() throws Exception
    {
-      OptionalSelector.of(dom, ".nope").orElseThrow(new IllegalArgumentException());
-   }
-
-   @Test(expected = IllegalArgumentException.class)
-   public void itThrowsTheSuppliedException() throws Exception
-   {
-      OptionalSelector.of(dom, ".nope").orElseThrowSupplied(IllegalArgumentException::new);
+      OptionalSelector.of(dom, ".nope").orElseThrow(IllegalArgumentException::new);
    }
 
    @Test(expected = ParseException.class)

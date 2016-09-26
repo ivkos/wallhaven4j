@@ -21,7 +21,7 @@ class WallpaperCollectionTransformers
    public User transformSubscribers(HtmlElement input)
    {
       String username = OptionalSelector.of(input, "a.username")
-            .orElseThrowSupplied(forResource(WallpaperCollection.class, "subscribed user"))
+            .orElseThrow(forResource(WallpaperCollection.class, "subscribed user"))
             .getText()
             .trim();
 
