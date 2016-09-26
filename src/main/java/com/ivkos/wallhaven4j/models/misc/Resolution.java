@@ -1,6 +1,13 @@
 package com.ivkos.wallhaven4j.models.misc;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static java.lang.Long.parseLong;
 
 public class Resolution extends Ratio
 {
@@ -14,6 +21,32 @@ public class Resolution extends Ratio
    public Resolution(long width, long height)
    {
       super(width, height);
+   }
+
+   /**
+    * Parses a resolution string and returns a corresponding Resolution object
+    *
+    * @param resolutionString resolution string in the format of WxH
+    * @return the resolution object
+    */
+   public static Resolution parse(String resolutionString)
+   {
+      Preconditions.checkArgument(!isNullOrEmpty(resolutionString), "resolution string must not be null or empty");
+
+      Pattern pattern = Pattern.compile("^(\\d+)[xX](\\d+)$");
+      Matcher matcher = pattern.matcher(resolutionString.trim());
+
+      if (!matcher.matches()) {
+         throw new IllegalArgumentException("Illegal resolution string format");
+      }
+
+      String wString = matcher.group(1);
+      String hString = matcher.group(2);
+
+      long w = parseLong(wString);
+      long h = parseLong(hString);
+
+      return new Resolution(w, h);
    }
 
    /**
