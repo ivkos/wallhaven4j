@@ -8,6 +8,8 @@ public interface HttpClient
 
    HttpResponse get(String url, Map<String, String> headers);
 
+   HttpResponse get(String url, Map<String, String> headers, Map<String, String> queryParams);
+
    HttpResponse get(String url);
 
    HttpResponse post(String url, Map<String, String> headers, String body);

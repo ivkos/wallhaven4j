@@ -13,6 +13,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
@@ -23,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -112,6 +114,23 @@ public class ApacheHttpClient implements HttpClient
    public HttpResponse get(String url, Map<String, String> headers)
    {
       return execute("GET", url, headers, null);
+   }
+
+   @Override
+   public HttpResponse get(String url, Map<String, String> headers, Map<String, String> queryParams)
+   {
+      URIBuilder uriBuilder;
+      try {
+         uriBuilder = new URIBuilder(url);
+      } catch (URISyntaxException e) {
+         throw new RuntimeException(e);
+      }
+
+      for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+         uriBuilder.addParameter(entry.getKey(), entry.getValue());
+      }
+
+      return get(uriBuilder.toString(), headers);
    }
 
    public HttpResponse get(String url)
