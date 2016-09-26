@@ -27,9 +27,9 @@ public abstract class AbstractResource<T>
       }
    }
 
-   protected final HtmlElement getDom(boolean enableCache)
+   protected final HtmlElement getDom()
    {
-      if (this.dom != null && enableCache) {
+      if (this.dom != null) {
          return this.dom;
       }
 
@@ -37,11 +37,6 @@ public abstract class AbstractResource<T>
       this.dom = getSession().getHtmlParser().parse(html, getUrl());
 
       return this.dom;
-   }
-
-   protected final HtmlElement getDom()
-   {
-      return getDom(true);
    }
 
    protected final void populateFields()
