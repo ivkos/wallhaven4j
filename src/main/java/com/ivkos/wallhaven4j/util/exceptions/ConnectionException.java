@@ -1,6 +1,6 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
-public class ConnectionException extends RuntimeException
+public class ConnectionException extends WallhavenException
 {
    public ConnectionException()
    {

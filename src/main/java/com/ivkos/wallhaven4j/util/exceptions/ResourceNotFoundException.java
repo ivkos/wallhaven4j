@@ -1,6 +1,6 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
-public class ResourceNotFoundException extends RuntimeException
+public class ResourceNotFoundException extends WallhavenException
 {
    public ResourceNotFoundException()
    {

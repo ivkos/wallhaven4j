@@ -1,6 +1,6 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
-public class ParseException extends RuntimeException
+public class ParseException extends WallhavenException
 {
    public ParseException()
    {
