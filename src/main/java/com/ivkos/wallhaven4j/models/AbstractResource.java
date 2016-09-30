@@ -2,6 +2,7 @@ package com.ivkos.wallhaven4j.models;
 
 import com.ivkos.wallhaven4j.util.ResourceFieldGetter;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
+import com.ivkos.wallhaven4j.util.exceptions.WallhavenException;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 
 import java.lang.reflect.InvocationTargetException;
@@ -48,8 +49,10 @@ public abstract class AbstractResource<T>
 
          try {
             method.invoke(this);
-         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException("A failure of epic proportions has occurred", e);
+         } catch (IllegalAccessException e) {
+            throw new WallhavenException("Could not populate fields of resource", e);
+         } catch (InvocationTargetException e) {
+            throw new WallhavenException("Could not populate fields of resource", e.getCause());
          }
       }
    }

@@ -13,6 +13,7 @@ import com.ivkos.wallhaven4j.util.ResourceFieldGetter;
 import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
+import com.ivkos.wallhaven4j.util.exceptions.WallhavenException;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 import com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector;
 import com.ivkos.wallhaven4j.util.httpclient.HttpResponse;
@@ -223,7 +224,7 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
          try {
             wallpapers.addAll(future.get());
          } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Could not get wallpapers in collection", e);
+            throw new WallhavenException("Could not get wallpapers in collection", e);
          }
       }
 

@@ -2,6 +2,7 @@ package com.ivkos.wallhaven4j.util;
 
 import com.google.common.io.Files;
 import com.google.common.reflect.TypeToken;
+import com.ivkos.wallhaven4j.util.exceptions.WallhavenException;
 import com.ivkos.wallhaven4j.util.jsonserializer.JsonSerializer;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
@@ -32,7 +33,7 @@ class FileCookieStore implements CookieStore
             Files.touch(cookiesFile);
 
          } catch (IOException e) {
-            throw new RuntimeException("Could not create file", e);
+            throw new WallhavenException("Could not create file", e);
          }
       }
 
@@ -45,7 +46,7 @@ class FileCookieStore implements CookieStore
       try {
          json = Files.toString(cookiesFile, Charset.defaultCharset());
       } catch (IOException e) {
-         throw new RuntimeException("Could not load cookies from file", e);
+         throw new WallhavenException("Could not load cookies from file", e);
       }
 
       if (json.isEmpty()) return;
@@ -68,7 +69,7 @@ class FileCookieStore implements CookieStore
       try {
          Files.write(json.getBytes(), cookiesFile);
       } catch (IOException e) {
-         throw new RuntimeException("Could not write cookies to file", e);
+         throw new WallhavenException("Could not write cookies to file", e);
       }
    }
 

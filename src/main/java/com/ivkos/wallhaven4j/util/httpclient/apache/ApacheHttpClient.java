@@ -127,7 +127,7 @@ public class ApacheHttpClient implements HttpClient
       try {
          uriBuilder = new URIBuilder(url);
       } catch (URISyntaxException e) {
-         throw new RuntimeException(e);
+         throw new ConnectionException(e);
       }
 
       for (Map.Entry<String, String> entry : queryParams.entrySet()) {
@@ -163,7 +163,7 @@ public class ApacheHttpClient implements HttpClient
          InputStream content = urlEncodedFormEntity.getContent();
          urlEncodedBody = CharStreams.toString(new InputStreamReader(content));
       } catch (IOException e) {
-         throw new RuntimeException(e);
+         throw new ConnectionException(e);
       }
 
       ImmutableMap<String, String> headers2 = ImmutableMap.<String, String>builder()
