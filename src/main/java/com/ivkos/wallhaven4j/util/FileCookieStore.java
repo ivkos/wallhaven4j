@@ -31,9 +31,8 @@ class FileCookieStore implements CookieStore
          try {
             Files.createParentDirs(cookiesFile);
             Files.touch(cookiesFile);
-
          } catch (IOException e) {
-            throw new WallhavenException("Could not create file", e);
+            throw new WallhavenException("Could not create cookie file", e);
          }
       }
 
