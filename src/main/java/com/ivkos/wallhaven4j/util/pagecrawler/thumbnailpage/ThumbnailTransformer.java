@@ -1,10 +1,12 @@
-package com.ivkos.wallhaven4j.models.wallpaper;
+package com.ivkos.wallhaven4j.util.pagecrawler.thumbnailpage;
 
 import com.google.inject.Inject;
 import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
 import com.ivkos.wallhaven4j.models.misc.enums.Category;
 import com.ivkos.wallhaven4j.models.misc.enums.Purity;
+import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
+import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
 import com.ivkos.wallhaven4j.util.exceptions.ParseException;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
 import com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector;
@@ -14,7 +16,7 @@ import static com.ivkos.wallhaven4j.models.misc.enums.Purity.*;
 import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.forResource;
 import static java.lang.Long.parseLong;
 
-public class ThumbnailTransformer
+class ThumbnailTransformer
 {
    private final ResourceFactoryFactory rff;
 

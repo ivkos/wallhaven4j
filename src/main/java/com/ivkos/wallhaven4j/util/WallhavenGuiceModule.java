@@ -16,6 +16,7 @@ import com.ivkos.wallhaven4j.util.httpclient.HttpClient;
 import com.ivkos.wallhaven4j.util.httpclient.apache.ApacheHttpClient;
 import com.ivkos.wallhaven4j.util.jsonserializer.GsonJsonSerializer;
 import com.ivkos.wallhaven4j.util.jsonserializer.JsonSerializer;
+import com.ivkos.wallhaven4j.util.pagecrawler.thumbnailpage.ThumbnailPageCrawlerFactory;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 
@@ -30,7 +31,9 @@ public class WallhavenGuiceModule extends AbstractModule
          TagCategoryFactory.class,
          UserFactory.class,
          WallpaperFactory.class,
-         WallpaperCollectionFactory.class
+         WallpaperCollectionFactory.class,
+
+         ThumbnailPageCrawlerFactory.class
    };
 
    private final File cookiesFile;
