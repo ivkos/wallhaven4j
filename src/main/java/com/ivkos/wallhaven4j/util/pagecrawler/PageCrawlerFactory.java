@@ -1,6 +1,6 @@
 package com.ivkos.wallhaven4j.util.pagecrawler;
 
-public interface PageCrawlerFactory<T>
+public interface PageCrawlerFactory<C extends PageCrawler<?>>
 {
-   PageCrawler<T> create(String pageUrl);
+   C create(String pageUrl);
 }
