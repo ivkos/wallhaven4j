@@ -9,20 +9,26 @@ import com.ivkos.wallhaven4j.models.user.User;
 import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionIdentifier;
+import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import com.ivkos.wallhaven4j.util.WallhavenGuiceModule;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
 import com.ivkos.wallhaven4j.util.exceptions.LoginException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
+import com.ivkos.wallhaven4j.util.pagecrawler.thumbnailpage.ThumbnailPageCrawlerFactory;
+import com.ivkos.wallhaven4j.util.searchquery.SearchQuery;
 
 import java.io.File;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Wallhaven
 {
    private final WallhavenSession session;
    private final ResourceFactoryFactory rff;
+   private final ThumbnailPageCrawlerFactory thumbnailPageCrawlerFactory;
 
    /**
     * Creates a new anonymous Wallhaven session.
@@ -35,6 +41,7 @@ public class Wallhaven
 
       session = injector.getInstance(WallhavenSession.class);
       rff = injector.getInstance(ResourceFactoryFactory.class);
+      thumbnailPageCrawlerFactory = injector.getInstance(ThumbnailPageCrawlerFactory.class);
    }
 
    /**
@@ -146,5 +153,23 @@ public class Wallhaven
       User user = rff.getFactoryFor(User.class).create(false, username);
 
       return rff.getFactoryFor(WallpaperCollection.class).create(true, new WallpaperCollectionIdentifier(id, user));
+   }
+
+   /**
+    * Executes the search query and returns a list of wallpapers matching the query
+    *
+    * @param searchQuery the search query
+    * @return a list of wallpapers matching the query
+    */
+   public List<Wallpaper> search(SearchQuery searchQuery)
+   {
+      checkNotNull(searchQuery);
+
+      return thumbnailPageCrawlerFactory
+            .create(UrlPrefixes.URL_SEARCH)
+            .getPageSequence(
+                  searchQuery.getPages(),
+                  searchQuery.getQueryParamsMap()
+            );
    }
 }

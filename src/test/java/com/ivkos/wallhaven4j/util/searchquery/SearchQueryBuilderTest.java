@@ -232,4 +232,17 @@ public class SearchQueryBuilderTest
    {
       assertNotNull(sqb.build());
    }
+
+   @Test
+   public void joinRatioSet() throws Exception
+   {
+      String s1 = sqb.build().joinRatioSet(ImmutableSet.of(new Ratio(16, 9), new Resolution(1920, 1080)));
+      assertEquals("16x9,1920x1080", s1);
+
+      String s2 = sqb.build().joinRatioSet(ImmutableSet.of(new Ratio(16, 9)));
+      assertEquals("16x9", s2);
+
+      String s3 = sqb.build().joinRatioSet(Collections.emptySet());
+      assertEquals("", s3);
+   }
 }

@@ -1,12 +1,18 @@
 package com.ivkos.wallhaven4j;
 
+import com.ivkos.wallhaven4j.models.misc.Resolution;
+import com.ivkos.wallhaven4j.models.misc.enums.Order;
+import com.ivkos.wallhaven4j.models.misc.enums.Sorting;
 import com.ivkos.wallhaven4j.models.user.User;
+import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.util.exceptions.LoginException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
+import com.ivkos.wallhaven4j.util.searchquery.SearchQueryBuilder;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -116,6 +122,32 @@ public class WallhavenTest extends AbstractWallhavenTest
    public void getWallpaperCollectionWithNegativeId() throws Exception
    {
       getWallhaven().getWallpaperCollection("someone", -1);
+   }
+
+   @Test
+   public void searchWithQuery() throws Exception
+   {
+      List<Wallpaper> result1 = getWallhaven().search(new SearchQueryBuilder()
+            .keywords("cars")
+            .resolutions(new Resolution(1920, 1080))
+            .sorting(Sorting.VIEWS)
+            .order(Order.DESC)
+            .build()
+      );
+      assertFalse(result1.isEmpty());
+
+      List<Wallpaper> result2 = getWallhaven(true).search(new SearchQueryBuilder()
+            .sorting(Sorting.FAVORITES)
+            .order(Order.DESC)
+            .build()
+      );
+      assertFalse(result2.isEmpty());
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void searchWithNullQuery() throws Exception
+   {
+      getWallhaven().search(null);
    }
 
    @Test

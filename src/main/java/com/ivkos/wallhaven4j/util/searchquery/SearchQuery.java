@@ -1,5 +1,6 @@
 package com.ivkos.wallhaven4j.util.searchquery;
 
+import com.google.common.base.Joiner;
 import com.ivkos.wallhaven4j.models.misc.Ratio;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
 import com.ivkos.wallhaven4j.models.misc.enums.Category;
@@ -8,9 +9,13 @@ import com.ivkos.wallhaven4j.models.misc.enums.Purity;
 import com.ivkos.wallhaven4j.models.misc.enums.Sorting;
 
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
+import static com.ivkos.wallhaven4j.models.misc.enums.util.BitfieldSum.asThreeBitBinaryString;
 import static com.ivkos.wallhaven4j.util.searchquery.SearchQueryDefaults.*;
+import static java.util.Collections.unmodifiableMap;
 
 public class SearchQuery
 {
@@ -68,4 +73,24 @@ public class SearchQuery
       return pages;
    }
    //endregion
+
+   public Map<String, String> getQueryParamsMap()
+   {
+      Map<String, String> map = new HashMap<>();
+
+      if (!DEFAULT_KEYWORDS.equals(keywords)) map.put("q", keywords);
+      if (!DEFAULT_CATEGORIES.equals(categories)) map.put("categories", asThreeBitBinaryString(categories));
+      if (!DEFAULT_PURITY.equals(purity)) map.put("purity", asThreeBitBinaryString(purity));
+      if (!DEFAULT_RESOLUTIONS.equals(resolutions)) map.put("resolution", joinRatioSet(resolutions));
+      if (!DEFAULT_RATIOS.equals(ratios)) map.put("ratios", joinRatioSet(ratios));
+      if (!DEFAULT_SORTING.equals(sorting)) map.put("sorting", sorting.toString());
+      if (!DEFAULT_ORDER.equals(order)) map.put("order", order.toString());
+
+      return unmodifiableMap(map);
+   }
+
+   protected <T extends Ratio> String joinRatioSet(Set<T> ratios)
+   {
+      return Joiner.on(",").join(ratios);
+   }
 }
