@@ -89,7 +89,7 @@ public class SearchQuery
       return unmodifiableMap(map);
    }
 
-   protected <T extends Ratio> String joinRatioSet(Set<T> ratios)
+   protected static <T extends Ratio> String joinRatioSet(Set<T> ratios)
    {
       return Joiner.on(",").join(ratios);
    }

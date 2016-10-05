@@ -18,6 +18,7 @@ import static com.ivkos.wallhaven4j.models.misc.enums.Order.DESC;
 import static com.ivkos.wallhaven4j.models.misc.enums.Purity.SFW;
 import static com.ivkos.wallhaven4j.models.misc.enums.Purity.SKETCHY;
 import static com.ivkos.wallhaven4j.models.misc.enums.Sorting.DATE_ADDED;
+import static com.ivkos.wallhaven4j.util.searchquery.SearchQuery.joinRatioSet;
 import static com.ivkos.wallhaven4j.util.searchquery.SearchQueryDefaults.*;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
@@ -234,15 +235,15 @@ public class SearchQueryBuilderTest
    }
 
    @Test
-   public void joinRatioSet() throws Exception
+   public void joinRatios() throws Exception
    {
-      String s1 = sqb.build().joinRatioSet(ImmutableSet.of(new Ratio(16, 9), new Resolution(1920, 1080)));
+      String s1 = joinRatioSet(ImmutableSet.of(new Ratio(16, 9), new Resolution(1920, 1080)));
       assertEquals("16x9,1920x1080", s1);
 
-      String s2 = sqb.build().joinRatioSet(ImmutableSet.of(new Ratio(16, 9)));
+      String s2 = joinRatioSet(ImmutableSet.of(new Ratio(16, 9)));
       assertEquals("16x9", s2);
 
-      String s3 = sqb.build().joinRatioSet(Collections.emptySet());
+      String s3 = joinRatioSet(Collections.emptySet());
       assertEquals("", s3);
    }
 }
