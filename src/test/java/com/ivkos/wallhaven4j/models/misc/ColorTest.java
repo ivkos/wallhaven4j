@@ -3,29 +3,52 @@ package com.ivkos.wallhaven4j.models.misc;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class ColorTest
 {
    private Color red = new Color(255, 0, 0);
    private Color abbeef = new Color("#abbeef");
 
    @Test
+   public void getRed() throws Exception
+   {
+      assertEquals(255, red.getRed());
+      assertEquals(171, abbeef.getRed());
+   }
+
+   @Test
+   public void getGreen() throws Exception
+   {
+      assertEquals(0, red.getGreen());
+      assertEquals(190, abbeef.getGreen());
+   }
+
+   @Test
+   public void getBlue() throws Exception
+   {
+      assertEquals(0, red.getBlue());
+      assertEquals(239, abbeef.getBlue());
+   }
+
+   @Test
    public void toHex() throws Exception
    {
-      Assert.assertEquals("#FF0000", red.toHex());
-      Assert.assertEquals("#ABBEEF", abbeef.toHex());
+      assertEquals("#FF0000", red.toHex());
+      assertEquals("#ABBEEF", abbeef.toHex());
    }
 
    @Test
    public void toRgb() throws Exception
    {
-      Assert.assertEquals("rgb(255,0,0)", red.toRgb());
-      Assert.assertEquals("rgb(171,190,239)", abbeef.toRgb());
+      assertEquals("rgb(255,0,0)", red.toRgb());
+      assertEquals("rgb(171,190,239)", abbeef.toRgb());
    }
 
    @Test
    public void toAString() throws Exception
    {
-      Assert.assertEquals(red.toHex(), red.toString());
+      assertEquals(red.toHex(), red.toString());
    }
 
    @Test
