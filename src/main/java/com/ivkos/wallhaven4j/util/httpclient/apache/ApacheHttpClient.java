@@ -33,7 +33,7 @@ import static com.google.common.collect.Collections2.transform;
 
 public class ApacheHttpClient implements HttpClient
 {
-   public static final int CONNECTION_TIMEOUT_MS = 10 * 1000;
+   private static final int CONNECTION_TIMEOUT_MS = 10 * 1000;
 
    private final org.apache.http.client.HttpClient apacheClient;
 
@@ -43,8 +43,7 @@ public class ApacheHttpClient implements HttpClient
       this.apacheClient = apacheClient;
    }
 
-   @Override
-   public HttpResponse execute(final String method, String url, Map<String, String> headers, String body)
+   private HttpResponse execute(final String method, String url, Map<String, String> headers, String body)
    {
       //region Build request
       HttpEntityEnclosingRequestBase base = new HttpEntityEnclosingRequestBase()
@@ -113,7 +112,6 @@ public class ApacheHttpClient implements HttpClient
       return theResponse;
    }
 
-
    @Override
    public HttpResponse get(String url, Map<String, String> headers)
    {
@@ -172,11 +170,6 @@ public class ApacheHttpClient implements HttpClient
             .build();
 
       return post(url, headers2, urlEncodedBody);
-   }
-
-   public HttpResponse post(String url, String body)
-   {
-      return post(url, Collections.emptyMap(), body);
    }
 
    @Override

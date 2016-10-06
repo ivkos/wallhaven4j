@@ -2,15 +2,10 @@ package com.ivkos.wallhaven4j.util.httpclient.apache;
 
 import com.ivkos.wallhaven4j.util.exceptions.ConnectionException;
 import com.ivkos.wallhaven4j.util.httpclient.HttpResponse;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import static java.util.Collections.unmodifiableMap;
 
 class ApacheHttpResponse implements HttpResponse
 {
@@ -21,12 +16,6 @@ class ApacheHttpResponse implements HttpResponse
    {
       this.apacheResponse = apacheResponse;
       this.body = getBodyEagerly();
-   }
-
-   @Override
-   public int getStatusCode()
-   {
-      return apacheResponse.getStatusLine().getStatusCode();
    }
 
    @Override
@@ -48,17 +37,5 @@ class ApacheHttpResponse implements HttpResponse
       }
 
       return body;
-   }
-
-   @Override
-   public Map<String, String> getHeaders()
-   {
-      Map<String, String> headersMap = new HashMap<>();
-
-      for (Header header : apacheResponse.getAllHeaders()) {
-         headersMap.put(header.getName(), header.getValue());
-      }
-
-      return unmodifiableMap(headersMap);
    }
 }
