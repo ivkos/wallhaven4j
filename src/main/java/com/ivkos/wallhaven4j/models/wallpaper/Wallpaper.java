@@ -106,6 +106,11 @@ public class Wallpaper extends AbstractResource<Long>
       return UrlPrefixes.URL_WALLPAPER + "/" + id;
    }
 
+   /**
+    * Returns the resolution of the wallpaper
+    *
+    * @return the resolution of the wallpaper
+    */
    @ResourceFieldGetter
    public Resolution getResolution()
    {
@@ -124,6 +129,11 @@ public class Wallpaper extends AbstractResource<Long>
       return resolution;
    }
 
+   /**
+    * Returns a list of the dominant colors in the wallpaper
+    *
+    * @return a list of the dominant colors in the wallpaper
+    */
    @ResourceFieldGetter
    public List<Color> getColors()
    {
@@ -138,6 +148,11 @@ public class Wallpaper extends AbstractResource<Long>
       return colors;
    }
 
+   /**
+    * Returns a list of the tags the wallpaper has been tagged with
+    *
+    * @return a list of the tags the wallpaper has been tagged with
+    */
    @ResourceFieldGetter
    public List<Tag> getTags()
    {
@@ -150,6 +165,11 @@ public class Wallpaper extends AbstractResource<Long>
       return tags;
    }
 
+   /**
+    * Returns the purity of the wallpaper
+    *
+    * @return the purity of the wallpaper
+    */
    @ResourceFieldGetter
    public Purity getPurity()
    {
@@ -167,6 +187,11 @@ public class Wallpaper extends AbstractResource<Long>
       return purity;
    }
 
+   /**
+    * Returns the user who has uploaded the wallpaper
+    *
+    * @return the user who has uploaded the wallpaper
+    */
    @ResourceFieldGetter
    public User getUser()
    {
@@ -181,6 +206,11 @@ public class Wallpaper extends AbstractResource<Long>
       return user;
    }
 
+   /**
+    * Returns the date and time the wallpaper has been uploaded
+    *
+    * @return the date and time the wallpaper has been uploaded
+    */
    @ResourceFieldGetter
    public DateTime getDateCreated()
    {
@@ -193,6 +223,11 @@ public class Wallpaper extends AbstractResource<Long>
       return dateCreated;
    }
 
+   /**
+    * Returns the category of the wallpaper
+    *
+    * @return the category of the wallpaper
+    */
    @ResourceFieldGetter
    public Category getCategory()
    {
@@ -220,10 +255,12 @@ public class Wallpaper extends AbstractResource<Long>
    }
 
    /**
+    * Returns the size of the wallpaper in KiB
+    *
     * @return the size of the wallpaper in KiB
     */
    @ResourceFieldGetter
-   public double getSize()
+   public Double getSize()
    {
       if (size != null) return size;
 
@@ -250,8 +287,13 @@ public class Wallpaper extends AbstractResource<Long>
       return size;
    }
 
+   /**
+    * Returns the number of views the wallpaper has gotten
+    *
+    * @return the number of views the wallpaper has gotten
+    */
    @ResourceFieldGetter
-   public long getViewsCount()
+   public Long getViewsCount()
    {
       if (viewsCount != null) return viewsCount;
 
@@ -269,6 +311,11 @@ public class Wallpaper extends AbstractResource<Long>
       return viewsCount;
    }
 
+   /**
+    * Returns the number of collections the wallpaper has been added to
+    *
+    * @return the number of collections the wallpaper has been added to
+    */
    @ResourceFieldGetter
    public Long getFavoritesCount()
    {
@@ -288,6 +335,11 @@ public class Wallpaper extends AbstractResource<Long>
       return favoritesCount;
    }
 
+   /**
+    * Returns a list of collections the wallpaper has been added to
+    *
+    * @return a list of collections the wallpaper has been added to
+    */
    public List<WallpaperCollection> getCollections()
    {
       if (collections != null) return collections;
