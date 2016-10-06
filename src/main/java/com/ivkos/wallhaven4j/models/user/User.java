@@ -64,11 +64,21 @@ public class User extends AbstractResource<String>
       return UrlPrefixes.URL_USER + "/" + UrlEscapers.urlPathSegmentEscaper().escape(id);
    }
 
+   /**
+    * Returns the username
+    *
+    * @return the username
+    */
    public String getUsername()
    {
       return getId();
    }
 
+   /**
+    * Returns the user group's name this user belongs to (e.g. Developer, User, Administrator, ...)
+    *
+    * @return the user group's name this user belongs to
+    */
    @ResourceFieldGetter
    public String getGroupName()
    {
@@ -79,6 +89,11 @@ public class User extends AbstractResource<String>
       return groupName;
    }
 
+   /**
+    * Returns the user's description text or <code>null</code> if none is set
+    *
+    * @return the user's description text or <code>null</code> if none is set
+    */
    @ResourceFieldGetter
    public String getDescription()
    {
@@ -94,6 +109,11 @@ public class User extends AbstractResource<String>
       return description;
    }
 
+   /**
+    * Returns the last time the user has been active online
+    *
+    * @return the last time the user has been active online
+    */
    @ResourceFieldGetter
    public DateTime getLastActiveTime()
    {
@@ -108,6 +128,11 @@ public class User extends AbstractResource<String>
       return lastActiveTime;
    }
 
+   /**
+    * Returns the date and time this user account has been created
+    *
+    * @return the date and time this user account has been created
+    */
    @ResourceFieldGetter
    public DateTime getDateCreated()
    {
@@ -120,6 +145,11 @@ public class User extends AbstractResource<String>
       return dateCreated;
    }
 
+   /**
+    * Returns the number of wallpaper this user has uploaded
+    *
+    * @return the number of wallpaper this user has uploaded
+    */
    @ResourceFieldGetter
    public long getUploadedWallpapersCount()
    {
@@ -135,6 +165,11 @@ public class User extends AbstractResource<String>
       return uploadedWallpapersCount;
    }
 
+   /**
+    * Returns the number of favorite wallpapers the user has
+    *
+    * @return the number of favorite wallpapers the user has
+    */
    @ResourceFieldGetter
    public Long getFavoriteWallpapersCount()
    {
@@ -150,6 +185,11 @@ public class User extends AbstractResource<String>
       return favoriteWallpapersCount;
    }
 
+   /**
+    * Returns the number of wallpapers this user has tagged
+    *
+    * @return the number of wallpapers this user has tagged
+    */
    @ResourceFieldGetter
    public Long getTaggedWallpapersCount()
    {
@@ -165,6 +205,11 @@ public class User extends AbstractResource<String>
       return taggedWallpapersCount;
    }
 
+   /**
+    * Returns the number of wallpapers this user has flagged
+    *
+    * @return the number of wallpapers this user has flagged
+    */
    @ResourceFieldGetter
    public Long getFlaggedWallpapersCount()
    {
@@ -180,6 +225,11 @@ public class User extends AbstractResource<String>
       return flaggedWallpapersCount;
    }
 
+   /**
+    * Returns the number of users subscribed to this user
+    *
+    * @return the number of users subscribed to this user
+    */
    @ResourceFieldGetter
    public Long getSubscribersCount()
    {
@@ -195,6 +245,11 @@ public class User extends AbstractResource<String>
       return subscribersCount;
    }
 
+   /**
+    * Returns the number of views the user's profile has received
+    *
+    * @return the number of views the user's profile has received
+    */
    @ResourceFieldGetter
    public Long getProfileViewsCount()
    {
@@ -210,6 +265,11 @@ public class User extends AbstractResource<String>
       return profileViewsCount;
    }
 
+   /**
+    * Returns the number of comments on the user's profile page
+    *
+    * @return the number of comments on the user's profile page
+    */
    @ResourceFieldGetter
    public Long getProfileCommentsCount()
    {
@@ -225,6 +285,11 @@ public class User extends AbstractResource<String>
       return profileCommentsCount;
    }
 
+   /**
+    * Returns the number of posts the user has posted on the forum
+    *
+    * @return the number of posts the user has posted on the forum
+    */
    @ResourceFieldGetter
    public Long getForumPostsCount()
    {
@@ -240,6 +305,11 @@ public class User extends AbstractResource<String>
       return forumPostsCount;
    }
 
+   /**
+    * Returns a list of the user's wallpaper collections
+    *
+    * @return a list of the user's wallpaper collections
+    */
    public List<WallpaperCollection> getCollections()
    {
       String url = getUrl() + "/favorites";
