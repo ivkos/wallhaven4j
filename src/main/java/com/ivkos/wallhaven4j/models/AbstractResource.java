@@ -57,6 +57,11 @@ public abstract class AbstractResource<T>
       }
    }
 
+   /**
+    * Returns the ID of this resource
+    *
+    * @return the ID of this resource
+    */
    public final T getId()
    {
       return id;
@@ -67,6 +72,11 @@ public abstract class AbstractResource<T>
       return session;
    }
 
+   /**
+    * Returns a browseable URL of this resource
+    *
+    * @return the URL of this resource
+    */
    public abstract String getUrl();
 
    //region equals, hashCode, toString
@@ -88,6 +98,11 @@ public abstract class AbstractResource<T>
       return Objects.hash(this.getClass(), this.getId());
    }
 
+   /**
+    * Returns a string representation of the ID of this resource
+    *
+    * @return a string representation of the ID of this resource
+    */
    @Override
    public String toString()
    {
