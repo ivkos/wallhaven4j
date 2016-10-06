@@ -3,10 +3,8 @@ package com.ivkos.wallhaven4j.util.htmlparser;
 import com.ivkos.wallhaven4j.util.exceptions.ParseException;
 import org.joda.time.DateTime;
 
-public class TimeElementParser
+public abstract class TimeElementParser
 {
-   private TimeElementParser() {}
-
    public static DateTime parse(HtmlElement htmlElement)
    {
       if (!htmlElement.getTagName().equals("time")) {
