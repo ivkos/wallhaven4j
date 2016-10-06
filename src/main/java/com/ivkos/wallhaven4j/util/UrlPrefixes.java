@@ -1,6 +1,6 @@
 package com.ivkos.wallhaven4j.util;
 
-public final class UrlPrefixes
+public abstract class UrlPrefixes
 {
    public static final String URL_BASE = "https://alpha.wallhaven.cc";
    public static final String URL_WALLPAPER = URL_BASE + "/wallpaper";
@@ -9,8 +9,4 @@ public final class UrlPrefixes
    public static final String URL_USER = URL_BASE + "/user";
    public static final String URL_LOGIN = URL_BASE + "/auth/login";
    public static final String URL_SEARCH = URL_BASE + "/search";
-
-   private UrlPrefixes()
-   {
-   }
 }
