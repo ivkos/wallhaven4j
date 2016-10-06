@@ -73,6 +73,11 @@ public class Tag extends AbstractResource<Long>
       if (preloadDom) populateFields();
    }
 
+   /**
+    * Returns the tag's name preceded by a # (e.g. #cars)
+    *
+    * @return the tag's name preceded by a #
+    */
    @Override
    public String toString()
    {
@@ -85,6 +90,11 @@ public class Tag extends AbstractResource<Long>
       return UrlPrefixes.URL_TAG + "/" + id;
    }
 
+   /**
+    * Returns the name
+    *
+    * @return the name
+    */
    @ResourceFieldGetter
    public String getName()
    {
@@ -95,6 +105,11 @@ public class Tag extends AbstractResource<Long>
       return this.name;
    }
 
+   /**
+    * Returns the purity
+    *
+    * @return the purity
+    */
    @ResourceFieldGetter
    public Purity getPurity()
    {
@@ -112,6 +127,11 @@ public class Tag extends AbstractResource<Long>
       return this.purity;
    }
 
+   /**
+    * Returns the category
+    *
+    * @return the category
+    */
    @ResourceFieldGetter
    public TagCategory getCategory()
    {
@@ -158,6 +178,11 @@ public class Tag extends AbstractResource<Long>
       return this.category;
    }
 
+   /**
+    * Returns the tag's aliases as a Set of strings
+    *
+    * @return the tag's aliases in a Set of strings
+    */
    @ResourceFieldGetter
    public Set<String> getAliases()
    {
@@ -181,6 +206,11 @@ public class Tag extends AbstractResource<Long>
       return this.aliases;
    }
 
+   /**
+    * Returns the number of wallpapers tagged with this tag
+    *
+    * @return the number of wallpapers tagged with this tag
+    */
    @ResourceFieldGetter
    public Long getTaggedWallpapersCount()
    {
@@ -200,6 +230,11 @@ public class Tag extends AbstractResource<Long>
       return taggedWallpapersCount;
    }
 
+   /**
+    * Returns the number of views wallpapers tagged with this tag have gotten
+    *
+    * @return the number of views wallpapers tagged with this tag have gotten
+    */
    @ResourceFieldGetter
    public Long getTaggedWallpapersViewCount()
    {
@@ -220,6 +255,11 @@ public class Tag extends AbstractResource<Long>
       return taggedWallpapersViewCount;
    }
 
+   /**
+    * Returns the number of users subscribed to this tag
+    *
+    * @return the number of users subscribed to this tag
+    */
    @ResourceFieldGetter
    public Long getSubscribersCount()
    {
@@ -239,6 +279,11 @@ public class Tag extends AbstractResource<Long>
       return subscribersCount;
    }
 
+   /**
+    * Returns the user who's created this tag
+    *
+    * @return the user who's created this tag
+    */
    @ResourceFieldGetter
    public User getUser()
    {
@@ -254,6 +299,11 @@ public class Tag extends AbstractResource<Long>
       return user;
    }
 
+   /**
+    * Returns the date and time this tag has been created
+    *
+    * @return the date and time this tag has been created
+    */
    @ResourceFieldGetter
    public DateTime getDateCreated()
    {
