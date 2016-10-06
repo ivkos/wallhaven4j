@@ -32,16 +32,31 @@ public class TagCategory extends AbstractResource<Long>
       this.parentCategory = parentCategory;
    }
 
+   /**
+    * Returns the name of the tag category
+    *
+    * @return the name of the tag category
+    */
    public String getName()
    {
       return name;
    }
 
+   /**
+    * Returns the parent tag category or <code>null</code> if this is a root tag category (i.e. has no parents)
+    *
+    * @return the parent tag category or <code>null</code> if this is a root tag category (i.e. has no parents)
+    */
    public TagCategory getParentCategory()
    {
       return parentCategory;
    }
 
+   /**
+    * Returns the name of the tag category
+    *
+    * @return the name of the tag category
+    */
    @Override
    public String toString()
    {
