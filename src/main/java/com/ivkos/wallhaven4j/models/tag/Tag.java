@@ -19,6 +19,7 @@ import com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector;
 import com.ivkos.wallhaven4j.util.htmlparser.TimeElementParser;
 import org.joda.time.DateTime;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -191,7 +192,7 @@ public class Tag extends AbstractResource<Long>
       HtmlElement element = OptionalSelector.of(getDom(), "#tag > h1.tagname").get();
       String originalTitle = element.getAttribute("title");
 
-      Pattern pattern = Pattern.compile("^" + Pattern.quote("Aliases: ") + "((.+)(,\\s.+)*)$");
+      Pattern pattern = Pattern.compile("^" + Pattern.quote("Aliases: ") + "((.+)(,\\s.+)*)?$");
       Matcher matcher = pattern.matcher(originalTitle);
 
       if (!matcher.matches()) {
@@ -199,6 +200,12 @@ public class Tag extends AbstractResource<Long>
       }
 
       String group = matcher.group(1);
+
+      if (group == null) {
+         this.aliases = Collections.emptySet();
+         return this.aliases;
+      }
+
       String[] split = group.split(",\\s");
 
       this.aliases = ImmutableSet.copyOf(split);
