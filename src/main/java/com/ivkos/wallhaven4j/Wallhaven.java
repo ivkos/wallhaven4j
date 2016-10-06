@@ -99,7 +99,7 @@ public class Wallhaven
     */
    public Tag getTag(long id)
    {
-      checkArgument(id > 0);
+      checkArgument(id > 0, "id must be greater than zero");
 
       return rff.getFactoryFor(Tag.class).create(true, id);
    }
@@ -130,7 +130,7 @@ public class Wallhaven
     */
    public Wallpaper getWallpaper(long id)
    {
-      checkArgument(id > 0);
+      checkArgument(id > 0, "id must be greater than zero");
 
       return rff.getFactoryFor(Wallpaper.class).create(true, id);
    }
@@ -142,13 +142,13 @@ public class Wallhaven
     * @param username the username of the user that owns the wallpaper collection
     * @param id       the wallpaper collection id
     * @return the wallpaper collection
-    * @throws ResourceNotFoundException if there no such wallpaper collection
+    * @throws ResourceNotFoundException if there is no such wallpaper collection
     * @throws IllegalArgumentException  if the username is <code>null</code> or empty, or the id is not greater than zero
     */
    public WallpaperCollection getWallpaperCollection(String username, long id)
    {
       checkArgument(!Strings.isNullOrEmpty(username), "username must not be null or empty");
-      checkArgument(id > 0);
+      checkArgument(id > 0, "id must be greater than zero");
 
       User user = rff.getFactoryFor(User.class).create(false, username);
 
@@ -163,7 +163,7 @@ public class Wallhaven
     */
    public List<Wallpaper> search(SearchQuery searchQuery)
    {
-      checkNotNull(searchQuery);
+      checkNotNull(searchQuery, "searchQuery must not be null");
 
       return thumbnailPageCrawlerFactory
             .create(UrlPrefixes.URL_SEARCH)
