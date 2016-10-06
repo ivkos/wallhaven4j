@@ -76,6 +76,11 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       if (preloadDom) populateFields();
    }
 
+   /**
+    * Returns the user who has created this collection
+    *
+    * @return the user who has created this collection
+    */
    public User getUser()
    {
       return getId().getUser();
@@ -87,12 +92,22 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       return getUser().getUrl() + "/favorites/" + id.getLongId();
    }
 
+   /**
+    * Returns the name of the collection
+    *
+    * @return the name of the collection
+    */
    @Override
    public String toString()
    {
       return name;
    }
 
+   /**
+    * Returns the name of the collection
+    *
+    * @return the name of the collection
+    */
    @ResourceFieldGetter
    public String getName()
    {
@@ -106,6 +121,11 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       return this.name;
    }
 
+   /**
+    * Returns the number of wallpapers in the collection
+    *
+    * @return the number of wallpapers in the collection
+    */
    @ResourceFieldGetter
    public Long getWallpapersCount()
    {
@@ -125,6 +145,11 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       return wallpapersCount;
    }
 
+   /**
+    * Returns the number of times the collection has been viewed
+    *
+    * @return the number of times the collection has been viewed
+    */
    @ResourceFieldGetter
    public Long getViewsCount()
    {
@@ -144,6 +169,11 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       return viewsCount;
    }
 
+   /**
+    * Returns the number of users subscribed to this collection
+    *
+    * @return the number of users subscribed to this collection
+    */
    @ResourceFieldGetter
    public Long getSubscribersCount()
    {
@@ -163,6 +193,15 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
       return subscribersCount;
    }
 
+   /**
+    * Returns a list of the users subscribed to this collection. Note that the list can be obtained only for collections
+    * owned by the currently logged in user. This method will always throw {@link ResourceNotAccessibleException} if
+    * this requirement is not met.
+    *
+    * @return a list of the users subscribed to this collection
+    * @throws ResourceNotAccessibleException if the collection is not owned by the currently logged in user,
+    *                                        or the current wallhaven session is anonymous
+    */
    public List<User> getSubscribers()
    {
       if (subscribers != null) return subscribers;
@@ -193,7 +232,7 @@ public class WallpaperCollection extends AbstractResource<WallpaperCollectionIde
    }
 
    /**
-    * Fetch wallpapers that are in the collection
+    * Fetches a list of the wallpapers that are in the collection
     *
     * @param pageCount Number of pages to fetch. One page could contain 24 (default), 32 or 64 wallpapers,
     *                  depending on the preference of the logged in user, set in Wallhaven's settings page.
