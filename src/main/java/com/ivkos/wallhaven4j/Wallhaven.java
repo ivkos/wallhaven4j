@@ -160,6 +160,7 @@ public class Wallhaven
     *
     * @param searchQuery the search query
     * @return a list of wallpapers matching the query
+    * @throws NullPointerException if searchQuery is null
     */
    public List<Wallpaper> search(SearchQuery searchQuery)
    {
@@ -171,5 +172,24 @@ public class Wallhaven
                   searchQuery.getPages(),
                   searchQuery.getQueryParamsMap()
             );
+   }
+
+   /**
+    * Executes the search query and returns a list of the wallpapers in the specified page
+    *
+    * @param searchQuery the search query
+    * @param page        the page to fetch
+    * @return a list of wallpapers matching the query
+    * @throws IllegalArgumentException if page is not greater than zero
+    * @throws NullPointerException     if searchQuery is null
+    */
+   public List<Wallpaper> search(SearchQuery searchQuery, long page)
+   {
+      checkNotNull(searchQuery, "searchQuery must not be null");
+      checkArgument(page > 0, "page must be greater than zero");
+
+      return thumbnailPageCrawlerFactory
+            .create(UrlPrefixes.URL_SEARCH)
+            .getPage(page, searchQuery.getQueryParamsMap());
    }
 }

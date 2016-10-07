@@ -1,6 +1,8 @@
 package com.ivkos.wallhaven4j;
 
+import com.ivkos.wallhaven4j.models.misc.Ratio;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
+import com.ivkos.wallhaven4j.models.misc.enums.Category;
 import com.ivkos.wallhaven4j.models.misc.enums.Order;
 import com.ivkos.wallhaven4j.models.misc.enums.Sorting;
 import com.ivkos.wallhaven4j.models.user.User;
@@ -8,6 +10,7 @@ import com.ivkos.wallhaven4j.models.wallpaper.Wallpaper;
 import com.ivkos.wallhaven4j.util.exceptions.LoginException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotAccessibleException;
 import com.ivkos.wallhaven4j.util.exceptions.ResourceNotFoundException;
+import com.ivkos.wallhaven4j.util.searchquery.SearchQuery;
 import com.ivkos.wallhaven4j.util.searchquery.SearchQueryBuilder;
 import org.junit.Test;
 
@@ -148,6 +151,38 @@ public class WallhavenTest extends AbstractWallhavenTest
    public void searchWithNullQuery() throws Exception
    {
       getWallhaven().search(null);
+   }
+
+   @Test
+   public void searchPageWithQuery() throws Exception
+   {
+      SearchQuery query = new SearchQueryBuilder()
+            .keywords("minimal")
+            .categories(Category.GENERAL)
+            .ratios(new Ratio(9, 16))
+            .build();
+
+      List<Wallpaper> page2 = getWallhaven().search(query, 2);
+
+      assertFalse(page2.isEmpty());
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void searchPageWithNullQuery() throws Exception
+   {
+      getWallhaven().search(null, 1);
+   }
+
+   @Test(expected = IllegalArgumentException.class)
+   public void searchPageWithZeroPage() throws Exception
+   {
+      getWallhaven().search(new SearchQueryBuilder().build(), 0);
+   }
+
+   @Test(expected = IllegalArgumentException.class)
+   public void searchPageWithNegativePage() throws Exception
+   {
+      getWallhaven().search(new SearchQueryBuilder().build(), -1);
    }
 
    @Test
