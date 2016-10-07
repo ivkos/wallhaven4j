@@ -5,6 +5,7 @@ import com.ivkos.wallhaven4j.models.misc.Ratio;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
 import com.ivkos.wallhaven4j.models.misc.enums.Category;
 import com.ivkos.wallhaven4j.models.misc.enums.Purity;
+import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -245,5 +246,15 @@ public class SearchQueryBuilderTest
 
       String s3 = joinRatioSet(Collections.emptySet());
       assertEquals("", s3);
+   }
+
+   @Test
+   public void getUrl() throws Exception
+   {
+      String url = sqb.build().getUrl();
+      assertEquals(UrlPrefixes.URL_SEARCH, url);
+
+      String url2 = sqb.keywords("cats").build().getUrl();
+      assertEquals(UrlPrefixes.URL_SEARCH + "?q=cats", url2);
    }
 }

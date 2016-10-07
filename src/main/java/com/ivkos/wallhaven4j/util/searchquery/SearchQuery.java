@@ -7,7 +7,10 @@ import com.ivkos.wallhaven4j.models.misc.enums.Category;
 import com.ivkos.wallhaven4j.models.misc.enums.Order;
 import com.ivkos.wallhaven4j.models.misc.enums.Purity;
 import com.ivkos.wallhaven4j.models.misc.enums.Sorting;
+import com.ivkos.wallhaven4j.util.UrlPrefixes;
+import org.apache.http.client.utils.URIBuilder;
 
+import java.net.URISyntaxException;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +90,22 @@ public class SearchQuery
       if (!DEFAULT_ORDER.equals(order)) map.put("order", order.toString());
 
       return unmodifiableMap(map);
+   }
+
+   public String getUrl()
+   {
+      URIBuilder builder;
+      try {
+         builder = new URIBuilder(UrlPrefixes.URL_SEARCH);
+      } catch (URISyntaxException e) {
+         throw new RuntimeException(e);
+      }
+
+      for (Map.Entry<String, String> entry : getQueryParamsMap().entrySet()) {
+         builder.addParameter(entry.getKey(), entry.getValue());
+      }
+
+      return builder.toString();
    }
 
    protected static <T extends Ratio> String joinRatioSet(Set<T> ratios)
