@@ -1,6 +1,7 @@
 package com.ivkos.wallhaven4j.util.pagecrawler.thumbnailpage;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
 import com.ivkos.wallhaven4j.models.misc.enums.Category;
@@ -16,6 +17,7 @@ import static com.ivkos.wallhaven4j.models.misc.enums.Purity.*;
 import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.forResource;
 import static java.lang.Long.parseLong;
 
+@Singleton
 class ThumbnailTransformer
 {
    private final ResourceFactoryFactory rff;

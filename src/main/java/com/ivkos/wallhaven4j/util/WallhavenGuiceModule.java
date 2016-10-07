@@ -3,8 +3,6 @@ package com.ivkos.wallhaven4j.util;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
-import com.ivkos.wallhaven4j.models.ResourceFactory;
-import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.tagcategory.TagCategoryFactory;
 import com.ivkos.wallhaven4j.models.user.UserFactory;
@@ -51,21 +49,13 @@ public class WallhavenGuiceModule extends AbstractModule
    @Override
    protected void configure()
    {
-      bind(WallhavenSession.class).in(SINGLETON);
-      bind(ResourceFactoryFactory.class).in(SINGLETON);
-
       bind(HttpClient.class).to(ApacheHttpClient.class).in(SINGLETON);
       bind(HtmlParser.class).to(JsoupHtmlParser.class).in(SINGLETON);
       bind(JsonSerializer.class).to(GsonJsonSerializer.class).in(SINGLETON);
 
-      for (Class factory : factories) {
-         installFactory(factory);
+      for (Class factoryClass : factories) {
+         install(new FactoryModuleBuilder().build(factoryClass));
       }
-   }
-
-   private <F extends ResourceFactory> void installFactory(Class<F> factoryClass)
-   {
-      install(new FactoryModuleBuilder().build(factoryClass));
    }
 
    @Provides

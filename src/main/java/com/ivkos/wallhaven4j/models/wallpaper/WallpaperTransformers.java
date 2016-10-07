@@ -1,6 +1,7 @@
 package com.ivkos.wallhaven4j.models.wallpaper;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
 import com.ivkos.wallhaven4j.models.misc.Color;
 import com.ivkos.wallhaven4j.models.misc.enums.Purity;
@@ -23,6 +24,7 @@ import static java.lang.Long.parseLong;
 import static java.lang.String.format;
 
 
+@Singleton
 class WallpaperTransformers
 {
    private final ResourceFactoryFactory rff;

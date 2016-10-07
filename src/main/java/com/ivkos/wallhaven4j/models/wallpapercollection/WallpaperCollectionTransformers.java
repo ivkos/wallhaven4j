@@ -1,6 +1,7 @@
 package com.ivkos.wallhaven4j.models.wallpapercollection;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.ivkos.wallhaven4j.models.ResourceFactoryFactory;
 import com.ivkos.wallhaven4j.models.user.User;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
@@ -8,6 +9,7 @@ import com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector;
 
 import static com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier.forResource;
 
+@Singleton
 class WallpaperCollectionTransformers
 {
    private final ResourceFactoryFactory rff;

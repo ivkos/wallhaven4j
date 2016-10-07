@@ -1,6 +1,7 @@
 package com.ivkos.wallhaven4j.models;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.ivkos.wallhaven4j.models.tag.Tag;
 import com.ivkos.wallhaven4j.models.tag.TagFactory;
 import com.ivkos.wallhaven4j.models.tagcategory.TagCategory;
@@ -12,6 +13,7 @@ import com.ivkos.wallhaven4j.models.wallpaper.WallpaperFactory;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollectionFactory;
 
+@Singleton
 public class ResourceFactoryFactory
 {
    private final TagFactory tagFactory;
