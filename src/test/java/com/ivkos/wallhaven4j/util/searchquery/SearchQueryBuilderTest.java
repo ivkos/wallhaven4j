@@ -5,7 +5,6 @@ import com.ivkos.wallhaven4j.models.misc.Ratio;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
 import com.ivkos.wallhaven4j.models.misc.enums.Category;
 import com.ivkos.wallhaven4j.models.misc.enums.Purity;
-import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -252,9 +251,9 @@ public class SearchQueryBuilderTest
    public void getUrl() throws Exception
    {
       String url = sqb.build().getUrl();
-      assertEquals(UrlPrefixes.URL_SEARCH, url);
+      assertEquals("https://alpha.wallhaven.cc/search?q=&categories=111&purity=100&resolutions=&ratios=&sorting=relevance&order=desc", url);
 
       String url2 = sqb.keywords("cats").build().getUrl();
-      assertEquals(UrlPrefixes.URL_SEARCH + "?q=cats", url2);
+      assertEquals("https://alpha.wallhaven.cc/search?q=cats&categories=111&purity=100&resolutions=&ratios=&sorting=relevance&order=desc", url2);
    }
 }
