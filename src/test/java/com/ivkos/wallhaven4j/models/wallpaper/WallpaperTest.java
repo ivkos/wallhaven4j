@@ -93,4 +93,26 @@ public class WallpaperTest extends AbstractWallhavenTest
       assertNotNull(collections);
       assertFalse(collections.isEmpty());
    }
+
+   @Test
+   public void getImageUrl() throws Exception
+   {
+      String imageUrl = w.getImageUrl();
+      assertNotNull(imageUrl);
+      assertTrue(imageUrl.endsWith(".jpg"));
+
+      Wallpaper pngWallpaper = getWallhaven().getWallpaper(154065);
+      String pngImageUrl = pngWallpaper.getImageUrl();
+
+      assertNotNull(pngImageUrl);
+      assertTrue(pngImageUrl.endsWith(".png"));
+   }
+
+   @Test
+   public void getThumbnailUrl() throws Exception
+   {
+      String thumbnailUrl = w.getThumbnailUrl();
+      assertNotNull(thumbnailUrl);
+      assertFalse(thumbnailUrl.isEmpty());
+   }
 }

@@ -15,12 +15,16 @@ import com.ivkos.wallhaven4j.models.wallpapercollection.WallpaperCollection;
 import com.ivkos.wallhaven4j.util.ResourceFieldGetter;
 import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import com.ivkos.wallhaven4j.util.WallhavenSession;
+import com.ivkos.wallhaven4j.util.exceptions.DescriptiveParseExceptionSupplier;
 import com.ivkos.wallhaven4j.util.exceptions.ParseException;
 import com.ivkos.wallhaven4j.util.htmlparser.HtmlElement;
+import com.ivkos.wallhaven4j.util.htmlparser.OptionalSelector;
 import com.ivkos.wallhaven4j.util.htmlparser.TimeElementParser;
 import com.ivkos.wallhaven4j.util.jsonserializer.JsonSerializer;
 import org.joda.time.DateTime;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -56,6 +60,8 @@ public class Wallpaper extends AbstractResource<Long>
 
    private Long favoritesCount;
    private List<WallpaperCollection> collections;
+
+   private String imageUrl;
 
    @AssistedInject
    Wallpaper(WallhavenSession session,
@@ -357,6 +363,32 @@ public class Wallpaper extends AbstractResource<Long>
             transformers::transformToWallpaperCollection)));
 
       return collections;
+   }
+
+   public String getThumbnailUrl()
+   {
+      return UrlPrefixes.URL_IMAGE_THUMB + getId() + ".jpg";
+   }
+
+   @ResourceFieldGetter
+   public String getImageUrl()
+   {
+      if (imageUrl != null) return imageUrl;
+
+      String schemalessUrl = OptionalSelector.of(getDom(), "img#wallpaper")
+            .orElseThrow(DescriptiveParseExceptionSupplier.forResource(this, "image URL"))
+            .getAttribute("src");
+
+      URI uri;
+      try {
+         uri = new URI("https", schemalessUrl, null);
+      } catch (URISyntaxException e) {
+         throw DescriptiveParseExceptionSupplier.forResource(this, "image URL").get(e);
+      }
+
+      imageUrl = uri.toString();
+
+      return imageUrl;
    }
 
    private static class XhrViewResponse

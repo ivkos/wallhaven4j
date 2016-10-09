@@ -9,4 +9,6 @@ public abstract class UrlPrefixes
    public static final String URL_USER = URL_BASE + "/user";
    public static final String URL_LOGIN = URL_BASE + "/auth/login";
    public static final String URL_SEARCH = URL_BASE + "/search";
+
+   public static final String URL_IMAGE_THUMB = "https://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-";
 }
