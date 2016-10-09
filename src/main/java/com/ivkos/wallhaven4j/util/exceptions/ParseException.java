@@ -1,5 +1,8 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
+/**
+ * Thrown to indicate that there has been a problem parsing Wallhaven's HTML.
+ */
 public class ParseException extends WallhavenException
 {
    public ParseException()

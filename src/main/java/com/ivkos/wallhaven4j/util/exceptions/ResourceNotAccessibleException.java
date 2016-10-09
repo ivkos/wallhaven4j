@@ -1,5 +1,8 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
+/**
+ * Thrown to indicate that the requested resource cannot be accessed due to privacy or purity restrictions.
+ */
 public class ResourceNotAccessibleException extends WallhavenException
 {
    public ResourceNotAccessibleException()

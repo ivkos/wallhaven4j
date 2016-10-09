@@ -1,5 +1,8 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
+/**
+ * Thrown to indicate that the requested resource cannot be found.
+ */
 public class ResourceNotFoundException extends WallhavenException
 {
    public ResourceNotFoundException()

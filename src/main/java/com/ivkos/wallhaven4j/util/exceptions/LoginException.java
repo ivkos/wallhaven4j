@@ -1,5 +1,8 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
+/**
+ * Thrown to indicate that logging in to Wallhaven was unsuccessful due to incorrect credentials.
+ */
 public class LoginException extends WallhavenException
 {
    public LoginException()

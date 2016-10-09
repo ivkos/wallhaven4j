@@ -1,5 +1,8 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
+/**
+ * Thrown to indicate a problem with the HTTP connection to Wallhaven.
+ */
 public class ConnectionException extends WallhavenException
 {
    public ConnectionException()

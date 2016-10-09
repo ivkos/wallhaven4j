@@ -1,5 +1,8 @@
 package com.ivkos.wallhaven4j.util.exceptions;
 
+/**
+ * Thrown to indicate a problem with the library.
+ */
 public class WallhavenException extends RuntimeException
 {
    public WallhavenException()
