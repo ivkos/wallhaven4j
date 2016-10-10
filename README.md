@@ -49,6 +49,10 @@ dependencies {
 </dependency>
 ```
 
+## Documentation
+
+Javadocs can be found [here](https://jitpack.io/com/ivkos/wallhaven4j/1.0.1/javadoc/).
+
 ## Quick Start
 
 **Important note:** This library works by parsing the HTML of Wallhaven. Site design can change unexpectedly and potentially break the library, so until a fix is pushed you are advised to handle `ParseException`s gracefully at any Wallhaven operation. See *Exception Handling* below for more information.
