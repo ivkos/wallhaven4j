@@ -39,10 +39,26 @@ public class AbstractResourceTest
    }
 
    @Test
-   public void toAString() throws Exception
+   public void toStringDefault() throws Exception
    {
       Wallpaper wallpaper = wallpaperFactory.create(false, 42L);
 
       assertEquals("42", wallpaper.toString());
+   }
+
+   @Test
+   public void toStringWithoutResourceType() throws Exception
+   {
+      Wallpaper wallpaper = wallpaperFactory.create(false, 42L);
+
+      assertEquals("42", wallpaper.toString(false));
+   }
+
+   @Test
+   public void toStringWithResourceType() throws Exception
+   {
+      Wallpaper wallpaper = wallpaperFactory.create(false, 42L);
+
+      assertEquals("Wallpaper 42", wallpaper.toString(true));
    }
 }

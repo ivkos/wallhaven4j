@@ -50,9 +50,10 @@ public abstract class AbstractResource<T>
          try {
             method.invoke(this);
          } catch (IllegalAccessException e) {
-            throw new WallhavenException("Could not populate fields of resource", e);
+            throw new WallhavenException("Could not populate fields of resource (" + this.toString(true) + ")", e);
          } catch (InvocationTargetException e) {
-            throw new WallhavenException("Could not populate fields of resource", e.getCause());
+            throw new WallhavenException("Could not populate fields of resource (" + this.toString(true) + ")",
+                  e.getCause());
          }
       }
    }
@@ -106,7 +107,22 @@ public abstract class AbstractResource<T>
    @Override
    public String toString()
    {
-      return this.getId().toString();
+      return this.toString(false);
+   }
+
+   /**
+    * Returns a string description of this resource including its resource type and ID, e.g. "Wallpaper 42"
+    *
+    * @param withResourceType whether to include the resource type in the description
+    * @return string description of this resource
+    */
+   public String toString(boolean withResourceType)
+   {
+      String id = this.getId().toString();
+
+      return withResourceType
+            ? String.format("%s %s", this.getClass().getSimpleName(), id)
+            : id;
    }
    //endregion
 }
