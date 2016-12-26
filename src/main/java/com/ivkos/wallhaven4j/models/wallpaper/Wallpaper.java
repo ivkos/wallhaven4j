@@ -181,7 +181,12 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (purity != null) return purity;
 
-      HtmlElement purityLabel = of(getDom(), "#wallpaper-purity-form > fieldset > label.purity").get();
+      HtmlElement purityRadio = of(getDom(), "#wallpaper-purity-form > input[type=radio][checked]").get();
+      HtmlElement purityLabel = purityRadio.getNextElementSibling();
+
+      if (purityLabel == null) {
+         throw new ParseException("Could not parse purity of wallpaper (could not find sibling of purity radio element)");
+      }
 
       purity = purityLabel.hasClass("sfw") ? SFW
             : purityLabel.hasClass("sketchy") ? SKETCHY
