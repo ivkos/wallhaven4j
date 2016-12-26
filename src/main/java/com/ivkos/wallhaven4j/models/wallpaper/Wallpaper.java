@@ -1,5 +1,6 @@
 package com.ivkos.wallhaven4j.models.wallpaper;
 
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
@@ -25,6 +26,7 @@ import org.joda.time.DateTime;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -244,9 +246,9 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (category != null) return category;
 
-      String categoryText = of(getDom(),
-            "div.sidebar-content > div.sidebar-section[data-storage-id=showcase-info] > dl > dd:nth-child(4)"
-      ).get().getText();
+      String categoryText = of(getElementNextToLabel("Category"), "dd")
+            .get()
+            .getText();
 
       switch (categoryText) {
          case "General":
@@ -275,9 +277,9 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (size != null) return size;
 
-      String sizeText = of(getDom(),
-            "div.sidebar-content > div.sidebar-section[data-storage-id=showcase-info] > dl > dd:nth-child(6)"
-      ).get().getText();
+      String sizeText = of(getElementNextToLabel("Size"), "dd")
+            .get()
+            .getText();
 
       Pattern pattern = Pattern.compile("([\\d.,]+)\\s(KiB|MiB)");
       Matcher matcher = pattern.matcher(sizeText);
@@ -308,9 +310,11 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (viewsCount != null) return viewsCount;
 
-      String viewsString = of(getDom(),
-            "div.sidebar-content > div.sidebar-section[data-storage-id=showcase-info] > dl > dd:nth-child(8)"
-      ).get().getText().trim().replace(",", "");
+      String viewsString = of(getElementNextToLabel("Views"), "dd")
+            .get()
+            .getText()
+            .trim()
+            .replace(",", "");
 
 
       try {
@@ -332,9 +336,11 @@ public class Wallpaper extends AbstractResource<Long>
    {
       if (favoritesCount != null) return favoritesCount;
 
-      String favoritesCountString = of(getDom(),
-            "div.sidebar-content > div:nth-child(5) > dl > dd:nth-child(10) > a"
-      ).get().getText().trim().replace(",", "");
+      String favoritesCountString = of(getElementNextToLabel("Favorites"), "dd")
+            .get()
+            .getText()
+            .trim()
+            .replace(",", "");
 
 
       try {
@@ -394,6 +400,17 @@ public class Wallpaper extends AbstractResource<Long>
       imageUrl = uri.toString();
 
       return imageUrl;
+   }
+
+   private HtmlElement getElementNextToLabel(String labelContent)
+   {
+      List<HtmlElement> dts = getDom().find("div.sidebar-content dl > dt");
+
+      ArrayList<HtmlElement> list = newArrayList(Collections2.filter(dts, e -> labelContent.equals(e.getText())));
+
+      if (list.isEmpty()) return null;
+
+      return list.get(0).getNextElementSibling();
    }
 
    private static class XhrViewResponse
