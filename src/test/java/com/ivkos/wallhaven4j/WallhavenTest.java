@@ -147,6 +147,17 @@ public class WallhavenTest extends AbstractWallhavenTest
       assertFalse(result2.isEmpty());
    }
 
+   @Test
+   public void searchLatest() throws Exception
+   {
+      List<Wallpaper> result = getWallhaven().search(new SearchQueryBuilder()
+            .sorting(Sorting.DATE_ADDED)
+            .order(Order.DESC)
+            .build());
+
+      assertFalse(result.isEmpty());
+   }
+
    @Test(expected = NullPointerException.class)
    public void searchWithNullQuery() throws Exception
    {

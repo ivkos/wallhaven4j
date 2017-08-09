@@ -68,7 +68,7 @@ class ThumbnailTransformer
       //endregion
 
       //region favorites count
-      String favoritesCountText = OptionalSelector.of(figureElement, "a.wall-favs")
+      String favoritesCountText = OptionalSelector.of(figureElement, "a.wall-favs, span.wall-favs")
             .orElseThrow(forResource(Wallpaper.class, "favorites count in thumbnail"))
             .getText()
             .trim()
