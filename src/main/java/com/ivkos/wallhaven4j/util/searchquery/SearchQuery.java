@@ -4,10 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.ivkos.wallhaven4j.models.misc.Ratio;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
-import com.ivkos.wallhaven4j.models.misc.enums.Category;
-import com.ivkos.wallhaven4j.models.misc.enums.Order;
-import com.ivkos.wallhaven4j.models.misc.enums.Purity;
-import com.ivkos.wallhaven4j.models.misc.enums.Sorting;
+import com.ivkos.wallhaven4j.models.misc.enums.*;
 import com.ivkos.wallhaven4j.util.UrlPrefixes;
 import org.apache.http.client.utils.URIBuilder;
 
@@ -26,6 +23,7 @@ public class SearchQuery
    protected EnumSet<Purity> purity = DEFAULT_PURITY;
    protected Sorting sorting = DEFAULT_SORTING;
    protected Order order = DEFAULT_ORDER;
+   protected ToplistRange toplistRange = DEFAULT_TOPLIST_RANGE;
    protected Set<Resolution> resolutions = DEFAULT_RESOLUTIONS;
    protected Set<Ratio> ratios = DEFAULT_RATIOS;
    protected long pages = DEFAULT_PAGES;
@@ -60,6 +58,11 @@ public class SearchQuery
       return order;
    }
 
+   public ToplistRange getToplistRange()
+   {
+      return toplistRange;
+   }
+
    public Set<Resolution> getResolutions()
    {
       return resolutions;
@@ -86,6 +89,7 @@ public class SearchQuery
             .put("ratios", joinRatioSet(ratios))
             .put("sorting", sorting.toString())
             .put("order", order.toString())
+            .put("topRange", toplistRange.toString())
             .build();
    }
 

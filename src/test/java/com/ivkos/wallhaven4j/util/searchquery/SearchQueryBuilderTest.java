@@ -18,6 +18,7 @@ import static com.ivkos.wallhaven4j.models.misc.enums.Order.DESC;
 import static com.ivkos.wallhaven4j.models.misc.enums.Purity.SFW;
 import static com.ivkos.wallhaven4j.models.misc.enums.Purity.SKETCHY;
 import static com.ivkos.wallhaven4j.models.misc.enums.Sorting.DATE_ADDED;
+import static com.ivkos.wallhaven4j.models.misc.enums.ToplistRange.LAST_1_DAY;
 import static com.ivkos.wallhaven4j.util.searchquery.SearchQuery.joinRatioSet;
 import static com.ivkos.wallhaven4j.util.searchquery.SearchQueryDefaults.*;
 import static java.util.Arrays.asList;
@@ -146,6 +147,19 @@ public class SearchQueryBuilderTest
    }
 
    @Test
+   public void toplistRange() throws Exception
+   {
+      sqb.toplistRange(LAST_1_DAY);
+      assertEquals(LAST_1_DAY, sqb.build().getToplistRange());
+   }
+
+   @Test(expected = NullPointerException.class)
+   public void toplsitRangeWontAcceptNull() throws Exception
+   {
+      sqb.toplistRange(null);
+   }
+
+   @Test
    public void resolutions() throws Exception
    {
       Resolution r1080p = new Resolution(1920, 1080);
@@ -251,9 +265,11 @@ public class SearchQueryBuilderTest
    public void getUrl() throws Exception
    {
       String url = sqb.build().getUrl();
-      assertEquals("https://alpha.wallhaven.cc/search?q=&categories=111&purity=100&resolutions=&ratios=&sorting=relevance&order=desc", url);
+      assertEquals("https://alpha.wallhaven.cc/search?q=&categories=111&purity=100&resolutions=&ratios=" +
+            "&sorting=relevance&order=desc&topRange=1M", url);
 
       String url2 = sqb.keywords("cats").build().getUrl();
-      assertEquals("https://alpha.wallhaven.cc/search?q=cats&categories=111&purity=100&resolutions=&ratios=&sorting=relevance&order=desc", url2);
+      assertEquals("https://alpha.wallhaven.cc/search?q=cats&categories=111&purity=100&resolutions=&ratios=" +
+            "&sorting=relevance&order=desc&topRange=1M", url2);
    }
 }

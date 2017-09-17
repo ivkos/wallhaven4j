@@ -5,10 +5,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.ivkos.wallhaven4j.models.misc.Ratio;
 import com.ivkos.wallhaven4j.models.misc.Resolution;
-import com.ivkos.wallhaven4j.models.misc.enums.Category;
-import com.ivkos.wallhaven4j.models.misc.enums.Order;
-import com.ivkos.wallhaven4j.models.misc.enums.Purity;
-import com.ivkos.wallhaven4j.models.misc.enums.Sorting;
+import com.ivkos.wallhaven4j.models.misc.enums.*;
 
 import java.util.Collection;
 import java.util.EnumSet;
@@ -141,7 +138,7 @@ public class SearchQueryBuilder
     *
     * @param sorting Sorting property.
     * @return the current <code>SearchQueryBuilder</code>
-    * @throws NullPointerException if sorting property <code>null</code>
+    * @throws NullPointerException if sorting is <code>null</code>
     * @see Sorting
     */
    public SearchQueryBuilder sorting(Sorting sorting)
@@ -157,7 +154,7 @@ public class SearchQueryBuilder
     *
     * @param order Order. Could be either <code>Order.DESC</code>, or <code>Order.ASC</code>.
     * @return the current <code>SearchQueryBuilder</code>
-    * @throws NullPointerException if sorting property <code>null</code>
+    * @throws NullPointerException if order is <code>null</code>
     * @see Order
     */
    public SearchQueryBuilder order(Order order)
@@ -165,6 +162,22 @@ public class SearchQueryBuilder
       checkNotNull(order, "order");
 
       this.query.order = order;
+      return this;
+   }
+
+   /**
+    * Sets the range of the toplist. In order for this to have effect, sorting must be set to {@link Sorting#TOPLIST}
+    *
+    * @param range The range of the toplist.
+    * @return the current <code>SearchQueryBuilder</code>
+    * @throws NullPointerException if range is <code>null</code>
+    * @see ToplistRange
+    */
+   public SearchQueryBuilder toplistRange(ToplistRange range)
+   {
+      checkNotNull(range, "range");
+
+      this.query.toplistRange = range;
       return this;
    }
 

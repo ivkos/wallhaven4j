@@ -16,6 +16,7 @@ public class SortingTest
       assertNotNull(valueOf("DATE_ADDED"));
       assertNotNull(valueOf("VIEWS"));
       assertNotNull(valueOf("FAVORITES"));
+      assertNotNull(valueOf("TOPLIST"));
    }
 
    @Test
