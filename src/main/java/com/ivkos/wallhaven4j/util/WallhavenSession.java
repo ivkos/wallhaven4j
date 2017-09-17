@@ -122,7 +122,7 @@ public class WallhavenSession
 
    private String getLoggedInUsername(HtmlElement dom)
    {
-      OptionalSelector os = OptionalSelector.of(dom, "#userpanel > nav:nth-child(1) > a > span.username");
+      OptionalSelector os = OptionalSelector.of(dom, "#userpanel > a > span.username");
 
       if (!os.isPresent()) return null;
 
