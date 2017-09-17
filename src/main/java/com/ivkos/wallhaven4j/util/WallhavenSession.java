@@ -2,6 +2,7 @@ package com.ivkos.wallhaven4j.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -68,22 +69,23 @@ public class WallhavenSession
             "password", password
       )).getBody();
 
-      ParseException parseException = new ParseException("Unexpected login redirect behavior");
+      Supplier<ParseException> parseExceptionSupplier = () -> new ParseException("Unexpected login redirect behavior");
 
       HtmlElement dom = htmlParser.parse(html, URL_LOGIN);
       HtmlElement metaRefresh = OptionalSelector.of(dom.findFirst("head"), "meta[http-equiv=refresh]")
-            .orElseThrow(() -> parseException);
+            .orElseThrow(parseExceptionSupplier);
 
       String redirectUrl;
       try {
          redirectUrl = metaRefresh.getAttribute("content").split("url=")[1];
       } catch (IndexOutOfBoundsException e) {
+         ParseException parseException = parseExceptionSupplier.get();
          parseException.initCause(e);
          throw parseException;
       }
 
       if (Strings.isNullOrEmpty(redirectUrl)) {
-         throw parseException;
+         throw parseExceptionSupplier.get();
       }
 
       if (redirectUrl.equals(URL_LOGIN)) {
@@ -91,7 +93,7 @@ public class WallhavenSession
       }
 
       if (!redirectUrl.equals(URL_BASE)) {
-         throw parseException;
+         throw parseExceptionSupplier.get();
       }
 
       this.currentUser = rff.getFactoryFor(User.class).create(false, username);
@@ -104,15 +106,15 @@ public class WallhavenSession
 
    private String getLoginToken(HtmlElement dom)
    {
-      ParseException parseException = new ParseException("Could not parse login token");
+      Supplier<ParseException> parseExceptionSupplier = () -> new ParseException("Could not parse login token");
 
       String token = OptionalSelector
             .of(dom, "input[name=\"_token\"]")
-            .orElseThrow(() -> parseException)
+            .orElseThrow(parseExceptionSupplier)
             .getValue();
 
       if (token.isEmpty()) {
-         throw parseException;
+         throw parseExceptionSupplier.get();
       }
 
       return token;
