@@ -33,6 +33,12 @@ public class WallpaperTest extends AbstractWallhavenTest
    }
 
    @Test
+   public void getShortLink() throws Exception
+   {
+      assertEquals("https://whvn.cc/" + WALLPAPER_ID_SFW, wSfw.getShortLink());
+   }
+
+   @Test
    public void getResolution() throws Exception
    {
       assertNotNull(wSfw.getResolution());

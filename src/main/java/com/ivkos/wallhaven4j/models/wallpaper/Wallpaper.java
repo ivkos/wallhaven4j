@@ -115,6 +115,16 @@ public class Wallpaper extends AbstractResource<Long>
    }
 
    /**
+    * Returns the short link of the wallpaper
+    *
+    * @return the short link of the wallpaper
+    */
+   public String getShortLink()
+   {
+      return UrlPrefixes.URL_WALLPAPER_SHORT + "/" + id;
+   }
+
+   /**
     * Returns the resolution of the wallpaper
     *
     * @return the resolution of the wallpaper
