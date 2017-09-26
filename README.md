@@ -25,7 +25,7 @@ allprojects {
 **Step 2.** Add the dependency:
 ```
 dependencies {
-    compile 'com.ivkos:wallhaven4j:1.2.0'
+    compile 'com.ivkos:wallhaven4j:1.3.0'
 }
 ```
 
@@ -45,13 +45,13 @@ dependencies {
 <dependency>
     <groupId>com.ivkos</groupId>
     <artifactId>wallhaven4j</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
 ## Documentation
 
-Javadocs can be found [here](https://jitpack.io/com/ivkos/wallhaven4j/1.2.0/javadoc/).
+Javadocs can be found [here](https://jitpack.io/com/ivkos/wallhaven4j/1.3.0/javadoc/).
 
 ## Quick Start
 
